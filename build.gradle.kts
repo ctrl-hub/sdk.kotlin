@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
     testImplementation(kotlin("test"))
 }
 
