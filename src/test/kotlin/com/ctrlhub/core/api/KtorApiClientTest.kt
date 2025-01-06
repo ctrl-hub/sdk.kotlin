@@ -1,6 +1,6 @@
 package com.ctrlhub.core.api
 
-import io.ktor.client.call.body
+import io.ktor.client.call.*
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
 import io.ktor.utils.io.*

@@ -2,7 +2,7 @@ package com.ctrlhub.core.router
 
 import com.ctrlhub.core.api.ApiException
 import com.ctrlhub.core.api.KtorApiClient
-import io.ktor.client.call.body
+import io.ktor.client.call.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
