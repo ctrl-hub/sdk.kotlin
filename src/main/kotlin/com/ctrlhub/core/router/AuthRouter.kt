@@ -31,9 +31,9 @@ class AuthRouter(apiClient: ApiClient) : Router(apiClient) {
         }
     }
 
-    suspend fun complete(payload: LoginPayload): CompleteResponse {
+    suspend fun complete(flowId: String, payload: LoginPayload): CompleteResponse {
         return try {
-            apiClient.post(url = "self-service/login", body = payload).body()
+            apiClient.post(url = "self-service/login?flow=$flowId", body = payload).body()
         } catch (e: Exception) {
             throw ApiException("Failed to complete auth", e)
         }
