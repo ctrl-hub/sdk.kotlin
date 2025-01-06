@@ -27,7 +27,7 @@ class KtorApiClient(val baseUrl: String) : ApiClient {
         }
     }
 
-    override suspend fun <T> get(
+    override suspend fun get(
         url: String,
         headers: Map<String, String>?
     ): HttpResponse {
@@ -36,7 +36,7 @@ class KtorApiClient(val baseUrl: String) : ApiClient {
         }
     }
 
-    override suspend fun <T> post(
+    override suspend fun post(
         url: String,
         body: Any,
         headers: Map<String, String>?
@@ -47,7 +47,7 @@ class KtorApiClient(val baseUrl: String) : ApiClient {
         }
     }
 
-    override suspend fun <T> put(
+    override suspend fun put(
         url: String,
         body: Any,
         headers: Map<String, String>?
@@ -58,7 +58,7 @@ class KtorApiClient(val baseUrl: String) : ApiClient {
         }
     }
 
-    override suspend fun <T> delete(
+    override suspend fun delete(
         url: String,
         headers: Map<String, String>?
     ): HttpResponse {

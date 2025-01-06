@@ -25,7 +25,7 @@ data class CompleteResponse(
 class AuthRouter(apiClient: ApiClient) : Router(apiClient) {
     suspend fun initiate(): AuthFlowResponse {
         return try {
-            return apiClient.get<AuthFlowResponse>(url = "self-service/login/api").body()
+            return apiClient.get(url = "self-service/login/api").body()
         } catch (e: Exception) {
             throw ApiException("Failed to initiate auth", e)
         }
@@ -33,7 +33,7 @@ class AuthRouter(apiClient: ApiClient) : Router(apiClient) {
 
     suspend fun complete(payload: LoginPayload): CompleteResponse {
         return try {
-            apiClient.post<CompleteResponse>(url = "self-service/login", body = payload).body()
+            apiClient.post(url = "self-service/login", body = payload).body()
         } catch (e: Exception) {
             throw ApiException("Failed to complete auth", e)
         }
