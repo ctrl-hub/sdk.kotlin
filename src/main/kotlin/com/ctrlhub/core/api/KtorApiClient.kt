@@ -36,18 +36,18 @@ class KtorApiClient(engine: HttpClientEngine, val baseUrl: String) {
     ): HttpResponse {
         return httpClient.post(url) {
             headers?.forEach { (key, value) -> header(key, value) }
-            body?.let { setBody(Json.encodeToString(it)) }
+            body?.let { setBody(Json.encodeToString<T>(it)) }
         }
     }
 
-    suspend fun put(
+    suspend inline fun <reified T> put(
         url: String,
-        body: Any,
+        body: T?,
         headers: Map<String, String>?
     ): HttpResponse {
         return httpClient.put(url) {
             headers?.forEach { (key, value) -> header(key, value) }
-            setBody(Json.encodeToString(body))
+            body?.let { setBody(Json.encodeToString<T>(it)) }
         }
     }
 
