@@ -1,5 +1,6 @@
 package com.ctrlhub.core.api
 
+import io.ktor.client.HttpClient
 import io.ktor.client.call.*
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
@@ -25,7 +26,7 @@ class KtorApiClientTest {
         }
 
         runBlocking {
-            val httpClient = KtorApiClient(mockEngine, "https://example.com")
+            val httpClient = KtorApiClient.create(HttpClient(mockEngine))
             val response: StubResponse = httpClient.get("/").body()
             assertEquals("success", response.status)
         }
@@ -42,7 +43,7 @@ class KtorApiClientTest {
         }
 
         runBlocking {
-            val httpClient = KtorApiClient(mockEngine, "https://example.com")
+            val httpClient = KtorApiClient.create(HttpClient(mockEngine))
             val httpResponse = httpClient.post(url = "/", body = "")
             val response: StubResponse = httpResponse.body()
             assertEquals("success", response.status)
@@ -61,7 +62,7 @@ class KtorApiClientTest {
         }
 
         runBlocking {
-            val httpClient = KtorApiClient(mockEngine, "https://example.com")
+            val httpClient = KtorApiClient.create(HttpClient(mockEngine))
             val httpResponse = httpClient.put(url = "/", body = "")
             val response: StubResponse = httpResponse.body()
             assertEquals("accepted", response.status)
@@ -80,7 +81,7 @@ class KtorApiClientTest {
         }
 
         runBlocking {
-            val httpClient = KtorApiClient(mockEngine, "https://example.com")
+            val httpClient = KtorApiClient.create(HttpClient(mockEngine))
             val httpResponse = httpClient.delete(url = "/")
             val response: StubResponse = httpResponse.body()
             assertEquals("deleted", response.status)

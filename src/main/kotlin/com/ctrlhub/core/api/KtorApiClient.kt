@@ -2,6 +2,7 @@ package com.ctrlhub.core.api
 
 import io.ktor.client.*
 import io.ktor.client.engine.*
+import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
@@ -10,14 +11,30 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class KtorApiClient(engine: HttpClientEngine, val baseUrl: String) {
-    val httpClient = HttpClient(engine) {
-        defaultRequest {
-            url(baseUrl)
+class KtorApiClient private constructor(val httpClient: HttpClient) {
+    companion object {
+        fun create(baseUrl: String): KtorApiClient {
+            val httpClient = HttpClient(CIO)
+            return KtorApiClient(configureHttpClient(httpClient, baseUrl))
         }
-        install(ContentNegotiation) {
-            json(Json { ignoreUnknownKeys = true})
+
+        fun create(httpClient: HttpClient): KtorApiClient {
+            return KtorApiClient(configureHttpClient(httpClient))
         }
+
+        private fun configureHttpClient(baseClient: HttpClient, baseUrl: String? = null): HttpClient {
+            return baseClient.config {
+                baseUrl?.let {
+                    defaultRequest {
+                        url(baseUrl)
+                    }
+                }
+                install(ContentNegotiation) {
+                    json(Json { ignoreUnknownKeys = true })
+                }
+            }
+        }
+
     }
 
     suspend fun get(

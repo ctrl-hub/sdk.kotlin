@@ -2,6 +2,7 @@ package com.ctrlhub.core.router
 
 import com.ctrlhub.core.api.ApiException
 import com.ctrlhub.core.api.KtorApiClient
+import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
 import io.ktor.utils.io.*
@@ -23,7 +24,7 @@ class AuthRouterTest {
         }
 
         val authRouter = AuthRouter(
-            apiClient = KtorApiClient(mockEngine, "https://example.com")
+            apiClient = KtorApiClient.create(HttpClient(mockEngine))
         )
 
         runBlocking {
@@ -43,7 +44,7 @@ class AuthRouterTest {
         }
 
         val authRouter = AuthRouter(
-            apiClient = KtorApiClient(mockEngine, "https://example.com")
+            apiClient = KtorApiClient.create(HttpClient(mockEngine))
         )
 
         runBlocking {
@@ -64,7 +65,7 @@ class AuthRouterTest {
         }
 
         val authRouter = AuthRouter(
-            apiClient = KtorApiClient(mockEngine, "https://example.com")
+            apiClient = KtorApiClient.create(HttpClient(mockEngine))
         )
 
         runBlocking {
