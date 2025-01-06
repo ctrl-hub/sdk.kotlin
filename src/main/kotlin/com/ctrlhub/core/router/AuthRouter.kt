@@ -22,9 +22,13 @@ data class CompleteResponse(
     val sessionToken: String
 )
 
-class AuthRouter(apiClient: ApiClient) : Router(apiClient) {
+sealed class AuthRouter(apiClient: ApiClient) : Router(apiClient) {
     suspend fun initiate(): AuthFlowResponse {
-        return apiClient.get<AuthFlowResponse>(url = "self-service/login/api").body()
+        return try {
+            return apiClient.get<AuthFlowResponse>(url = "self-service/login/api").body()
+        } catch (e: Exception) {
+            throw ApiException("Failed to initiate auth", e)
+        }
     }
 
     suspend fun complete(payload: LoginPayload): CompleteResponse {
