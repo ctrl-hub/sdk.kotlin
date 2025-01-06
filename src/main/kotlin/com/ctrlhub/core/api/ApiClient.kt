@@ -1,9 +1,10 @@
 package com.ctrlhub.core.api
 
-import com.ctrlhub.core.LoggerInterface
-import com.ctrlhub.core.router.NetworkRequest
-import com.ctrlhub.core.router.NetworkResult
+import io.ktor.client.statement.HttpResponse
 
 interface ApiClient {
-    suspend fun <T, U> handle(request: NetworkRequest<T>): NetworkResult<U>
+    suspend fun <T> get(url: String, headers: Map<String, String>? = null): HttpResponse
+    suspend fun <T> post(url: String, body: Any, headers: Map<String, String>? = null): HttpResponse
+    suspend fun <T> put(url: String, body: Any, headers: Map<String, String>? = null): HttpResponse
+    suspend fun <T> delete(url: String, headers: Map<String, String>? = null): HttpResponse
 }

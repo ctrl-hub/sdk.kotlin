@@ -1,13 +1,9 @@
 package com.ctrlhub.core.router
 
 import com.ctrlhub.core.api.ApiClient
-import io.ktor.http.*
-import kotlinx.coroutines.flow.Flow
+import com.ctrlhub.core.api.ApiException
+import io.ktor.client.call.body
 import kotlinx.serialization.Serializable
-
-private object InitiateRequest : NetworkRequest<Nothing>(url = "self-service/login/api")
-data class CompleteRequest(val payload: LoginPayload) :
-    NetworkRequest<LoginPayload>(method = HttpMethod.Post, url = "self-service/login", body = payload)
 
 @Serializable
 data class LoginPayload(
@@ -27,11 +23,15 @@ data class CompleteResponse(
 )
 
 class AuthRouter(apiClient: ApiClient) : Router(apiClient) {
-    suspend fun initiate(): Flow<NetworkResult<AuthFlowResponse>> {
-        return makeNetworkRequest(InitiateRequest)
+    suspend fun initiate(): AuthFlowResponse {
+        return apiClient.get<AuthFlowResponse>(url = "self-service/login/api").body()
     }
 
-    suspend fun complete(payload: LoginPayload): Flow<NetworkResult<CompleteResponse>> {
-        return makeNetworkRequest(CompleteRequest(payload))
+    suspend fun complete(payload: LoginPayload): CompleteResponse {
+        return try {
+            apiClient.post<CompleteResponse>(url = "self-service/login", body = payload).body()
+        } catch (e: Exception) {
+            throw ApiException("Failed to complete auth", e)
+        }
     }
 }
