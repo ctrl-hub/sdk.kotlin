@@ -22,7 +22,7 @@ data class CompleteResponse(
     val sessionToken: String
 )
 
-sealed class AuthRouter(apiClient: ApiClient) : Router(apiClient) {
+class AuthRouter(apiClient: ApiClient) : Router(apiClient) {
     suspend fun initiate(): AuthFlowResponse {
         return try {
             return apiClient.get<AuthFlowResponse>(url = "self-service/login/api").body()
