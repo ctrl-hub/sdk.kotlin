@@ -62,7 +62,7 @@ class KtorApiClientTest {
 
         runBlocking {
             val httpClient = KtorApiClient(mockEngine, "https://example.com")
-            val httpResponse = httpClient.post(url = "/", body = "")
+            val httpResponse = httpClient.put(url = "/", body = "")
             val response: StubResponse = httpResponse.body()
             assertEquals("accepted", response.status)
             assertEquals(HttpStatusCode.Accepted, httpResponse.status)
@@ -81,7 +81,7 @@ class KtorApiClientTest {
 
         runBlocking {
             val httpClient = KtorApiClient(mockEngine, "https://example.com")
-            val httpResponse = httpClient.post(url = "/", body = "")
+            val httpResponse = httpClient.delete(url = "/")
             val response: StubResponse = httpResponse.body()
             assertEquals("deleted", response.status)
             assertEquals(HttpStatusCode.Accepted, httpResponse.status)

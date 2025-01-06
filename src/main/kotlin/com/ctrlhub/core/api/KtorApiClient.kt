@@ -43,7 +43,7 @@ class KtorApiClient(engine: HttpClientEngine, val baseUrl: String) {
     suspend inline fun <reified T> put(
         url: String,
         body: T?,
-        headers: Map<String, String>?
+        headers: Map<String, String>? = null
     ): HttpResponse {
         return httpClient.put(url) {
             headers?.forEach { (key, value) -> header(key, value) }
@@ -53,7 +53,7 @@ class KtorApiClient(engine: HttpClientEngine, val baseUrl: String) {
 
     suspend fun delete(
         url: String,
-        headers: Map<String, String>?
+        headers: Map<String, String>? = null
     ): HttpResponse {
         return httpClient.delete(url) {
             headers?.forEach { (key, value) ->
