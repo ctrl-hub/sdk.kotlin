@@ -1,6 +1,7 @@
 package com.ctrlhub.core.api
 
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -15,39 +16,37 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class KtorApiClient(val baseUrl: String) : ApiClient {
-    private val httpClient by lazy {
-        HttpClient(CIO) {
-            defaultRequest {
-                url(baseUrl)
-            }
-            install(ContentNegotiation) {
-                json(Json { ignoreUnknownKeys = true})
-            }
+class KtorApiClient(engine: HttpClientEngine, val baseUrl: String) {
+    val httpClient = HttpClient(engine) {
+        defaultRequest {
+            url(baseUrl)
+        }
+        install(ContentNegotiation) {
+            json(Json { ignoreUnknownKeys = true})
         }
     }
 
-    override suspend fun get(
+    suspend fun get(
         url: String,
-        headers: Map<String, String>?
+        headers: Map<String, String>? = null
     ): HttpResponse {
         return httpClient.get(url) {
             headers?.forEach { (key, value) -> header(key, value) }
         }
     }
 
-    override suspend fun post(
+    suspend inline fun <reified T> post(
         url: String,
-        body: Any,
-        headers: Map<String, String>?
+        body: T?,
+        headers: Map<String, String>? = null
     ): HttpResponse {
         return httpClient.post(url) {
             headers?.forEach { (key, value) -> header(key, value) }
-            setBody(Json.encodeToString(body))
+            body?.let { setBody(Json.encodeToString(it)) }
         }
     }
 
-    override suspend fun put(
+    suspend fun put(
         url: String,
         body: Any,
         headers: Map<String, String>?
@@ -58,7 +57,7 @@ class KtorApiClient(val baseUrl: String) : ApiClient {
         }
     }
 
-    override suspend fun delete(
+    suspend fun delete(
         url: String,
         headers: Map<String, String>?
     ): HttpResponse {
