@@ -6,7 +6,9 @@ import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.util.appendIfNameAbsent
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -27,6 +29,9 @@ class KtorApiClient private constructor(val httpClient: HttpClient) {
                     defaultRequest {
                         url(baseUrl)
                     }
+                }
+                defaultRequest {
+                    headers.appendIfNameAbsent(HttpHeaders.ContentType, "application/json")
                 }
                 expectSuccess = true
                 install(ContentNegotiation) {
