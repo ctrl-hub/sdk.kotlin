@@ -28,6 +28,7 @@ class KtorApiClient private constructor(val httpClient: HttpClient) {
                         url(baseUrl)
                     }
                 }
+                expectSuccess = true
                 install(ContentNegotiation) {
                     json(Json { ignoreUnknownKeys = true })
                 }
