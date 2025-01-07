@@ -1,0 +1,28 @@
+name: Publish Package to GitHub Packages
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code with Git
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Kotlin
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'jetbrains'
+          java-version: 22
+          cache: gradle
+
+      - name: Build and Publish Artifact
+        run: ./gradlew clean publish
