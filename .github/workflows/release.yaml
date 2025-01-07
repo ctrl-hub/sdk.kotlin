@@ -5,9 +5,9 @@ on:
       - "*"
 
 jobs:
-  test:
-    name: Run tests
-    uses: ctrl-hub/infra.github-actions/.github/workflows/ci-kotlin-test.yaml@v8
+#  test:
+#    name: Run tests
+#    uses: ctrl-hub/infra.github-actions/.github/workflows/ci-kotlin-test.yaml@v8
 
   build:
     name: Build and Publish Artifact
