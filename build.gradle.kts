@@ -43,7 +43,7 @@ publishing {
             url = uri("https://maven.pkg.github.com/ctrl-hub/sdk.kotlin")
 
             credentials {
-                username = System.getenv("GITHUB_USERNAME")
+                username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
             }
         }

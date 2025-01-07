@@ -31,5 +31,4 @@ jobs:
       - name: Build and Publish Artifact
         run: ./gradlew clean publish
         env:
-          GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
