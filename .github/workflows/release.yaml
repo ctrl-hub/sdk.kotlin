@@ -5,6 +5,10 @@ on:
       - "*"
 
 jobs:
+  test:
+    name: Run tests
+    uses: ctrl-hub/infra.github-actions/.github/workflows/ci-kotlin-test.yaml@v8
+
   build:
     name: Build and Publish Artifact
     runs-on: ubuntu-latest
@@ -13,21 +17,17 @@ jobs:
     permissions:
       contents: read
       packages: write
-
     steps:
-
       - name: Checkout code with Git
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       - name: Set up Kotlin
         uses: actions/setup-java@v4
         with:
           distribution: 'jetbrains'
           java-version: 21
           cache: gradle
-
       - name: Build and Publish Artifact
         run: ./gradlew clean publish
         env:
