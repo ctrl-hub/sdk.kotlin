@@ -6,12 +6,43 @@ on:
 
 jobs:
   build:
+    name: Build and Publish Artifact
     runs-on: ubuntu-latest
+    env:
+      OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
     permissions:
       contents: read
       packages: write
 
     steps:
+      - name: Install 1Password CLI
+        run: |
+          wget "https://cache.agilebits.com/dist/1P/op2/pkg/${ONEPASSWORD_VERSION}/op_linux_amd64_${ONEPASSWORD_VERSION}.zip" -O op.zip && \
+          unzip -d op op.zip && \
+          sudo mv op/op /usr/local/bin && \
+          rm -r op.zip op && \
+          sudo groupadd -f onepassword-cli && \
+          sudo chgrp onepassword-cli /usr/local/bin/op && \
+          sudo chmod g+s /usr/local/bin/op
+        env:
+          ONEPASSWORD_VERSION: v2.24.0
+
+      - name: Check 1Password credentials
+        run: op user get --me
+
+      - name: Obtain repo access token
+        id: ctrl_hub_bot_repo_access_token
+        run: echo CTRL_HUB_BOT_REPO_ACCESS_TOKEN=$(op read op://ctrl-hub.run/CTRL_HUB_BOT_REPO_ACCESS_TOKEN/password) >> "$GITHUB_OUTPUT"
+
+      - name: Set envs
+        run: |
+          echo "GITHUB_CURRENT_REPO_NAME=${GITHUB_REPOSITORY}" >> $GITHUB_ENV
+          echo "GITHUB_CURRENT_REPO_URL=https://github.com/${GITHUB_REPOSITORY}" >> $GITHUB_ENV
+          echo "GITHUB_CURRENT_RUN_URL=https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" >> $GITHUB_ENV
+          echo "GITHUB_CURRENT_RUN_ID=${GITHUB_RUN_ID}" >> $GITHUB_ENV
+          echo "GITHUB_CURRENT_RUN_TRIGGERING_ACTOR=${GITHUB_TRIGGERING_ACTOR}" >> $GITHUB_ENV
+          echo "GITHUB_CURRENT_RUN_ATTEMPT=${GITHUB_RUN_ATTEMPT}" >> $GITHUB_ENV
+
       - name: Checkout code with Git
         uses: actions/checkout@v4
         with:
@@ -26,3 +57,6 @@ jobs:
 
       - name: Build and Publish Artifact
         run: ./gradlew clean publish
+        env:
+          GITHUB_USERNAME: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ steps.ctrl_hub_bot_repo_access_token.outputs.CTRL_HUB_BOT_REPO_ACCESS_TOKEN }}
