@@ -2,26 +2,10 @@ package com.ctrlhub.core.router
 
 import com.ctrlhub.core.api.ApiException
 import com.ctrlhub.core.api.KtorApiClient
+import com.ctrlhub.core.api.payload.auth.LoginPayload
+import com.ctrlhub.core.api.response.auth.AuthFlowResponse
+import com.ctrlhub.core.api.response.auth.CompleteResponse
 import io.ktor.client.call.*
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class LoginPayload(
-    val identifier: String,
-    val password: String,
-    val method: String
-)
-
-@Serializable
-data class AuthFlowResponse(
-    val id: String
-)
-
-@Serializable
-data class CompleteResponse(
-    @SerialName("session_token") val sessionToken: String
-)
 
 class AuthRouter(apiClient: KtorApiClient) : Router(apiClient) {
     suspend fun initiate(): AuthFlowResponse {
