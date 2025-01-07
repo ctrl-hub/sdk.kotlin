@@ -15,27 +15,27 @@ class ConfigTest {
     fun `authBaseUrl should return correct value for PRODUCTION`() {
         Config.environment = Environment.PRODUCTION
 
-        assertEquals("auth.ctrl-hub.com", Config.authBaseUrl)
+        assertEquals("https://auth.ctrl-hub.com", Config.authBaseUrl)
     }
 
     @Test
     fun `authBaseUrl should return correct value for STAGING`() {
         Config.environment = Environment.STAGING
 
-        assertEquals("auth.ctrl-hub.dev", Config.authBaseUrl)
+        assertEquals("https://auth.ctrl-hub.dev", Config.authBaseUrl)
     }
 
     @Test
     fun `apiBaseUrl should return correct value for PRODUCTION`() {
         Config.environment = Environment.PRODUCTION
 
-        assertEquals("api.ctrl-hub.com", Config.apiBaseUrl)
+        assertEquals("https://api.ctrl-hub.com", Config.apiBaseUrl)
     }
 
     @Test
     fun `apiBaseUrl should return correct value for STAGING`() {
         Config.environment = Environment.STAGING
 
-        assertEquals("api.ctrl-hub.dev", Config.apiBaseUrl)
+        assertEquals("https://api.ctrl-hub.dev", Config.apiBaseUrl)
     }
 }

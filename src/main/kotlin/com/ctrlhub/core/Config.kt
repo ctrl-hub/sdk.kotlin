@@ -10,13 +10,13 @@ object Config {
 
     val authBaseUrl: String
         get() = when (environment) {
-            Environment.STAGING -> "auth.ctrl-hub.dev"
-            Environment.PRODUCTION -> "auth.ctrl-hub.com"
+            Environment.STAGING -> "https://auth.ctrl-hub.dev"
+            Environment.PRODUCTION -> "https://auth.ctrl-hub.com"
         }
 
     val apiBaseUrl: String
         get() = when (environment) {
-            Environment.STAGING -> "api.ctrl-hub.dev"
-            Environment.PRODUCTION -> "api.ctrl-hub.com"
+            Environment.STAGING -> "https://api.ctrl-hub.dev"
+            Environment.PRODUCTION -> "https://api.ctrl-hub.com"
         }
 }
