@@ -1,4 +1,11 @@
 package com.ctrlhub.core.api
 
-// TODO - flesh this out more with different types of exceptions
-class ApiException(message: String, e: Throwable): Exception(message, e)
+import io.ktor.client.statement.HttpResponse
+
+open class ApiException(message: String, e: Throwable) : Exception(message, e)
+
+class ApiClientException(message: String, val response: HttpResponse, e: Throwable) : ApiException(message, e) {
+    fun statusCode(): Int {
+        return response.status.value
+    }
+}
