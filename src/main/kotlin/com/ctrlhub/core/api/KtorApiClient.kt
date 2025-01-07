@@ -33,7 +33,6 @@ class KtorApiClient private constructor(val httpClient: HttpClient) {
                 }
             }
         }
-
     }
 
     suspend fun get(
