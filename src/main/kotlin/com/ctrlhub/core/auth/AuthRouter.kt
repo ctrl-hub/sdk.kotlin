@@ -1,14 +1,16 @@
-package com.ctrlhub.core.router
+package com.ctrlhub.core.auth
 
 import com.ctrlhub.core.Config
 import com.ctrlhub.core.api.ApiClientException
 import com.ctrlhub.core.api.ApiException
 import com.ctrlhub.core.api.KtorApiClient
-import com.ctrlhub.core.api.payload.auth.LoginPayload
-import com.ctrlhub.core.api.response.auth.AuthFlowResponse
-import com.ctrlhub.core.api.response.auth.CompleteResponse
-import io.ktor.client.call.*
+import com.ctrlhub.core.auth.payload.LoginPayload
+import com.ctrlhub.core.auth.response.AuthFlowResponse
+import com.ctrlhub.core.auth.response.CompleteResponse
+import com.ctrlhub.core.router.Router
+import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
+import io.ktor.http.HttpStatusCode
 
 class AuthRouter(apiClient: KtorApiClient) : Router(apiClient = apiClient) {
     suspend fun initiate(): AuthFlowResponse {
@@ -25,6 +27,13 @@ class AuthRouter(apiClient: KtorApiClient) : Router(apiClient = apiClient) {
         return try {
             apiClient.post(url = "${Config.authBaseUrl}/self-service/login?flow=$flowId", body = payload).body()
         } catch (e: ClientRequestException) {
+            if (e.response.status == HttpStatusCode.BadRequest) {
+                val bodyAsString: String = e.response.body()
+                if (bodyAsString.contains("credentials are invalid")) {
+                    throw InvalidCredentialsException()
+                }
+            }
+
             throw ApiClientException("Failed to complete auth", e.response, e)
         } catch (e: Exception) {
             throw ApiException("Failed to complete auth", e)

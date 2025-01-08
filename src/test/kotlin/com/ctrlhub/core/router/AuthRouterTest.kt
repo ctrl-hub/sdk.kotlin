@@ -2,7 +2,8 @@ package com.ctrlhub.core.router
 
 import com.ctrlhub.core.api.ApiException
 import com.ctrlhub.core.api.KtorApiClient
-import com.ctrlhub.core.api.payload.auth.LoginPayload
+import com.ctrlhub.core.auth.payload.LoginPayload
+import com.ctrlhub.core.auth.AuthRouter
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*

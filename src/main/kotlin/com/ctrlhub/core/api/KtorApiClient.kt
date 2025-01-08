@@ -57,7 +57,10 @@ class KtorApiClient private constructor(val httpClient: HttpClient) {
     ): HttpResponse {
         return httpClient.post(url) {
             headers?.forEach { (key, value) -> header(key, value) }
-            body?.let { setBody(Json.encodeToString<T>(it)) }
+            body?.let {
+                val jsonBody = Json.encodeToString<T>(it)
+                setBody(jsonBody)
+            }
         }
     }
 

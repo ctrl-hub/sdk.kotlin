@@ -1,4 +1,4 @@
-package com.ctrlhub.core.api.payload.auth
+package com.ctrlhub.core.auth.payload
 
 import kotlinx.serialization.Serializable
 

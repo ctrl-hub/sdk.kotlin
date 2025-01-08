@@ -1,4 +1,4 @@
-package com.ctrlhub.core.api.response.auth
+package com.ctrlhub.core.auth.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

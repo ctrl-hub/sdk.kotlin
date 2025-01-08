@@ -1,7 +1,7 @@
 package com.ctrlhub.core
 
 import com.ctrlhub.core.api.KtorApiClient
-import com.ctrlhub.core.router.AuthRouter
+import com.ctrlhub.core.auth.AuthRouter
 
 class Api private constructor(apiClient: KtorApiClient) {
     val auth: AuthRouter = AuthRouter(apiClient)
