@@ -8,9 +8,9 @@ import com.ctrlhub.core.auth.payload.LoginPayload
 import com.ctrlhub.core.auth.response.AuthFlowResponse
 import com.ctrlhub.core.auth.response.CompleteResponse
 import com.ctrlhub.core.router.Router
-import io.ktor.client.call.body
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.http.HttpStatusCode
+import io.ktor.client.call.*
+import io.ktor.client.plugins.*
+import io.ktor.http.*
 
 class AuthRouter(apiClient: KtorApiClient) : Router(apiClient = apiClient) {
     suspend fun initiate(): AuthFlowResponse {

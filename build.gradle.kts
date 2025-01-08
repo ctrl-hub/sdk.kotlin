@@ -9,6 +9,10 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+
+    maven {
+        url = uri("https://maven.scijava.org/content/repositories/public/")
+    }
 }
 
 dependencies {
@@ -18,6 +22,7 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.jetbrains.kotlinx.serialization.json)
+    implementation(libs.jsonapi.converter)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.mockk)

@@ -1,6 +1,6 @@
 package com.ctrlhub.core.api
 
-import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.*
 
 open class ApiException(message: String, e: Throwable) : Exception(message, e)
 

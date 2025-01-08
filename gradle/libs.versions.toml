@@ -3,6 +3,7 @@ kotlin = "2.0.21"
 ktor = "3.0.3"
 kotlinSerialization = "1.7.3"
 mockk = "1.9.3"
+jsonapi = "0.14"
 
 [libraries]
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -13,3 +14,4 @@ ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 jetbrains-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+jsonapi-converter = { module = "com.github.jasminb:jsonapi-converter", version.ref = "jsonapi" }

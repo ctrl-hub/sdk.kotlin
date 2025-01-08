@@ -1,0 +1,78 @@
+{
+  "data": {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "type": "users",
+    "attributes": {
+      "email": "user@example.com",
+      "identities": [
+        {
+          "platform": "Platform A",
+          "id": "11111111-1111-1111-1111-111111111111",
+          "meta": {
+            "organisation_id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+          }
+        },
+        {
+          "platform": "Platform B",
+          "id": "22222222-2222-2222-2222-222222222222",
+          "meta": {
+            "organisation_id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
+          }
+        },
+        {
+          "platform": "Platform C",
+          "id": "33333333-3333-3333-3333-333333333333",
+          "meta": {
+            "organisation_id": "cccccccc-cccc-cccc-cccc-cccccccccccc"
+          }
+        },
+        {
+          "platform": "Platform D",
+          "id": "44444444-4444-4444-4444-444444444444",
+          "meta": null
+        }
+      ],
+      "profile": {
+        "work": {
+          "occupation": "Test Occupation",
+          "cscs": "",
+          "eusr": "",
+          "start_date": "2020-01-01"
+        },
+        "personal": {
+          "first_name": "Test",
+          "last_name": "User",
+          "dob": "2000-01-01",
+          "username": "test.user"
+        },
+        "contact": {
+          "mobile": "0000000000",
+          "landline": "0000000000"
+        },
+        "address": {
+          "number": "0",
+          "name": "Building Name",
+          "street": "Test Street",
+          "area": "Test Area",
+          "town": "Test Town",
+          "county": "Test County",
+          "postcode": "XX00 0XX",
+          "country_code": "XX",
+          "what3words": "test.place.here"
+        },
+        "settings": {
+          "preferred_language": "en",
+          "timezone": "UTC"
+        }
+      }
+    }
+  },
+  "meta": {},
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {}
+  },
+  "links": {
+    "self": "https://api.example.com/v3/iam/whoami"
+  }
+}
