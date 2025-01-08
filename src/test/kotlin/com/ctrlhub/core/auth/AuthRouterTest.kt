@@ -16,16 +16,16 @@ class AuthRouterTest {
 
     @Test
     fun `test initiate auth success`() {
-        val mockEngine = MockEngine.Companion { request ->
+        val mockEngine = MockEngine { request ->
             respond(
                 content = ByteReadChannel("""{"id": "test-123"}"""),
-                status = HttpStatusCode.Companion.OK,
+                status = HttpStatusCode.OK,
                 headers = headersOf(HttpHeaders.ContentType, "application/json")
             )
         }
 
         val authRouter = AuthRouter(
-            apiClient = KtorApiClient.Companion.create(HttpClient(mockEngine))
+            apiClient = KtorApiClient.create(HttpClient(mockEngine))
         )
 
         runBlocking {
@@ -36,16 +36,16 @@ class AuthRouterTest {
 
     @Test
     fun `test exception thrown when auth initiate fails`() {
-        val mockEngine = MockEngine.Companion { request ->
+        val mockEngine = MockEngine { request ->
             respond(
                 content = ByteReadChannel("""{}"""),
-                status = HttpStatusCode.Companion.InternalServerError,
+                status = HttpStatusCode.InternalServerError,
                 headers = headersOf(HttpHeaders.ContentType, "application/json")
             )
         }
 
         val authRouter = AuthRouter(
-            apiClient = KtorApiClient.Companion.create(HttpClient(mockEngine))
+            apiClient = KtorApiClient.create(HttpClient(mockEngine))
         )
 
         runBlocking {
@@ -57,16 +57,16 @@ class AuthRouterTest {
 
     @Test
     fun `test can complete auth successfully`() {
-        val mockEngine = MockEngine.Companion { request ->
+        val mockEngine = MockEngine { request ->
             respond(
                 content = ByteReadChannel("""{"session_token": "ses-123"}"""),
-                status = HttpStatusCode.Companion.OK,
+                status = HttpStatusCode.OK,
                 headers = headersOf(HttpHeaders.ContentType, "application/json")
             )
         }
 
         val authRouter = AuthRouter(
-            apiClient = KtorApiClient.Companion.create(HttpClient(mockEngine))
+            apiClient = KtorApiClient.create(HttpClient(mockEngine))
         )
 
         runBlocking {

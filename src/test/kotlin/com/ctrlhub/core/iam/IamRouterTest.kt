@@ -19,7 +19,7 @@ class IamRouterTest {
         val jsonFilePath = Paths.get("src/test/resources/iam/whoami-response.json")
         val jsonContent = Files.readString(jsonFilePath)
 
-        val mockEngine = MockEngine.Companion { request ->
+        val mockEngine = MockEngine { request ->
             respond(
                 content = jsonContent,
                 status = HttpStatusCode.OK,
