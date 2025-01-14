@@ -21,6 +21,7 @@ class Identity {
     val meta: IdentityMeta? = null
 }
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 class IdentityMeta {
     @JsonProperty("organisation_id") val organisationId: String? = null
 }
