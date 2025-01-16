@@ -13,6 +13,7 @@ import io.ktor.client.call.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
+import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.*
@@ -30,9 +31,13 @@ class AuthRouter(httpClient: HttpClient) : Router(httpClient = httpClient) {
         }
     }
 
-    suspend fun refresh(): AuthFlowResponse {
+    suspend fun refresh(sessionToken: String): AuthFlowResponse {
         return try {
-            httpClient.get("${Config.authBaseUrl}/self-service/login/api?refresh=true").body()
+            httpClient.get("${Config.authBaseUrl}/self-service/login/api?refresh=true") {
+                headers {
+                    header("X-Session-Token", sessionToken)
+                }
+            }.body()
         } catch (e: ClientRequestException) {
             throw ApiClientException("Failed to initiate auth", e.response, e)
         } catch (e: Exception) {

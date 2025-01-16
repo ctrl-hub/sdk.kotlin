@@ -105,7 +105,7 @@ class AuthRouterTest {
 
         runBlocking {
             assertFailsWith<ApiException> {
-                authRouter.refresh()
+                authRouter.refresh("sess-123")
             }
         }
     }
@@ -123,7 +123,7 @@ class AuthRouterTest {
         val authRouter = AuthRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
-            val response = authRouter.refresh()
+            val response = authRouter.refresh("sess-123")
             assertEquals("test-123", response.id)
         }
     }
