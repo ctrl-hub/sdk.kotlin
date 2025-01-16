@@ -23,6 +23,16 @@ class AuthRouter(apiClient: KtorApiClient) : Router(apiClient = apiClient) {
         }
     }
 
+    suspend fun refresh(): AuthFlowResponse {
+        return try {
+            return apiClient.get(url = "${Config.authBaseUrl}/self-service/login/api?refresh=true").body()
+        } catch (e: ClientRequestException) {
+            throw ApiClientException("Failed to initiate auth", e.response, e)
+        } catch (e: Exception) {
+            throw ApiException("Failed to initiate auth", e)
+        }
+    }
+
     suspend fun complete(flowId: String, payload: LoginPayload): CompleteResponse {
         return try {
             apiClient.post(url = "${Config.authBaseUrl}/self-service/login?flow=$flowId", body = payload).body()

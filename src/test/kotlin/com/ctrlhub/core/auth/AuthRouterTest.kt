@@ -81,4 +81,45 @@ class AuthRouterTest {
             assertEquals("ses-123", response.sessionToken)
         }
     }
+
+    @Test
+    fun `test exception thrown when refresh fails`() {
+        val mockEngine = MockEngine { request ->
+            respond(
+                content = ByteReadChannel("""{}"""),
+                status = HttpStatusCode.InternalServerError,
+                headers = headersOf(HttpHeaders.ContentType, "application/json")
+            )
+        }
+
+        val authRouter = AuthRouter(
+            apiClient = KtorApiClient.create(HttpClient(mockEngine))
+        )
+
+        runBlocking {
+            assertFailsWith<ApiException> {
+                authRouter.refresh()
+            }
+        }
+    }
+
+    @Test
+    fun `test exception thrown when refresh succeeds`() {
+        val mockEngine = MockEngine { request ->
+            respond(
+                content = ByteReadChannel("""{"id": "test-123"}"""),
+                status = HttpStatusCode.OK,
+                headers = headersOf(HttpHeaders.ContentType, "application/json")
+            )
+        }
+
+        val authRouter = AuthRouter(
+            apiClient = KtorApiClient.create(HttpClient(mockEngine))
+        )
+
+        runBlocking {
+            val response = authRouter.refresh()
+            assertEquals("test-123", response.id)
+        }
+    }
 }
