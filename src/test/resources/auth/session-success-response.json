@@ -1,0 +1,8 @@
+{
+  "session_token": "ses-123",
+  "session": {
+    "active": true,
+    "expires_at": "2025-01-15T14:04:34.245708802Z",
+    "authenticated_at": "2025-01-15T14:04:34.245708802Z"
+  }
+}

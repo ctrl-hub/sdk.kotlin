@@ -1,6 +1,6 @@
 package com.ctrlhub.core.iam
 
-import com.ctrlhub.core.api.KtorApiClient
+import com.ctrlhub.core.configureForTest
 import com.ctrlhub.core.iam.response.User
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
@@ -27,9 +27,7 @@ class IamRouterTest {
             )
         }
 
-        val iamRouter = IamRouter(
-            apiClient = KtorApiClient.create(HttpClient(mockEngine))
-        )
+        val iamRouter = IamRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
             val response = iamRouter.whoami(sessionToken = "test-token")

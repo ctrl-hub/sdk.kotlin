@@ -3,19 +3,26 @@ package com.ctrlhub.core.auth
 import com.ctrlhub.core.Config
 import com.ctrlhub.core.api.ApiClientException
 import com.ctrlhub.core.api.ApiException
-import com.ctrlhub.core.api.KtorApiClient
 import com.ctrlhub.core.auth.payload.LoginPayload
+import com.ctrlhub.core.auth.payload.LogoutPayload
 import com.ctrlhub.core.auth.response.AuthFlowResponse
 import com.ctrlhub.core.auth.response.CompleteResponse
 import com.ctrlhub.core.router.Router
+import io.ktor.client.HttpClient
 import io.ktor.client.call.*
 import io.ktor.client.plugins.*
+import io.ktor.client.request.delete
+import io.ktor.client.request.get
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
 import io.ktor.http.*
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
-class AuthRouter(apiClient: KtorApiClient) : Router(apiClient = apiClient) {
+class AuthRouter(httpClient: HttpClient) : Router(httpClient = httpClient) {
     suspend fun initiate(): AuthFlowResponse {
         return try {
-            return apiClient.get(url = "${Config.authBaseUrl}/self-service/login/api").body()
+            httpClient.get("${Config.authBaseUrl}/self-service/login/api").body()
         } catch (e: ClientRequestException) {
             throw ApiClientException("Failed to initiate auth", e.response, e)
         } catch (e: Exception) {
@@ -25,7 +32,7 @@ class AuthRouter(apiClient: KtorApiClient) : Router(apiClient = apiClient) {
 
     suspend fun refresh(): AuthFlowResponse {
         return try {
-            return apiClient.get(url = "${Config.authBaseUrl}/self-service/login/api?refresh=true").body()
+            httpClient.get("${Config.authBaseUrl}/self-service/login/api?refresh=true").body()
         } catch (e: ClientRequestException) {
             throw ApiClientException("Failed to initiate auth", e.response, e)
         } catch (e: Exception) {
@@ -35,7 +42,9 @@ class AuthRouter(apiClient: KtorApiClient) : Router(apiClient = apiClient) {
 
     suspend fun complete(flowId: String, payload: LoginPayload): CompleteResponse {
         return try {
-            apiClient.post(url = "${Config.authBaseUrl}/self-service/login?flow=$flowId", body = payload).body()
+            httpClient.post("${Config.authBaseUrl}/self-service/login?flow=$flowId") {
+                setBody(Json.encodeToString(payload))
+            }.body()
         } catch (e: ClientRequestException) {
             if (e.response.status == HttpStatusCode.BadRequest) {
                 val bodyAsString: String = e.response.body()
@@ -45,6 +54,22 @@ class AuthRouter(apiClient: KtorApiClient) : Router(apiClient = apiClient) {
             }
 
             throw ApiClientException("Failed to complete auth", e.response, e)
+        } catch (e: Exception) {
+            throw ApiException("Failed to complete auth", e)
+        }
+    }
+
+    suspend fun logout(sessionToken: String): Boolean {
+        return try {
+            val statusCode = httpClient.delete("${Config.authBaseUrl}/self-service/logout/api") {
+                setBody(Json.encodeToString(LogoutPayload(
+                    sessionToken = sessionToken
+                )))
+            }.status
+
+            statusCode == HttpStatusCode.NoContent
+        } catch (e: ClientRequestException) {
+            false
         } catch (e: Exception) {
             throw ApiException("Failed to complete auth", e)
         }

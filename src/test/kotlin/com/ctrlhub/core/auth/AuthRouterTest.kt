@@ -1,16 +1,28 @@
 package com.ctrlhub.core.auth
 
+import com.ctrlhub.core.Config
 import com.ctrlhub.core.api.ApiException
-import com.ctrlhub.core.api.KtorApiClient
+import com.ctrlhub.core.auth.AuthRouter
 import com.ctrlhub.core.auth.payload.LoginPayload
+import com.ctrlhub.core.configureForTest
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
+import io.ktor.client.plugins.UserAgent
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.json
+import io.ktor.util.appendIfNameAbsent
 import io.ktor.utils.io.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
+import java.nio.file.Files
+import java.nio.file.Paths
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class AuthRouterTest {
 
@@ -24,9 +36,7 @@ class AuthRouterTest {
             )
         }
 
-        val authRouter = AuthRouter(
-            apiClient = KtorApiClient.create(HttpClient(mockEngine))
-        )
+        val authRouter = AuthRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
             val response = authRouter.initiate()
@@ -44,9 +54,7 @@ class AuthRouterTest {
             )
         }
 
-        val authRouter = AuthRouter(
-            apiClient = KtorApiClient.create(HttpClient(mockEngine))
-        )
+        val authRouter = AuthRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
             assertFailsWith<ApiException> {
@@ -57,17 +65,18 @@ class AuthRouterTest {
 
     @Test
     fun `test can complete auth successfully`() {
+        val jsonFilePath = Paths.get("src/test/resources/auth/session-success-response.json")
+        val jsonContent = Files.readString(jsonFilePath)
+
         val mockEngine = MockEngine { request ->
             respond(
-                content = ByteReadChannel("""{"session_token": "ses-123"}"""),
+                content = ByteReadChannel(jsonContent),
                 status = HttpStatusCode.OK,
                 headers = headersOf(HttpHeaders.ContentType, "application/json")
             )
         }
 
-        val authRouter = AuthRouter(
-            apiClient = KtorApiClient.create(HttpClient(mockEngine))
-        )
+        val authRouter = AuthRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
             val response = authRouter.complete(
@@ -92,9 +101,7 @@ class AuthRouterTest {
             )
         }
 
-        val authRouter = AuthRouter(
-            apiClient = KtorApiClient.create(HttpClient(mockEngine))
-        )
+        val authRouter = AuthRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
             assertFailsWith<ApiException> {
@@ -113,13 +120,47 @@ class AuthRouterTest {
             )
         }
 
-        val authRouter = AuthRouter(
-            apiClient = KtorApiClient.create(HttpClient(mockEngine))
-        )
+        val authRouter = AuthRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
             val response = authRouter.refresh()
             assertEquals("test-123", response.id)
+        }
+    }
+
+    @Test
+    fun `test logout returns true on success`() {
+        val mockEngine = MockEngine { request ->
+            respond(
+                content = ByteReadChannel(""),
+                status = HttpStatusCode.NoContent,
+                headers = headersOf(HttpHeaders.ContentType, "application/json")
+            )
+        }
+
+        val authRouter = AuthRouter(httpClient = HttpClient(mockEngine).configureForTest())
+
+        runBlocking {
+            val result = authRouter.logout("dummy-session-token")
+            assertTrue(result, "Logout should return true on success")
+        }
+    }
+
+    @Test
+    fun `test logout returns false on error`() {
+        val mockEngine = MockEngine { request ->
+            respond(
+                content = ByteReadChannel(""),
+                status = HttpStatusCode.BadRequest,
+                headers = headersOf(HttpHeaders.ContentType, "application/json")
+            )
+        }
+
+        val authRouter = AuthRouter(httpClient = HttpClient(mockEngine).configureForTest())
+
+        runBlocking {
+            val result = authRouter.logout("dummy-session-token")
+            assertFalse(result, "Logout should return false on success")
         }
     }
 }

@@ -7,6 +7,7 @@ enum class Environment {
 
 object Config {
     var environment: Environment = Environment.PRODUCTION
+    var userAgent: String = "CtrlHub SDK"
 
     val authBaseUrl: String
         get() = when (environment) {

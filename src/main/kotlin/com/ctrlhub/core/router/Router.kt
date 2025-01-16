@@ -1,5 +1,5 @@
 package com.ctrlhub.core.router
 
-import com.ctrlhub.core.api.KtorApiClient
+import io.ktor.client.HttpClient
 
-abstract class Router(val apiClient: KtorApiClient)
+abstract class Router(val httpClient: HttpClient)
