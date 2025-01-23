@@ -1,8 +1,10 @@
 package com.ctrlhub.core.iam
 
+import com.ctrlhub.core.Api
 import com.ctrlhub.core.Config
 import com.ctrlhub.core.api.ApiClientException
 import com.ctrlhub.core.api.ApiException
+import com.ctrlhub.core.http.KtorClientFactory
 import com.ctrlhub.core.iam.response.User
 import com.ctrlhub.core.router.Router
 import com.github.jasminb.jsonapi.ResourceConverter
@@ -14,7 +16,6 @@ import io.ktor.client.request.header
 import io.ktor.http.headers
 
 class IamRouter(httpClient: HttpClient) : Router(httpClient) {
-
     suspend fun whoami(sessionToken: String): User {
         return try {
             val rawResponse = httpClient.get("${Config.apiBaseUrl}/v3/iam/whoami") {
@@ -34,3 +35,6 @@ class IamRouter(httpClient: HttpClient) : Router(httpClient) {
         }
     }
 }
+
+val Api.iam: IamRouter
+    get() = IamRouter(KtorClientFactory.create())

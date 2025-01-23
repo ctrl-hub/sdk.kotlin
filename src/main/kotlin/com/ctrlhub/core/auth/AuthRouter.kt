@@ -1,5 +1,6 @@
 package com.ctrlhub.core.auth
 
+import com.ctrlhub.core.Api
 import com.ctrlhub.core.Config
 import com.ctrlhub.core.api.ApiClientException
 import com.ctrlhub.core.api.ApiException
@@ -7,6 +8,7 @@ import com.ctrlhub.core.auth.payload.LoginPayload
 import com.ctrlhub.core.auth.payload.LogoutPayload
 import com.ctrlhub.core.auth.response.AuthFlowResponse
 import com.ctrlhub.core.auth.response.CompleteResponse
+import com.ctrlhub.core.http.KtorClientFactory
 import com.ctrlhub.core.router.Router
 import io.ktor.client.HttpClient
 import io.ktor.client.call.*
@@ -80,3 +82,6 @@ class AuthRouter(httpClient: HttpClient) : Router(httpClient = httpClient) {
         }
     }
 }
+
+val Api.auth: AuthRouter
+    get() = AuthRouter(KtorClientFactory.create())

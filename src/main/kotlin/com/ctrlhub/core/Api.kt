@@ -1,9 +1,7 @@
 package com.ctrlhub.core
 
-import com.ctrlhub.core.auth.AuthRouter
-import com.ctrlhub.core.iam.IamRouter
+import com.ctrlhub.core.http.KtorClientFactory
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.UserAgent
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -13,17 +11,14 @@ import io.ktor.util.appendIfNameAbsent
 import kotlinx.serialization.json.Json
 
 class Api private constructor(httpClient: HttpClient) {
-    val auth: AuthRouter = AuthRouter(httpClient)
-    val iam: IamRouter = IamRouter(httpClient)
-
     companion object {
         fun create(): Api {
-            val httpClient = HttpClient(CIO)
+            val httpClient = KtorClientFactory.create()
             return Api(configureHttpClient(httpClient, Config.apiBaseUrl))
         }
 
         fun create(httpClient: HttpClient): Api {
-            return Api(configureHttpClient(httpClient, Config.apiBaseUrl))
+            return Api(httpClient)
         }
 
         private fun configureHttpClient(baseClient: HttpClient, baseUrl: String? = null): HttpClient {
