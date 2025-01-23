@@ -1,0 +1,92 @@
+{
+  "data": [
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "type": "organisations",
+      "attributes": {
+        "description": "",
+        "name": "Organisation 1",
+        "settings": {
+          "nomenclature": {
+            "governance": {
+              "schemes": null,
+              "work_orders": null,
+              "operations": null
+            }
+          }
+        },
+        "slug": "organisation-1"
+      },
+      "meta": {
+        "status": "active",
+        "created_at": "2020-08-05T11:42:59Z"
+      }
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000002",
+      "type": "organisations",
+      "attributes": {
+        "description": "",
+        "name": "Organisation 2",
+        "settings": {
+          "nomenclature": {
+            "governance": {
+              "schemes": null,
+              "work_orders": null,
+              "operations": null
+            }
+          }
+        },
+        "slug": "organisation-2"
+      },
+      "meta": {
+        "status": "active",
+        "created_at": "2018-07-18T08:53:25Z"
+      }
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000003",
+      "type": "organisations",
+      "attributes": {
+        "description": "",
+        "name": "Organisation 3",
+        "settings": {
+          "nomenclature": {
+            "governance": {
+              "schemes": null,
+              "work_orders": null,
+              "operations": null
+            }
+          }
+        },
+        "slug": "organisation-3"
+      },
+      "meta": {
+        "status": "active",
+        "created_at": "2018-06-13T11:42:24Z"
+      }
+    }
+  ],
+  "meta": {
+    "features": {
+      "params": {
+        "include": {
+          "options": null
+        },
+        "sort": {
+          "options": null
+        },
+        "filter": {
+          "options": null
+        }
+      }
+    }
+  },
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {}
+  },
+  "links": {
+    "self": "https://api.ctrl-hub.com/v3/orgs"
+  }
+}
