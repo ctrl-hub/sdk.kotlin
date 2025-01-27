@@ -1,6 +1,7 @@
 {
   "session_token": "ses-123",
   "session": {
+    "id": "c17267e4-1b2c-468e-9334-9dd7082933db",
     "active": true,
     "expires_at": "2025-01-15T14:04:34.245708802Z",
     "authenticated_at": "2025-01-15T14:04:34.245708802Z"

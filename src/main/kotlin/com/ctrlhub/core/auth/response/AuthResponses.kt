@@ -13,6 +13,7 @@ data class AuthFlowResponse(
 @Serializable
 data class SessionResponse(
     val active: Boolean,
+    val id: String,
 
     @Serializable(with = LocalDateTimeSerializer::class)
     @SerialName("expires_at") val expiresAt: LocalDateTime,
