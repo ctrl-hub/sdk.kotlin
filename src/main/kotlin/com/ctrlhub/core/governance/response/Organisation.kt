@@ -2,6 +2,7 @@ package com.ctrlhub.core.governance.response
 
 import com.ctrlhub.core.AbstractNomenclatureEntry
 import com.ctrlhub.core.serializer.JacksonLocalDateTimeDeserializer
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.github.jasminb.jsonapi.StringIdHandler
@@ -28,6 +29,7 @@ class Organisation {
     lateinit var meta: OrganisationMeta
 }
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 class Settings {
     lateinit var nomenclature: Nomenclature
 }
