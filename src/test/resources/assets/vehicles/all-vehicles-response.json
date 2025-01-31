@@ -1,0 +1,103 @@
+{
+  "data": [
+    {
+      "id": "705ec18e-5c15-4d02-83c8-5c75c97cb157",
+      "type": "vehicles",
+      "attributes": {
+        "colour": "white",
+        "description": null,
+        "registration": "ANON-XXX",
+        "status": "active",
+        "vin": "ANON-VIN"
+      },
+      "relationships": {
+        "assignee": {
+          "data": {
+            "id": "e524ae57-7830-56d0-c4e8-4806a46cebdd",
+            "type": "users"
+          }
+        },
+        "equipment": {
+          "data": [
+            {
+              "id": "2075e5da-908f-40ba-b2e0-1813cc28a6f6",
+              "type": "equipment-items"
+            }
+          ]
+        },
+        "specification": {
+          "data": {
+            "id": "4485789d-447f-4da9-abb3-dc57d925e9e4",
+            "type": "vehicle-specifications"
+          }
+        }
+      },
+      "meta": {
+        "counts": {
+          "equipment": 1
+        },
+        "created_at": "2025-01-15T15:48:21Z",
+        "modified_at": "2025-01-29T18:09:16Z",
+        "sorn": false,
+        "mot": {
+          "is_valid": true,
+          "records": 7,
+          "last": {
+            "at": "2024-08-23T14:49:53Z",
+            "id": "169503801896"
+          }
+        },
+        "tax": {
+          "is_valid": true,
+          "due": "2025-07-01"
+        },
+        "last_odometer_reading": 179387,
+        "checks": {
+          "inventory": {
+            "count": 2,
+            "last": {
+              "at": "2024-12-17T16:42:00Z",
+              "id": "6b585c03-88d8-4002-8b9a-96f3739a760a"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "features": {
+      "params": {
+        "include": {
+          "options": [
+            "status",
+            "assignee",
+            "equipment",
+            "equipment.manufacturer",
+            "equipment.model",
+            "equipment.model.categories",
+            "specification",
+            "specification.model",
+            "specification.model.manufacturer"
+          ]
+        },
+        "sort": {
+          "options": [
+            "created_at",
+            "modified_at"
+          ]
+        },
+        "filter": {
+          "options": null
+        }
+      }
+    },
+    "count": 10
+  },
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {}
+  },
+  "links": {
+    "self": "https://api.ctrl-hub.dev/v3/orgs/123/assets/vehicles"
+  }
+}

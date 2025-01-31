@@ -15,7 +15,7 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.http.headers
 
-class OrganisationRouter(httpClient: HttpClient) : Router(httpClient) {
+class OrganisationsRouter(httpClient: HttpClient) : Router(httpClient) {
     suspend fun all(sessionToken: String): List<Organisation> {
         return try {
             val rawResponse = httpClient.get("${Config.apiBaseUrl}/v3/orgs") {
@@ -39,5 +39,5 @@ class OrganisationRouter(httpClient: HttpClient) : Router(httpClient) {
     }
 }
 
-val Api.organisation: OrganisationRouter
-    get() = OrganisationRouter(KtorClientFactory.create())
+val Api.organisations: OrganisationsRouter
+    get() = OrganisationsRouter(KtorClientFactory.create())

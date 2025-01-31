@@ -1,0 +1,489 @@
+{
+  "data": [
+    {
+      "id": "705ec18e-5c15-4d02-83c8-5c75c97cb157",
+      "type": "vehicles",
+      "attributes": {
+        "colour": "white",
+        "description": null,
+        "registration": "REG-123",
+        "status": "active",
+        "vin": null
+      },
+      "relationships": {
+        "assignee": {
+          "data": {
+            "id": "e524ae57-7830-56d0-c4e8-4806a46cebdd",
+            "type": "users"
+          }
+        },
+        "equipment": {
+          "data": [
+            {
+              "id": "2075e5da-908f-40ba-b2e0-1813cc28a6f6",
+              "type": "equipment-items"
+            }
+          ]
+        },
+        "specification": {
+          "data": {
+            "id": "4485789d-447f-4da9-abb3-dc57d925e9e4",
+            "type": "vehicle-specifications"
+          }
+        }
+      },
+      "meta": {
+        "counts": {
+          "equipment": 1
+        },
+        "created_at": "2025-01-15T15:48:21Z",
+        "modified_at": "2025-01-29T18:09:16Z",
+        "sorn": false,
+        "mot": {
+          "is_valid": true,
+          "records": 7,
+          "last": {
+            "at": "2024-08-23T14:49:53Z",
+            "id": "169503801896"
+          }
+        },
+        "tax": {
+          "is_valid": true,
+          "due": "2025-07-01"
+        },
+        "last_odometer_reading": 179387,
+        "checks": {
+          "inventory": {
+            "count": 2,
+            "last": {
+              "at": "2024-12-17T16:42:00Z",
+              "id": "6b585c03-88d8-4002-8b9a-96f3739a760a"
+            }
+          }
+        },
+        "dvla": {
+          "mot": {
+            "exists": true,
+            "data": {
+              "make": "FORD",
+              "model": "TRANSIT",
+              "first_used": "2017-01-30T00:00:00Z",
+              "fuel_type": "Diesel",
+              "colour": "White",
+              "registration_date": "2017-01-30T00:00:00Z",
+              "manufacture_date": "2017-01-30T00:00:00Z",
+              "engine_size": "2198",
+              "has_outstanding_recall": "unknown"
+            },
+            "last_sync": "2025-01-31T14:30:10.241Z"
+          },
+          "ves": {
+            "exists": true,
+            "data": {
+              "art_end_date": "",
+              "co2_emissions": 222,
+              "colour": "WHITE",
+              "date_of_last_v5c_issued": "2022-08-09",
+              "engine_capacity": 2198,
+              "euro_status": "",
+              "fuel_type": "DIESEL",
+              "make": "FORD",
+              "marked_for_export": false,
+              "month_of_first_registration": "2017-01",
+              "mot_status": "Valid",
+              "real_driving_emissions": "",
+              "registration_number": "REG-123",
+              "revenue_weight": 3500,
+              "tax_due_date": "2025-07-01",
+              "tax_status": "Taxed",
+              "type_approval": "N1",
+              "wheelplan": "2 AXLE RIGID BODY",
+              "year_of_manufacture": 2017
+            },
+            "last_sync": "2025-01-31T14:30:11.863Z"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "features": {
+      "params": {
+        "include": {
+          "options": [
+            "status",
+            "assignee",
+            "equipment",
+            "equipment.manufacturer",
+            "equipment.model",
+            "equipment.model.categories",
+            "specification",
+            "specification.model",
+            "specification.model.manufacturer"
+          ]
+        },
+        "sort": {
+          "options": [
+            "created_at",
+            "modified_at"
+          ]
+        },
+        "filter": {
+          "options": null
+        }
+      }
+    },
+    "count": 10
+  },
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {}
+  },
+  "links": {
+    "self": "https://api.ctrl-hub.dev/v3/orgs/123/assets/vehicles?include=specification.model"
+  },
+  "included": [
+    {
+      "id": "4485789d-447f-4da9-abb3-dc57d925e9e4",
+      "type": "vehicle-specifications",
+      "attributes": {
+        "documentation": [],
+        "emissions": 222,
+        "engine_capacity": 2198,
+        "fuel_type": "diesel",
+        "wheelplan": "2 AXLE RIGID BODY",
+        "year": 2017
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "a7bd307a-fa74-4947-8131-393d731383dc",
+            "type": "vehicle-models"
+          }
+        }
+      }
+    },
+    {
+      "id": "b355b146-3059-47da-8a37-7415e408c92c",
+      "type": "vehicle-specifications",
+      "attributes": {
+        "documentation": [],
+        "emissions": 146,
+        "engine_capacity": 1596,
+        "fuel_type": "petrol",
+        "wheelplan": "2 AXLE RIGID BODY",
+        "year": 2015
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "a409f5d5-0201-4eed-befd-354b4ea893b9",
+            "type": "vehicle-models"
+          }
+        }
+      }
+    },
+    {
+      "id": "7f717a9e-b8a0-428e-bb9a-c4a6ba603b57",
+      "type": "vehicle-specifications",
+      "attributes": {
+        "documentation": [],
+        "emissions": 200,
+        "engine_capacity": 2143,
+        "fuel_type": "diesel",
+        "wheelplan": "2 AXLE RIGID BODY",
+        "year": 2020
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "ab20a11c-7fde-4dc6-8ef4-f8ef69567ac1",
+            "type": "vehicle-models"
+          }
+        }
+      }
+    },
+    {
+      "id": "2902a75c-ce95-473d-8863-1aa1e482c726",
+      "type": "vehicle-specifications",
+      "attributes": {
+        "documentation": [],
+        "emissions": 241,
+        "engine_capacity": 1950,
+        "fuel_type": "diesel",
+        "wheelplan": "2 AXLE RIGID BODY",
+        "year": 2022
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "d0ec0c47-1c41-41fd-a0d7-2b69de8d3df5",
+            "type": "vehicle-models"
+          }
+        }
+      }
+    },
+    {
+      "id": "23029c22-8a89-40e0-8e4c-245b93b8e9b7",
+      "type": "vehicle-specifications",
+      "attributes": {
+        "documentation": [],
+        "emissions": 183,
+        "engine_capacity": 2298,
+        "fuel_type": "diesel",
+        "wheelplan": "2 AXLE RIGID BODY",
+        "year": 2018
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "1f72cebc-05cd-4699-ae11-0bde4ca4eebe",
+            "type": "vehicle-models"
+          }
+        }
+      }
+    },
+    {
+      "id": "8d681634-3a20-44eb-b480-54d151e86c42",
+      "type": "vehicle-specifications",
+      "attributes": {
+        "documentation": [],
+        "emissions": 173,
+        "engine_capacity": 1998,
+        "fuel_type": "diesel",
+        "wheelplan": "2 AXLE RIGID BODY",
+        "year": 2021
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "6096aa9b-6676-4c54-b900-9125829c4d59",
+            "type": "vehicle-models"
+          }
+        }
+      }
+    },
+    {
+      "id": "b19e675e-549c-4f7c-a4e9-672cce763687",
+      "type": "vehicle-specifications",
+      "attributes": {
+        "documentation": [],
+        "emissions": 214,
+        "engine_capacity": 3800,
+        "fuel_type": "petrol",
+        "wheelplan": "2 AXLE RIGID BODY",
+        "year": 2015
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "cd99436e-6ffa-41d8-8000-aa15246b690e",
+            "type": "vehicle-models"
+          }
+        }
+      }
+    },
+    {
+      "id": "d7ea38ab-b2aa-4daa-87b0-1ea2cd144e7c",
+      "type": "vehicle-specifications",
+      "attributes": {
+        "documentation": [],
+        "emissions": 394,
+        "engine_capacity": 5935,
+        "fuel_type": "petrol",
+        "wheelplan": "2 AXLE RIGID BODY",
+        "year": 2008
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "033c6fcb-d817-4593-a706-1d80e184ac32",
+            "type": "vehicle-models"
+          }
+        }
+      }
+    },
+    {
+      "id": "3c8718cb-ceac-4488-96bf-5f95e122908a",
+      "type": "vehicle-specifications",
+      "attributes": {
+        "documentation": [],
+        "emissions": 142,
+        "engine_capacity": 2967,
+        "fuel_type": "diesel",
+        "wheelplan": "2 AXLE RIGID BODY",
+        "year": 2015
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "38751605-cd74-4f24-8638-a3b90f861b25",
+            "type": "vehicle-models"
+          }
+        }
+      }
+    },
+    {
+      "id": "a7bd307a-fa74-4947-8131-393d731383dc",
+      "type": "vehicle-models",
+      "attributes": {
+        "name": "TRANSIT"
+      },
+      "relationships": {
+        "categories": {
+          "data": []
+        },
+        "manufacturer": {
+          "data": {
+            "id": "296905bb-dabd-43a7-a823-daf4849ca060",
+            "type": "vehicle-manufacturers"
+          }
+        }
+      }
+    },
+    {
+      "id": "a409f5d5-0201-4eed-befd-354b4ea893b9",
+      "type": "vehicle-models",
+      "attributes": {
+        "name": "FOCUS"
+      },
+      "relationships": {
+        "categories": {
+          "data": []
+        },
+        "manufacturer": {
+          "data": {
+            "id": "296905bb-dabd-43a7-a823-daf4849ca060",
+            "type": "vehicle-manufacturers"
+          }
+        }
+      }
+    },
+    {
+      "id": "ab20a11c-7fde-4dc6-8ef4-f8ef69567ac1",
+      "type": "vehicle-models",
+      "attributes": {
+        "name": "SPRINTER"
+      },
+      "relationships": {
+        "categories": {
+          "data": []
+        },
+        "manufacturer": {
+          "data": {
+            "id": "5dfff071-58d3-4e3b-b973-df3818d9875f",
+            "type": "vehicle-manufacturers"
+          }
+        }
+      }
+    },
+    {
+      "id": "d0ec0c47-1c41-41fd-a0d7-2b69de8d3df5",
+      "type": "vehicle-models",
+      "attributes": {
+        "name": "SPRINTER 315 PROGRESSIVE CDI"
+      },
+      "relationships": {
+        "categories": {
+          "data": []
+        },
+        "manufacturer": {
+          "data": {
+            "id": "5dfff071-58d3-4e3b-b973-df3818d9875f",
+            "type": "vehicle-manufacturers"
+          }
+        }
+      }
+    },
+    {
+      "id": "1f72cebc-05cd-4699-ae11-0bde4ca4eebe",
+      "type": "vehicle-models",
+      "attributes": {
+        "name": "NAVARA"
+      },
+      "relationships": {
+        "categories": {
+          "data": []
+        },
+        "manufacturer": {
+          "data": {
+            "id": "5172e50d-fccd-43e5-a50c-6c3e2dd716da",
+            "type": "vehicle-manufacturers"
+          }
+        }
+      }
+    },
+    {
+      "id": "6096aa9b-6676-4c54-b900-9125829c4d59",
+      "type": "vehicle-models",
+      "attributes": {
+        "name": "F-PACE R-DYNAM SE D MHEV AWD A"
+      },
+      "relationships": {
+        "categories": {
+          "data": []
+        },
+        "manufacturer": {
+          "data": {
+            "id": "8955428f-a855-4e82-8dd0-9077d3c87900",
+            "type": "vehicle-manufacturers"
+          }
+        }
+      }
+    },
+    {
+      "id": "cd99436e-6ffa-41d8-8000-aa15246b690e",
+      "type": "vehicle-models",
+      "attributes": {
+        "name": "911"
+      },
+      "relationships": {
+        "categories": {
+          "data": []
+        },
+        "manufacturer": {
+          "data": {
+            "id": "54f74ba0-792c-47c3-830a-837741571df0",
+            "type": "vehicle-manufacturers"
+          }
+        }
+      }
+    },
+    {
+      "id": "033c6fcb-d817-4593-a706-1d80e184ac32",
+      "type": "vehicle-models",
+      "attributes": {
+        "name": "DB9"
+      },
+      "relationships": {
+        "categories": {
+          "data": []
+        },
+        "manufacturer": {
+          "data": {
+            "id": "fe975e92-5a13-464b-8d99-1463f2c3662e",
+            "type": "vehicle-manufacturers"
+          }
+        }
+      }
+    },
+    {
+      "id": "38751605-cd74-4f24-8638-a3b90f861b25",
+      "type": "vehicle-models",
+      "attributes": {
+        "name": "A7"
+      },
+      "relationships": {
+        "categories": {
+          "data": []
+        },
+        "manufacturer": {
+          "data": {
+            "id": "026e6b06-50c0-4a65-ac98-b2b8255e88f0",
+            "type": "vehicle-manufacturers"
+          }
+        }
+      }
+    }
+  ]
+}
