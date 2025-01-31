@@ -15,7 +15,18 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.http.headers
 
+/**
+ * A router that deals with the Iam realm of the Ctrl Hub API
+ */
 class IamRouter(httpClient: HttpClient) : Router(httpClient) {
+
+    /**
+     * Returns information about the currently authenticated user, based on a session token
+     *
+     * @param sessionToken String A valid session token obtained via authentication
+     *
+     * @return A user object providing information about a currently authenticated user
+     */
     suspend fun whoami(sessionToken: String): User {
         return try {
             val rawResponse = httpClient.get("${Config.apiBaseUrl}/v3/iam/whoami") {

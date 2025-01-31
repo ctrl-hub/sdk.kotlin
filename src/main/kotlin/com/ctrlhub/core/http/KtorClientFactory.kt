@@ -11,6 +11,11 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.util.appendIfNameAbsent
 import kotlinx.serialization.json.Json
 
+/**
+ * A wrapper around the Ktor client. This allows default configuration
+ * to be applied that is specific to the Ctrl Hub API, but is also flexible
+ * in that an existing Ktor client can be passed, and config is applied to that.
+ */
 object KtorClientFactory {
     private lateinit var httpClient: HttpClient
 

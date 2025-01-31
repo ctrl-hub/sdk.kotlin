@@ -10,13 +10,25 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.util.appendIfNameAbsent
 import kotlinx.serialization.json.Json
 
+/**
+ * The "facade" class through which interaction with the API occurs.
+ */
 class Api private constructor(httpClient: HttpClient) {
     companion object {
+        /**
+         * Creates a new Api instance with a default client
+         */
         fun create(): Api {
             val httpClient = KtorClientFactory.create()
             return Api(configureHttpClient(httpClient, Config.apiBaseUrl))
         }
 
+        /**
+         * Creates a new Api client, with a given HttpClient instance.
+         * Default config will be applied to this client
+         *
+         * @param httpClient HttpClient A ktor client instance
+         */
         fun create(httpClient: HttpClient): Api {
             return Api(httpClient)
         }

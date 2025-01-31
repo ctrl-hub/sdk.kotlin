@@ -16,6 +16,9 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.http.headers
 
+/**
+ * Represents JSONAPI includes that are associated for vehicles
+ */
 enum class VehicleIncludes(val value: String) {
     Status("status"),
     Assignee("assignee"),
@@ -28,7 +31,20 @@ enum class VehicleIncludes(val value: String) {
     SpecificationModelManufacturer("specification.model.manufacturer")
 }
 
+/**
+ * A vehicles router that deals with the vehicles realm of the Ctrl Hub API
+ */
 class VehiclesRouter(httpClient: HttpClient) : Router(httpClient) {
+
+    /**
+     * Request all vehicles
+     *
+     * @param sessionToken String A valid session token gained after authentication
+     * @param organisationId String The organisation ID to retrieve all vehicles for
+     * @param includes A variable list of any includes, to return in the response. For example, VehicleIncludes.Specification will provide additional Specification attributes
+     *
+     * @return A list of all vehicles
+     */
     suspend fun all(sessionToken: String, organisationId: String, vararg includes: VehicleIncludes): List<Vehicle> {
         val includesQuery = if (includes.isNotEmpty()) {
             "?include=${includes.joinToString(",") { it.value }}"

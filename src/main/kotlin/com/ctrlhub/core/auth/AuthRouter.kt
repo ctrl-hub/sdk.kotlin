@@ -22,7 +22,19 @@ import io.ktor.http.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
+/**
+ * A router that deals with authenticating through the Ctrl Hub API
+ */
 class AuthRouter(httpClient: HttpClient) : Router(httpClient = httpClient) {
+
+    /**
+     * Initiates a flow for authentication. This needs to be called first, before completing
+     *
+     * @return A response containing a flow ID and other information associated with an auth flow
+     *
+     * @throws ApiClientException when a client based exception occurs, usually as a result of a non-200 HTTP response code
+     * @throws ApiException when another type of exception occurs
+     */
     suspend fun initiate(): AuthFlowResponse {
         return try {
             httpClient.get("${Config.authBaseUrl}/self-service/login/api").body()
@@ -33,6 +45,14 @@ class AuthRouter(httpClient: HttpClient) : Router(httpClient = httpClient) {
         }
     }
 
+    /**
+     * Provides a mechanism for refreshing a session
+     *
+     * @param sessionToken String A valid session token obtained via authentication
+     *
+     * @throws ApiClientException when a client based exception occurs, usually as a result of a non-200 HTTP response code
+     * @throws ApiException when another type of exception occurs
+     */
     suspend fun refresh(sessionToken: String): AuthFlowResponse {
         return try {
             httpClient.get("${Config.authBaseUrl}/self-service/login/api?refresh=true") {
@@ -47,6 +67,17 @@ class AuthRouter(httpClient: HttpClient) : Router(httpClient = httpClient) {
         }
     }
 
+    /**
+     * Completes an authentication flow. This is the second step of authentication, after calling initiate
+     *
+     * @param flowId String A flow ID obtainer via the initiate call
+     * @param payload LoginPayload A payload that is used to authenticate a user
+     *
+     * @return A response representing a completed authentication response. This will hold session information
+     *
+     * @throws ApiClientException when a client based exception occurs, usually as a result of a non-200 HTTP response code
+     * @throws ApiException when another type of exception occurs
+     */
     suspend fun complete(flowId: String, payload: LoginPayload): CompleteResponse {
         return try {
             httpClient.post("${Config.authBaseUrl}/self-service/login?flow=$flowId") {
@@ -66,6 +97,14 @@ class AuthRouter(httpClient: HttpClient) : Router(httpClient = httpClient) {
         }
     }
 
+    /**
+     * Invalidates a session
+     *
+     * @param sessionToken String A session token that will identify the session to be invalidated
+     *
+     * @return true if the session could be invalidated successfuly, false if not
+     * @throws ApiException If an exception occurred whilst attempting to invalidate a session
+     */
     suspend fun logout(sessionToken: String): Boolean {
         return try {
             val statusCode = httpClient.delete("${Config.authBaseUrl}/self-service/logout/api") {

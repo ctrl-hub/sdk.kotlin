@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class LoginPayload(
     val identifier: String,
     val password: String,
-    val method: String
+    val method: String = "password"
 )
 
 @Serializable

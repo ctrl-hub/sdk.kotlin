@@ -15,6 +15,9 @@ import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.http.headers
 
+/**
+ * An organisation router that deals with the organisations realm of the Ctrl Hub API
+ */
 class OrganisationsRouter(httpClient: HttpClient) : Router(httpClient) {
     suspend fun all(sessionToken: String): List<Organisation> {
         return try {
