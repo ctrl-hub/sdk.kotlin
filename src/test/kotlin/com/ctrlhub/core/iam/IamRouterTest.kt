@@ -34,8 +34,8 @@ class IamRouterTest {
             assertIs<User>(response)
             assertEquals("00000000-0000-0000-0000-000000000000", response.id)
             assertEquals("user@example.com", response.email)
-            assertEquals("Test", response.profile.personal.firstName)
-            assertEquals("User", response.profile.personal.lastName)
+            assertEquals("Test", response.profile.personal?.firstName)
+            assertEquals("User", response.profile.personal?.lastName)
         }
     }
 }

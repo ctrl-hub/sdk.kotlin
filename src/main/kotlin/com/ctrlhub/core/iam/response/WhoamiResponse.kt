@@ -27,11 +27,11 @@ class IdentityMeta {
 }
 
 class Profile {
-    lateinit var address: ProfileAddress
-    lateinit var contact: ProfileContact
-    lateinit var personal: ProfilePersonal
+    var address: ProfileAddress? = null
+    var contact: ProfileContact? = null
+    var personal: ProfilePersonal? = null
     lateinit var settings: ProfileSettings
-    lateinit var work: ProfileWork
+    var work: ProfileWork? = null
 }
 
 class ProfileAddress {
