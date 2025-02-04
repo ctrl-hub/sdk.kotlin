@@ -105,7 +105,7 @@ class AuthRouterTest {
 
         runBlocking {
             assertFailsWith<ApiException> {
-                authRouter.refresh("sess-123")
+                authRouter.refresh()
             }
         }
     }
@@ -123,7 +123,7 @@ class AuthRouterTest {
         val authRouter = AuthRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
-            val response = authRouter.refresh("sess-123")
+            val response = authRouter.refresh()
             assertEquals("test-123", response.id)
         }
     }
@@ -141,7 +141,7 @@ class AuthRouterTest {
         val authRouter = AuthRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
-            val result = authRouter.logout("dummy-session-token")
+            val result = authRouter.logout()
             assertTrue(result, "Logout should return true on success")
         }
     }
@@ -159,7 +159,7 @@ class AuthRouterTest {
         val authRouter = AuthRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
-            val result = authRouter.logout("dummy-session-token")
+            val result = authRouter.logout()
             assertFalse(result, "Logout should return false on success")
         }
     }

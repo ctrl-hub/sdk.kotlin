@@ -30,9 +30,10 @@ class VehiclesRouterTest {
         }
 
         val vehiclesRouter = VehiclesRouter(httpClient = HttpClient(mockEngine).configureForTest())
+        vehiclesRouter.sessionToken = "sess-123"
 
         runBlocking {
-            val response = vehiclesRouter.all(sessionToken = "test-token", organisationId = "123")
+            val response = vehiclesRouter.all(organisationId = "123")
             assertIs<List<Vehicle>>(response)
             assertNotNull(response[0].id)
         }
@@ -52,9 +53,10 @@ class VehiclesRouterTest {
         }
 
         val vehiclesRouter = VehiclesRouter(httpClient = HttpClient(mockEngine).configureForTest())
+        vehiclesRouter.sessionToken = "sess-123"
 
         runBlocking {
-            val response = vehiclesRouter.all(sessionToken = "test-token", organisationId = "123", VehicleIncludes.SpecificationModel)
+            val response = vehiclesRouter.all(organisationId = "123", VehicleIncludes.SpecificationModel)
             assertIs<List<Vehicle>>(response)
             val first = response[0]
             assertNotNull(first.specification?.model)

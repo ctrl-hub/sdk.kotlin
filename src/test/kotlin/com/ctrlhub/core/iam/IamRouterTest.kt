@@ -28,9 +28,10 @@ class IamRouterTest {
         }
 
         val iamRouter = IamRouter(httpClient = HttpClient(mockEngine).configureForTest())
+        iamRouter.sessionToken = "sess-123"
 
         runBlocking {
-            val response = iamRouter.whoami(sessionToken = "test-token")
+            val response = iamRouter.whoami()
             assertIs<User>(response)
             assertEquals("00000000-0000-0000-0000-000000000000", response.id)
             assertEquals("user@example.com", response.email)

@@ -16,3 +16,5 @@ class ApiClientException(message: String, val response: HttpResponse, e: Throwab
         return response.status.value
     }
 }
+
+class MissingSessionTokenException : Exception("No session token provided")

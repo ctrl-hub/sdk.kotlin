@@ -55,12 +55,24 @@ val api = Api.create()
 val response: List<Vehicle> = api.vehicles.all("your-session-token", "organisation-id", VehicleIncludes.SpecificationModel)
 ```
 
-## Example Usage
+## Examples of Usage
 
 ```kotlin
 Config.environment = Environment.STAGING
 val api = Api.create()
 
-val response = api.vehicles.all("sess-123", "org-123", VehicleIncludes.SpecificationModel)
+api.sessionToken = "sess-123"
+val response = api.vehicles.all("org-123", VehicleIncludes.SpecificationModel)
 println(response.size)
+```
+
+```kotlin
+Config.environment = Environment.STAGING
+val api = Api.create()
+
+with(api.vehicles) {
+    sessionToken = "sess-123"
+    val response = all("org-123", VehicleIncludes.SpecificationModel)
+    println(response.size)
+}
 ```
