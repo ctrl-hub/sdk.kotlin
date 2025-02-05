@@ -30,7 +30,6 @@ class OrganisationRouterTest {
         }
 
         val organisationRouter = OrganisationsRouter(httpClient = HttpClient(mockEngine).configureForTest())
-        organisationRouter.sessionToken = "sess-123"
 
         runBlocking {
             val response = organisationRouter.all()

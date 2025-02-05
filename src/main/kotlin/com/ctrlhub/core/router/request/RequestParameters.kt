@@ -5,31 +5,51 @@ data class FilterOption(
     val value: String
 )
 
-/**
- * A class that represents request parameters that can be specified
- * as part of an API request
- */
-data class RequestParameters(
-    val filterOptions: List<FilterOption> = emptyList(),
-    val includes: List<JsonApiIncludes> = emptyList()
+abstract class AbstractRequestParameters(
+    val filterOptions: List<FilterOption>
 ) {
-    fun toMap(): Map<String, String> {
+    fun withFilters(vararg filters: FilterOption): RequestParameters {
+        return RequestParameters(filterOptions = this.filterOptions + filters)
+    }
+
+    open fun toMap(): Map<String, String> {
         val queryParams = mutableMapOf<String, String>()
 
-        if (includes.isNotEmpty()) {
-            queryParams.put("include", buildIncludesQueryString(includes))
-        }
+        filterOptions.forEach { queryParams["filter[${it.field}]"] = it.value }
 
-        filterOptions.forEach { queryParams.put("filter[${it.field}]", it.value) }
+        return queryParams
+    }
+}
+
+class RequestParameters(
+    filterOptions: List<FilterOption> = emptyList()
+) : AbstractRequestParameters(filterOptions)
+
+open class RequestParametersWithIncludes<TIncludes>(
+    filterOptions: List<FilterOption> = emptyList(),
+    val includes: List<TIncludes> = emptyList()
+) : AbstractRequestParameters(filterOptions) where TIncludes : JsonApiIncludes {
+
+    fun withIncludes(vararg includes: TIncludes): RequestParametersWithIncludes<TIncludes> {
+        return copy(includes = this.includes + includes)
+    }
+
+    override fun toMap(): Map<String, String> {
+        val queryParams = super.toMap().toMutableMap()
+
+        if (includes.isNotEmpty()) {
+            queryParams["include"] = buildIncludesQueryString(includes)
+        }
 
         return queryParams
     }
 
-    private fun buildIncludesQueryString(includes: List<JsonApiIncludes>): String {
-        if (includes.isEmpty()) {
-            return ""
-        }
-
+    private fun buildIncludesQueryString(includes: List<TIncludes>): String {
         return includes.joinToString(",") { it.value().lowercase() }
     }
+
+    private fun copy(
+        filterOptions: List<FilterOption> = this.filterOptions,
+        includes: List<TIncludes> = this.includes
+    ) = RequestParametersWithIncludes(filterOptions, includes)
 }

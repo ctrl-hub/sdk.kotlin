@@ -141,7 +141,7 @@ class AuthRouterTest {
         val authRouter = AuthRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
-            val result = authRouter.logout()
+            val result = authRouter.logout("sess-123")
             assertTrue(result, "Logout should return true on success")
         }
     }
@@ -159,7 +159,7 @@ class AuthRouterTest {
         val authRouter = AuthRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
-            val result = authRouter.logout()
+            val result = authRouter.logout("sess-123")
             assertFalse(result, "Logout should return false on success")
         }
     }

@@ -1,18 +1,14 @@
 package com.ctrlhub.core.assets.vehicles
 
 import com.ctrlhub.core.Api
-import com.ctrlhub.core.api.ApiClientException
-import com.ctrlhub.core.api.ApiException
+import com.ctrlhub.core.assets.vehicles.VehicleRequestParameters
 import com.ctrlhub.core.assets.vehicles.response.Vehicle
-import com.ctrlhub.core.http.KtorClientFactory
 import com.ctrlhub.core.router.Router
+import com.ctrlhub.core.router.request.FilterOption
 import com.ctrlhub.core.router.request.JsonApiIncludes
 import com.ctrlhub.core.router.request.RequestParameters
-import com.github.jasminb.jsonapi.ResourceConverter
-import com.github.jasminb.jsonapi.SerializationFeature
+import com.ctrlhub.core.router.request.RequestParametersWithIncludes
 import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.plugins.*
 
 /**
  * Represents JSONAPI includes that are associated for vehicles
@@ -33,10 +29,15 @@ enum class VehicleIncludes(val value: String) : JsonApiIncludes {
     }
 }
 
+class VehicleRequestParameters(
+    filterOptions: List<FilterOption> = emptyList(),
+    includes: List<VehicleIncludes> = emptyList()
+) : RequestParametersWithIncludes<VehicleIncludes>(filterOptions, includes)
+
 /**
  * A vehicles router that deals with the vehicles realm of the Ctrl Hub API
  */
-class VehiclesRouter(httpClient: HttpClient) : Router(httpClient, requiresAuthentication = true) {
+class VehiclesRouter(httpClient: HttpClient) : Router(httpClient) {
 
     /**
      * Request all vehicles
@@ -48,28 +49,11 @@ class VehiclesRouter(httpClient: HttpClient) : Router(httpClient, requiresAuthen
      */
     suspend fun all(
         organisationId: String,
-        requestParameters: RequestParameters = RequestParameters()
+        requestParameters: VehicleRequestParameters = VehicleRequestParameters()
     ): List<Vehicle> {
-        return try {
-            val rawResponse =
-                performGet("/v3/orgs/$organisationId/assets/vehicles", requestParameters.toMap())
-            val resourceConverter = ResourceConverter(Vehicle::class.java).apply {
-                enableSerializationOption(SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES)
-            }
-
-            val jsonApiResponse = resourceConverter.readDocumentCollection<Vehicle>(
-                rawResponse.body<ByteArray>(),
-                Vehicle::class.java
-            )
-
-            jsonApiResponse.get()!!
-        } catch (e: ClientRequestException) {
-            throw ApiClientException("All vehicles request failed", e.response, e)
-        } catch (e: Exception) {
-            throw ApiException("All vehicles request failed", e)
-        }
+        return fetchJsonApiResources("/v3/orgs/$organisationId/assets/vehicles", requestParameters.toMap())
     }
 }
 
 val Api.vehicles: VehiclesRouter
-    get() = VehiclesRouter(KtorClientFactory.create())
+    get() = VehiclesRouter(httpClient)

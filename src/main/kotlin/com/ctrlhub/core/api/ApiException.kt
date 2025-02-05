@@ -8,6 +8,11 @@ import io.ktor.client.statement.*
 open class ApiException(message: String, e: Throwable) : Exception(message, e)
 
 /**
+ * Represents an authorized error that occurs when interacting with the API.
+ */
+class UnauthorizedException(message: String, val response: HttpResponse, e: Throwable) : ApiException(message, e)
+
+/**
  * Represents a client based exception that occurred when interacting with the API.
  * This is usually the result of a non-200 HTTP response code.
  */
@@ -16,5 +21,3 @@ class ApiClientException(message: String, val response: HttpResponse, e: Throwab
         return response.status.value
     }
 }
-
-class MissingSessionTokenException : Exception("No session token provided")

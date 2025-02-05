@@ -8,24 +8,17 @@ import com.ctrlhub.core.auth.payload.LoginPayload
 import com.ctrlhub.core.auth.payload.LogoutPayload
 import com.ctrlhub.core.auth.response.AuthFlowResponse
 import com.ctrlhub.core.auth.response.CompleteResponse
-import com.ctrlhub.core.http.KtorClientFactory
 import com.ctrlhub.core.router.Router
-import io.ktor.client.HttpClient
+import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.*
-import io.ktor.client.request.delete
-import io.ktor.client.request.get
-import io.ktor.client.request.header
-import io.ktor.client.request.post
-import io.ktor.client.request.setBody
+import io.ktor.client.request.*
 import io.ktor.http.*
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 /**
  * A router that deals with authenticating through the Ctrl Hub API
  */
-class AuthRouter(httpClient: HttpClient) : Router(httpClient = httpClient, requiresAuthentication = false) {
+class AuthRouter(httpClient: HttpClient) : Router(httpClient = httpClient) {
 
     /**
      * Initiates a flow for authentication. This needs to be called first, before completing
@@ -95,7 +88,7 @@ class AuthRouter(httpClient: HttpClient) : Router(httpClient = httpClient, requi
      * @return true if the session could be invalidated successfully, false if not
      * @throws ApiException If an exception occurred whilst attempting to invalidate a session
      */
-    suspend fun logout(): Boolean {
+    suspend fun logout(sessionToken: String): Boolean {
         return try {
             val statusCode = performDelete("${Config.authBaseUrl}/self-service/logout/api", body = LogoutPayload(
                 sessionToken = sessionToken.toString()
@@ -111,4 +104,4 @@ class AuthRouter(httpClient: HttpClient) : Router(httpClient = httpClient, requi
 }
 
 val Api.auth: AuthRouter
-    get() = AuthRouter(KtorClientFactory.create())
+    get() = AuthRouter(httpClient)

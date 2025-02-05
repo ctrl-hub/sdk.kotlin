@@ -32,7 +32,6 @@ class VehiclesManufacturersRouterTest {
         }
 
         val vehicleManufacturersRouter = VehicleManufacturersRouter(httpClient = HttpClient(mockEngine).configureForTest())
-        vehicleManufacturersRouter.sessionToken = "sess-123"
 
         runBlocking {
             val response = vehicleManufacturersRouter.all()
@@ -55,7 +54,6 @@ class VehiclesManufacturersRouterTest {
         }
 
         val vehicleManufacturersRouter = VehicleManufacturersRouter(httpClient = HttpClient(mockEngine).configureForTest())
-        vehicleManufacturersRouter.sessionToken = "sess-123"
 
         runBlocking {
             val response = vehicleManufacturersRouter.models(manufacturerId = "123")

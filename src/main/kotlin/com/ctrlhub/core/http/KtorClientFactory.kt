@@ -19,10 +19,10 @@ import kotlinx.serialization.json.Json
 object KtorClientFactory {
     private lateinit var httpClient: HttpClient
 
-    fun create(): HttpClient {
+    fun create(sessionToken: String?): HttpClient {
         if (!this::httpClient.isInitialized) {
             val httpClient = HttpClient(CIO)
-            this.httpClient = configureHttpClient(httpClient)
+            this.httpClient = configureHttpClient(httpClient, baseUrl = Config.apiBaseUrl, sessionToken = sessionToken)
         }
 
         return this.httpClient
@@ -33,14 +33,11 @@ object KtorClientFactory {
         return configureHttpClient(httpClient, Config.apiBaseUrl)
     }
 
-    private fun configureHttpClient(baseClient: HttpClient, baseUrl: String? = null): HttpClient {
+    private fun configureHttpClient(baseClient: HttpClient, baseUrl: String, sessionToken: String? = null): HttpClient {
         return baseClient.config {
-            baseUrl?.let {
-                defaultRequest {
-                    url(baseUrl)
-                }
-            }
             defaultRequest {
+                url(baseUrl)
+                sessionToken?.let { headers.append("X-Session-Token", it) }
                 headers.appendIfNameAbsent(HttpHeaders.ContentType, "application/json")
             }
             expectSuccess = true
