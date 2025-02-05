@@ -1,0 +1,45 @@
+{
+  "data": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "type": "vehicle-models",
+      "attributes": {
+        "name": "DB9"
+      },
+      "relationships": {
+        "categories": {
+          "data": []
+        },
+        "manufacturer": {
+          "data": {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "type": "vehicle-manufacturers"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "features": {
+      "params": {
+        "include": {
+          "options": null
+        },
+        "sort": {
+          "options": null
+        },
+        "filter": {
+          "options": null
+        }
+      }
+    },
+    "count": 1
+  },
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {}
+  },
+  "links": {
+    "self": "https://api.ctrl-hub.dev/v3/assets/vehicles/manufacturers/00000000-0000-0000-0000-000000000000/models"
+  }
+}

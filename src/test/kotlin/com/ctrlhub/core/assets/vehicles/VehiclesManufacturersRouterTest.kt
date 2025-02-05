@@ -1,6 +1,8 @@
 package com.ctrlhub.core.assets.vehicles
 
 import com.ctrlhub.core.assets.vehicles.response.Vehicle
+import com.ctrlhub.core.assets.vehicles.response.VehicleManufacturer
+import com.ctrlhub.core.assets.vehicles.response.VehicleModel
 import com.ctrlhub.core.configureForTest
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
@@ -15,10 +17,10 @@ import java.nio.file.Paths
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
-class VehiclesRouterTest {
+class VehiclesManufacturersRouterTest {
     @Test
     fun `can retrieve all vehicles`() {
-        val jsonFilePath = Paths.get("src/test/resources/assets/vehicles/all-vehicles-response.json")
+        val jsonFilePath = Paths.get("src/test/resources/assets/vehicles/all-vehicle-manufacturers-response.json")
         val jsonContent = Files.readString(jsonFilePath)
 
         val mockEngine = MockEngine { request ->
@@ -29,19 +31,19 @@ class VehiclesRouterTest {
             )
         }
 
-        val vehiclesRouter = VehiclesRouter(httpClient = HttpClient(mockEngine).configureForTest())
-        vehiclesRouter.sessionToken = "sess-123"
+        val vehicleManufacturersRouter = VehicleManufacturersRouter(httpClient = HttpClient(mockEngine).configureForTest())
+        vehicleManufacturersRouter.sessionToken = "sess-123"
 
         runBlocking {
-            val response = vehiclesRouter.all(organisationId = "123")
-            assertIs<List<Vehicle>>(response)
+            val response = vehicleManufacturersRouter.all()
+            assertIs<List<VehicleManufacturer>>(response)
             assertNotNull(response[0].id)
         }
     }
 
     @Test
-    fun `can retrieve all vehicles with includes`() {
-        val jsonFilePath = Paths.get("src/test/resources/assets/vehicles/all-vehicles-response-with-includes.json")
+    fun `can retrieve all vehicle models for a manufacturer`() {
+        val jsonFilePath = Paths.get("src/test/resources/assets/vehicles/all-vehicle-models-response.json")
         val jsonContent = Files.readString(jsonFilePath)
 
         val mockEngine = MockEngine { request ->
@@ -52,14 +54,14 @@ class VehiclesRouterTest {
             )
         }
 
-        val vehiclesRouter = VehiclesRouter(httpClient = HttpClient(mockEngine).configureForTest())
-        vehiclesRouter.sessionToken = "sess-123"
+        val vehicleManufacturersRouter = VehicleManufacturersRouter(httpClient = HttpClient(mockEngine).configureForTest())
+        vehicleManufacturersRouter.sessionToken = "sess-123"
 
         runBlocking {
-            val response = vehiclesRouter.all(organisationId = "123", VehicleIncludes.SpecificationModel)
-            assertIs<List<Vehicle>>(response)
+            val response = vehicleManufacturersRouter.models(manufacturerId = "123")
+            assertIs<List<VehicleModel>>(response)
             val first = response[0]
-            assertNotNull(first.specification?.model)
+            assertNotNull(first.id)
         }
     }
 }

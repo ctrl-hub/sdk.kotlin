@@ -1,0 +1,104 @@
+{
+  "data": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "type": "vehicle-manufacturers",
+      "attributes": {
+        "name": "APRILIA"
+      }
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "type": "vehicle-manufacturers",
+      "attributes": {
+        "name": "Aston Martin"
+      }
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "type": "vehicle-manufacturers",
+      "attributes": {
+        "name": "Audi"
+      }
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "type": "vehicle-manufacturers",
+      "attributes": {
+        "name": "BMW"
+      }
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "type": "vehicle-manufacturers",
+      "attributes": {
+        "name": "Ford"
+      }
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "type": "vehicle-manufacturers",
+      "attributes": {
+        "name": "Jaguar"
+      }
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "type": "vehicle-manufacturers",
+      "attributes": {
+        "name": "Mercedes-Benz"
+      }
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "type": "vehicle-manufacturers",
+      "attributes": {
+        "name": "Nissan"
+      }
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "type": "vehicle-manufacturers",
+      "attributes": {
+        "name": "Porsche"
+      }
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "type": "vehicle-manufacturers",
+      "attributes": {
+        "name": "VOLKSWAGEN"
+      }
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "type": "vehicle-manufacturers",
+      "attributes": {
+        "name": "VOLVO"
+      }
+    }
+  ],
+  "meta": {
+    "features": {
+      "params": {
+        "include": {
+          "options": null
+        },
+        "sort": {
+          "options": null
+        },
+        "filter": {
+          "options": null
+        }
+      }
+    },
+    "count": 11
+  },
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {}
+  },
+  "links": {
+    "self": "https://api.ctrl-hub.dev/v3/assets/vehicles/manufacturers"
+  }
+}

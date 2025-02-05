@@ -21,6 +21,13 @@ class Vehicle {
     var specification: VehicleSpecification? = null
 }
 
+@Type("vehicle-categories")
+class VehicleCategory {
+    @Id(StringIdHandler::class)
+    var id: String = ""
+    var name: String = ""
+}
+
 @Type("vehicle-specifications")
 @JsonIgnoreProperties(ignoreUnknown = true)
 class VehicleSpecification {
