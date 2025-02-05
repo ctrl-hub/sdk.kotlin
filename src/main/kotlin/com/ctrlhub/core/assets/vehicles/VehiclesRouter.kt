@@ -7,6 +7,7 @@ import com.ctrlhub.core.assets.vehicles.response.Vehicle
 import com.ctrlhub.core.http.KtorClientFactory
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.JsonApiIncludes
+import com.ctrlhub.core.router.request.RequestParameters
 import com.github.jasminb.jsonapi.ResourceConverter
 import com.github.jasminb.jsonapi.SerializationFeature
 import io.ktor.client.*
@@ -41,14 +42,17 @@ class VehiclesRouter(httpClient: HttpClient) : Router(httpClient, requiresAuthen
      * Request all vehicles
      *
      * @param organisationId String The organisation ID to retrieve all vehicles for
-     * @param includes A variable list of any includes, to return in the response. For example, VehicleIncludes.Specification will provide additional Specification attributes
+     * @param requestParameters RequestParameters An instance of RequestParameters, capturing sorting, filtering and pagination based request params
      *
      * @return A list of all vehicles
      */
-    suspend fun all(organisationId: String, vararg includes: VehicleIncludes = emptyArray()): List<Vehicle> {
+    suspend fun all(
+        organisationId: String,
+        requestParameters: RequestParameters = RequestParameters()
+    ): List<Vehicle> {
         return try {
-            val includesQuery = buildIncludesQueryString(*includes)
-            val rawResponse = performGet("/v3/orgs/$organisationId/assets/vehicles" + (if (includesQuery.isNotEmpty()) "?$includesQuery" else ""))
+            val rawResponse =
+                performGet("/v3/orgs/$organisationId/assets/vehicles", requestParameters.toMap())
             val resourceConverter = ResourceConverter(Vehicle::class.java).apply {
                 enableSerializationOption(SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES)
             }

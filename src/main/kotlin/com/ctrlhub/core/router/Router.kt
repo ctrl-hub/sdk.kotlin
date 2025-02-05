@@ -20,10 +20,10 @@ abstract class Router(val httpClient: HttpClient, val requiresAuthentication: Bo
         if (includes.isEmpty()) {
             return ""
         }
-        return "include=" + includes.joinToString(",") { it.value().lowercase() }
+        return includes.joinToString(",") { it.value().lowercase() }
     }
 
-    protected suspend fun performGet(endpoint: String): HttpResponse {
+    protected suspend fun performGet(endpoint: String, queryString: Map<String, String> = emptyMap()): HttpResponse {
         if (requiresAuthentication && sessionToken.isNullOrEmpty()) {
             throw MissingSessionTokenException()
         }
@@ -31,6 +31,9 @@ abstract class Router(val httpClient: HttpClient, val requiresAuthentication: Bo
         return httpClient.get(endpoint) {
             if (requiresAuthentication && !sessionToken.isNullOrEmpty()) headers {
                 header("X-Session-Token", sessionToken!!)
+            }
+            url {
+                queryString.forEach { key, value -> parameters.append(key, value) }
             }
         }
     }

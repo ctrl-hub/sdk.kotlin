@@ -7,6 +7,7 @@ import com.ctrlhub.core.assets.vehicles.response.VehicleManufacturer
 import com.ctrlhub.core.assets.vehicles.response.VehicleModel
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.JsonApiIncludes
+import com.ctrlhub.core.router.request.RequestParameters
 import com.github.jasminb.jsonapi.ResourceConverter
 import com.github.jasminb.jsonapi.SerializationFeature
 import io.ktor.client.HttpClient
@@ -27,9 +28,16 @@ enum class VehicleManufacturerIncludes(val value: String) : JsonApiIncludes {
 class VehicleManufacturersRouter(httpClient: HttpClient) : Router(httpClient, requiresAuthentication = true) {
     private val endpoint: String = "${Config.apiBaseUrl}/v3/assets/vehicles/manufacturers"
 
-    suspend fun all(): List<VehicleManufacturer> {
+    /**
+     * Retrieve all vehicle manufacturers
+     *
+     * @param requestParameters RequestParameters An instance of RequestParameters, capturing sorting, and filtering based request params
+     *
+     * @return A list of vehicle manufacturers
+     */
+    suspend fun all(requestParameters: RequestParameters = RequestParameters()): List<VehicleManufacturer> {
         return try {
-            val rawResponse = performGet(endpoint)
+            val rawResponse = performGet(endpoint, requestParameters.toMap())
             val resourceConverter = ResourceConverter(VehicleManufacturer::class.java).apply {
                 enableSerializationOption(SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES)
             }
@@ -47,11 +55,9 @@ class VehicleManufacturersRouter(httpClient: HttpClient) : Router(httpClient, re
         }
     }
 
-    suspend fun models(manufacturerId: String, vararg includes: VehicleManufacturerIncludes = emptyArray()): List<VehicleModel> {
+    suspend fun models(manufacturerId: String, requestParameters: RequestParameters = RequestParameters()): List<VehicleModel> {
         return try {
-            val includesStr = buildIncludesQueryString(*includes)
-
-            val rawResponse = performGet("$endpoint/$manufacturerId/models" + (if (includesStr.isNotEmpty()) "?$includesStr" else ""))
+            val rawResponse = performGet("$endpoint/$manufacturerId/models", requestParameters.toMap())
             val resourceConverter = ResourceConverter(VehicleModel::class.java).apply {
                 enableSerializationOption(SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES)
             }
