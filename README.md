@@ -44,11 +44,24 @@ Config.environment = Environment.PRODUCTION // For production
 Interaction with the APIs is done via the `Api` singleton. The Api singleton provides access to a configured Ktor client for interaction with the Api. A session token can also be applied:
 
 ```kotlin
-Api.sessionToken = "valid_session_token"
+Api.applySessionToken("valid_session_token")
+```
+
+### Applying Ktor config
+Ktor configuration can be applied using the `Api.withHttpClientConfig` method:
+
+```kotlin
+Api.withHttpClientConfig {
+    install(Logging) {
+        level = LogLevel.ALL
+    }
+}
 ```
 
 ### Routers
-Routers are used to encapsulate specific areas of the API. For example, the `VehiclesRouter` takes care of all Vehicle API interactions. Routers are attached to the `Api` object via extension properties. 
+Routers are used to encapsulate specific areas of the API. For example, the `VehiclesRouter` takes care of all Vehicle API interactions. Routers are attached to the `Api` object via extension properties.
+
+For more information: https://ktor.io/docs/client-logging.html
 
 #### Example usage of the `VehiclesRouter`:
 
@@ -64,11 +77,22 @@ val response: List<Vehicle> = api.vehicles.all("organisation-id", VehicleRequest
 ## Examples of Usage
 
 ```kotlin
-Config.environment = Environment.STAGING
-Api.sessionToken = "" // Replace with an actual session token
-
 runBlocking {
-    val response = Api.vehicles.all("123")
-    println(response.size)
+    Config.environment = Environment.STAGING
+    val authResponse = Api.auth.initiate()
+    Api.withHttpClientConfig {
+        install(Logging) {
+            level = LogLevel.ALL
+        }
+    }
+
+    val response = Api.auth.complete(authResponse.id, payload = LoginPayload(
+        identifier = "test@example.com",
+        password = "Password1!",
+    ))
+
+    Api.applySessionToken(response.sessionToken)
+    val vehicles = Api.vehicles.all("org-123")
+    println(vehicles.size)
 }
 ```
