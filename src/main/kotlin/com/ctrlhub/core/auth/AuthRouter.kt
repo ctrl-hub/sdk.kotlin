@@ -67,7 +67,9 @@ class AuthRouter(httpClient: HttpClient) : Router(httpClient = httpClient) {
      */
     suspend fun complete(flowId: String, payload: LoginPayload): CompleteResponse {
         return try {
-            performPost("${Config.authBaseUrl}/self-service/login?flow=$flowId", payload).body()
+            performPost("${Config.authBaseUrl}/self-service/login", payload, mapOf(
+                "flow" to flowId
+            )).body()
         } catch (e: ClientRequestException) {
             if (e.response.status == HttpStatusCode.BadRequest) {
                 val bodyAsString: String = e.response.body()
