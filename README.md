@@ -41,17 +41,18 @@ Config.environment = Environment.PRODUCTION // For production
 ```
 
 ### API object
-Interaction with the APIs is done via the `Api` singleton. The Api singleton provides access to a configured Ktor client for interaction with the Api. A session token can also be applied:
+Interaction with the APIs is done via the `Api` class. The Api class provides access to a configured Ktor client for interaction with the Api. A session token can also be applied:
 
 ```kotlin
-Api.applySessionToken("valid_session_token")
+val api = Api()
+api.applySessionToken("valid_session_token")
 ```
 
 ### Applying Ktor config
 Ktor configuration can be applied using the `Api.withHttpClientConfig` method:
 
 ```kotlin
-Api.withHttpClientConfig {
+api.withHttpClientConfig {
     install(Logging) {
         level = LogLevel.ALL
     }
@@ -78,20 +79,21 @@ val response: List<Vehicle> = Api.vehicles.all("organisation-id", VehicleRequest
 ```kotlin
 runBlocking {
     Config.environment = Environment.STAGING
-    val authResponse = Api.auth.initiate()
-    Api.withHttpClientConfig {
+    val api = Api()
+    val authResponse = api.auth.initiate()
+    api.withHttpClientConfig {
         install(Logging) {
             level = LogLevel.ALL
         }
     }
 
-    val response = Api.auth.complete(authResponse.id, payload = LoginPayload(
+    val response = api.auth.complete(authResponse.id, payload = LoginPayload(
         identifier = "test@example.com",
         password = "Password1!",
     ))
 
-    Api.applySessionToken(response.sessionToken)
-    val vehicles = Api.vehicles.all("org-123")
+    api.applySessionToken(response.sessionToken)
+    val vehicles = api.vehicles.all("org-123")
     println(vehicles.size)
 }
 ```

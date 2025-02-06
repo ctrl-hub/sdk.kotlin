@@ -6,10 +6,10 @@ import io.ktor.client.*
 /**
  * The facade object through which interaction with the API occurs.
  */
-object Api {
-    private var sessionToken: String? = null
+class Api(
     var httpClient: HttpClient = KtorClientFactory.create()
-        private set
+) {
+    private var sessionToken: String? = null
 
     fun withHttpClientConfig(config: HttpClientConfig<*>.() -> Unit) {
         httpClient = KtorClientFactory.create(configBlock = config)
