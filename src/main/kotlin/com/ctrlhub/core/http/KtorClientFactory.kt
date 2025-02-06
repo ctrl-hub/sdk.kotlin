@@ -19,7 +19,6 @@ import java.util.concurrent.atomic.AtomicReference
  * in that an existing Ktor client can be passed, and config is applied to that.
  */
 object KtorClientFactory {
-    // Function to create an HttpClient with configuration and optional session token
     fun create(
         httpClient: HttpClient = HttpClient(CIO),
         sessionToken: String? = null,
@@ -28,15 +27,13 @@ object KtorClientFactory {
         return configureHttpClient(httpClient, sessionToken, configBlock)
     }
 
-    // Function to create a new HttpClient based on an existing HttpClient configuration
     fun createWithExistingConfig(
         existingClient: HttpClient,
         sessionToken: String? = null
     ): HttpClient {
-        return configureHttpClient(existingClient, sessionToken)  // Reapply session token while retaining existing config
+        return configureHttpClient(existingClient, sessionToken)
     }
 
-    // Function to configure the HttpClient
     private fun configureHttpClient(
         baseClient: HttpClient,
         sessionToken: String? = null,
@@ -45,7 +42,7 @@ object KtorClientFactory {
         return baseClient.config {
             defaultRequest {
                 url(Config.apiBaseUrl)
-                sessionToken?.let { headers.append("X-Session-Token", it) } // Apply session token if present
+                sessionToken?.let { headers.append("X-Session-Token", it) }
                 headers.appendIfNameAbsent(HttpHeaders.ContentType, "application/json")
             }
             expectSuccess = true
@@ -58,7 +55,7 @@ object KtorClientFactory {
             install(UserAgent) {
                 agent = Config.userAgent
             }
-            configBlock()  // Apply additional user-defined config
+            configBlock()
         }
     }
 }
