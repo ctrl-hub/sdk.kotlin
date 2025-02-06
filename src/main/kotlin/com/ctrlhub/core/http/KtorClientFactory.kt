@@ -42,7 +42,10 @@ object KtorClientFactory {
             }
             expectSuccess = true
             install(ContentNegotiation) {
-                json(Json { ignoreUnknownKeys = true })
+                json(Json {
+                    ignoreUnknownKeys = true
+                    encodeDefaults = true
+                })
             }
             install(UserAgent) {
                 agent = Config.userAgent
