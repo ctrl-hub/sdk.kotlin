@@ -66,8 +66,7 @@ For more information: https://ktor.io/docs/client-logging.html
 #### Example usage of the `VehiclesRouter`:
 
 ```kotlin
-val api = Api.create()
-val response: List<Vehicle> = api.vehicles.all("organisation-id", VehicleRequestParameters(
+val response: List<Vehicle> = Api.vehicles.all("organisation-id", VehicleRequestParameters(
     includes = listOf(
         VehicleIncludes.Specification
     )
