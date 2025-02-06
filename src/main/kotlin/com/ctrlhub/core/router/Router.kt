@@ -21,9 +21,12 @@ abstract class Router(protected val httpClient: HttpClient) {
         }
     }
 
-    protected suspend inline fun <reified T> performPost(endpoint: String, body: T): HttpResponse {
+    protected suspend inline fun <reified T> performPost(endpoint: String, body: T, queryString: Map<String, String> = emptyMap()): HttpResponse {
         return httpClient.post(endpoint) {
             contentType(ContentType.Application.Json)
+            url {
+                queryString.forEach { key, value -> parameters.append(key, value) }
+            }
             setBody(body)
         }
     }

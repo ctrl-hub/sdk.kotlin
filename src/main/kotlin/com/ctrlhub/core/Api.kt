@@ -7,9 +7,18 @@ import io.ktor.client.*
  * The facade object through which interaction with the API occurs.
  */
 object Api {
-    var sessionToken: String? = null
+    private var sessionToken: String? = null
+    var httpClient: HttpClient = KtorClientFactory.create()
+    private set
 
-    val httpClient: HttpClient by lazy {
-        KtorClientFactory.create(sessionToken)
+    fun withHttpClientConfig(config: HttpClientConfig<*>.() -> Unit) {
+        httpClient = KtorClientFactory.create(
+            configBlock = config
+        )
+    }
+
+    fun applySessionToken(newSessionToken: String) {
+        sessionToken = newSessionToken
+        httpClient = KtorClientFactory.createWithExistingConfig(httpClient, sessionToken)
     }
 }
