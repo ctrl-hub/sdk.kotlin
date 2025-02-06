@@ -21,28 +21,18 @@ import java.util.concurrent.atomic.AtomicReference
 object KtorClientFactory {
     fun create(
         httpClient: HttpClient = HttpClient(CIO),
-        sessionToken: String? = null,
         configBlock: HttpClientConfig<*>.() -> Unit = {}
     ): HttpClient {
-        return configureHttpClient(httpClient, sessionToken, configBlock)
-    }
-
-    fun createWithExistingConfig(
-        existingClient: HttpClient,
-        sessionToken: String? = null
-    ): HttpClient {
-        return configureHttpClient(existingClient, sessionToken)
+        return configureHttpClient(httpClient, configBlock)
     }
 
     private fun configureHttpClient(
         baseClient: HttpClient,
-        sessionToken: String? = null,
         configBlock: HttpClientConfig<*>.() -> Unit = {}
     ): HttpClient {
         return baseClient.config {
             defaultRequest {
                 url(Config.apiBaseUrl)
-                sessionToken?.let { headers.append("X-Session-Token", it) }
                 headers.appendIfNameAbsent(HttpHeaders.ContentType, "application/json")
             }
             expectSuccess = true
