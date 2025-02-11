@@ -17,6 +17,7 @@ class OrganisationCollection {
 }
 
 @Type("organisations")
+@JsonIgnoreProperties(ignoreUnknown = true)
 class Organisation {
     @Id(StringIdHandler::class)
     lateinit var id: String
@@ -37,6 +38,7 @@ class Settings {
 /**
  * Not to be confused with OrganisationResponseMeta
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 class OrganisationMeta {
     @JsonProperty("created_at")
     @JsonDeserialize(using = JacksonLocalDateTimeDeserializer::class)
@@ -44,6 +46,7 @@ class OrganisationMeta {
     lateinit var status: String
 }
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 class OrganisationResponseMeta {
     lateinit var counts: OrganisationResponseMetaCounts
     @JsonProperty("created_at")
@@ -52,23 +55,29 @@ class OrganisationResponseMeta {
     lateinit var status: String
 }
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 class OrganisationResponseMetaCounts {
     var limit: Int = 0
 }
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 class OrganisationResponseMetaPage {
     var limit: Int = 0
     var offset: Int = 0
 }
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 class Nomenclature {
     lateinit var governance: GovernanceNomenclature
 }
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 class SchemesNomenclature : AbstractNomenclatureEntry()
+@JsonIgnoreProperties(ignoreUnknown = true)
 class WorkOrdersNomenclature : AbstractNomenclatureEntry()
+@JsonIgnoreProperties(ignoreUnknown = true)
 class OperationsNomenclature : AbstractNomenclatureEntry()
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 class GovernanceNomenclature {
     var schemes: List<SchemesNomenclature>? = null
     @JsonProperty("work_orders") var workOrders: List<WorkOrdersNomenclature>? = null
