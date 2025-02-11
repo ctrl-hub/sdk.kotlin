@@ -1,0 +1,164 @@
+{
+  "data": {
+    "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "type": "vehicles",
+    "attributes": {
+      "colour": "grey",
+      "description": null,
+      "registration": "XXXXXXX",
+      "status": "active",
+      "vin": null
+    },
+    "relationships": {
+      "assignee": {
+        "data": {
+          "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+          "type": "users"
+        }
+      },
+      "equipment": {
+        "data": []
+      },
+      "specification": {
+        "data": {
+          "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+          "type": "vehicle-specifications"
+        }
+      }
+    },
+    "meta": {
+      "counts": {
+        "equipment": 0
+      },
+      "created_at": "2025-02-06T15:39:00Z",
+      "modified_at": "2025-02-06T15:39:00Z",
+      "sorn": false,
+      "mot": {
+        "is_valid": true,
+        "records": 7,
+        "last": {
+          "at": "2024-07-30T11:45:46Z",
+          "id": "xxxxxxxxxxxx"
+        }
+      },
+      "tax": {
+        "is_valid": true,
+        "due": "2025-10-01"
+      },
+      "last_odometer_reading": 43595,
+      "checks": {
+        "inventory": {
+          "count": 0,
+          "last": {
+            "at": null,
+            "id": ""
+          }
+        },
+        "inspection": {
+          "count": 0,
+          "last": {
+            "at": null,
+            "id": ""
+          }
+        }
+      },
+      "dvla": {
+        "mot": {
+          "exists": true,
+          "data": {
+            "make": "REDACTED",
+            "model": "REDACTED",
+            "first_used": "2017-03-31T00:00:00Z",
+            "fuel_type": "Diesel",
+            "colour": "Grey",
+            "registration_date": "2017-03-31T00:00:00Z",
+            "manufacture_date": "2017-03-31T00:00:00Z",
+            "engine_size": "1499",
+            "has_outstanding_recall": "unknown"
+          },
+          "last_sync": "2025-02-11T16:00:12.384Z"
+        },
+        "ves": {
+          "exists": true,
+          "data": {
+            "art_end_date": "",
+            "co2_emissions": 94,
+            "colour": "GREY",
+            "date_of_last_v5c_issued": "2022-09-30",
+            "engine_capacity": 1499,
+            "euro_status": "",
+            "fuel_type": "DIESEL",
+            "make": "REDACTED",
+            "marked_for_export": false,
+            "month_of_first_registration": "2017-03",
+            "mot_status": "Valid",
+            "real_driving_emissions": "",
+            "registration_number": "XXXXXXX",
+            "revenue_weight": 1575,
+            "tax_due_date": "2025-10-01",
+            "tax_status": "Taxed",
+            "type_approval": "M1",
+            "wheelplan": "2 AXLE RIGID BODY",
+            "year_of_manufacture": 2017
+          },
+          "last_sync": "2025-02-11T16:00:15.324Z"
+        }
+      }
+    }
+  },
+  "meta": {},
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {}
+  },
+  "links": {
+    "self": "https://api.example.com/v3/orgs/xxxxxx/assets/vehicles/xxxxxx?include=specification.model.manufacturer"
+  },
+  "included": [
+    {
+      "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "type": "vehicle-specifications",
+      "attributes": {
+        "documentation": [],
+        "emissions": 94,
+        "engine_capacity": 1499,
+        "fuel_type": "diesel",
+        "wheelplan": "2 AXLE RIGID BODY",
+        "year": 2017
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "type": "vehicle-models"
+          }
+        }
+      }
+    },
+    {
+      "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "type": "vehicle-models",
+      "attributes": {
+        "name": "REDACTED"
+      },
+      "relationships": {
+        "categories": {
+          "data": []
+        },
+        "manufacturer": {
+          "data": {
+            "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "type": "vehicle-manufacturers"
+          }
+        }
+      }
+    },
+    {
+      "id": "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "type": "vehicle-manufacturers",
+      "attributes": {
+        "name": "REDACTED"
+      }
+    }
+  ]
+}

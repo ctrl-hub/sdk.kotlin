@@ -53,6 +53,14 @@ class VehiclesRouter(httpClient: HttpClient) : Router(httpClient) {
     ): List<Vehicle> {
         return fetchJsonApiResources("/v3/orgs/$organisationId/assets/vehicles", requestParameters.toMap())
     }
+
+    suspend fun one(
+        organisationId: String,
+        vehicleId: String,
+        requestParameters: VehicleRequestParameters = VehicleRequestParameters()
+    ): Vehicle {
+        return fetchJsonApiResource("/v3/orgs/$organisationId/assets/vehicles/$vehicleId", requestParameters.toMap())
+    }
 }
 
 val Api.vehicles: VehiclesRouter
