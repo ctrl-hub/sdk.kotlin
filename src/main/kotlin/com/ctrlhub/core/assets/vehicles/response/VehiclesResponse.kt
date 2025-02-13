@@ -11,7 +11,7 @@ import com.github.jasminb.jsonapi.annotations.Type
 class Vehicle {
     @Id(StringIdHandler::class)
     var id: String = ""
-    var colour: String = ""
+    var colour: String? = null
     var description: String? = null
     var registration: String = ""
     var status: String = ""
