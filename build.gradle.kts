@@ -24,6 +24,7 @@ dependencies {
     implementation(libs.ktor.logging.plugin)
     implementation(libs.jetbrains.kotlinx.serialization.json)
     implementation(libs.jsonapi.converter)
+    implementation(libs.jackson.datatype.jsr)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.mockk)

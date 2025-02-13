@@ -6,6 +6,9 @@ import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.RequestParameters
 import io.ktor.client.*
 
+/**
+ * A router that interacts with the vehicle categories realm of the Ctrl Hub API
+ */
 class VehicleCategoriesRouter(httpClient: HttpClient) : Router(httpClient) {
     private val endpoint = "/v3/assets/vehicles/categories"
 

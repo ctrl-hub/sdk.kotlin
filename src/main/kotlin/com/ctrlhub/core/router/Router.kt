@@ -3,6 +3,8 @@ package com.ctrlhub.core.router
 import com.ctrlhub.core.api.ApiClientException
 import com.ctrlhub.core.api.ApiException
 import com.ctrlhub.core.api.UnauthorizedException
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.github.jasminb.jsonapi.ResourceConverter
 import com.github.jasminb.jsonapi.SerializationFeature
 import io.ktor.client.*
@@ -12,7 +14,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 
-abstract class Router(protected val httpClient: HttpClient) {
+abstract class Router(val httpClient: HttpClient) {
     protected suspend fun performGet(endpoint: String, queryString: Map<String, String> = emptyMap()): HttpResponse {
         return httpClient.get(endpoint) {
             url {
@@ -47,7 +49,7 @@ abstract class Router(protected val httpClient: HttpClient) {
     protected suspend inline fun <reified T> fetchJsonApiResource(endpoint: String, queryParameters: Map<String, String> = emptyMap()): T {
         return try {
             val rawResponse = performGet(endpoint, queryParameters)
-            val resourceConverter = ResourceConverter(T::class.java).apply {
+            val resourceConverter = ResourceConverter(getObjectMapper(), T::class.java).apply {
                 enableSerializationOption(SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES)
             }
             val jsonApiResponse = resourceConverter.readDocument<T>(rawResponse.body<ByteArray>(), T::class.java)
@@ -67,7 +69,7 @@ abstract class Router(protected val httpClient: HttpClient) {
     protected suspend inline fun <reified T> fetchJsonApiResources(endpoint: String, queryParameters: Map<String, String> = emptyMap()): List<T> {
         return try {
             val rawResponse = performGet(endpoint, queryParameters)
-            val resourceConverter = ResourceConverter(T::class.java).apply {
+            val resourceConverter = ResourceConverter(getObjectMapper(), T::class.java).apply {
                 enableSerializationOption(SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES)
             }
             val jsonApiResponse = resourceConverter.readDocumentCollection<T>(rawResponse.body<ByteArray>(), T::class.java)
@@ -81,6 +83,12 @@ abstract class Router(protected val httpClient: HttpClient) {
             throw ApiClientException("Request failed: $endpoint", e.response, e)
         } catch (e: Exception) {
             throw ApiException("Request failed: $endpoint", e)
+        }
+    }
+
+    fun getObjectMapper(): ObjectMapper {
+        return ObjectMapper().apply {
+            registerModule(JavaTimeModule())
         }
     }
 }

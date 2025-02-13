@@ -1,0 +1,94 @@
+{
+  "data": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "type": "vehicle-inspections",
+      "attributes": {
+        "checks": {
+          "visible_damage": true,
+          "tyres": null,
+          "washers_and_wipers": null,
+          "windscreen": null,
+          "number_plate": null,
+          "security": null,
+          "accessories": null,
+          "spare_number_plate": null,
+          "safe_access": null,
+          "reversing_alarm": null,
+          "beacons": null,
+          "chemicals_and_fuel": null,
+          "storage": null,
+          "lights_and_indicators": null,
+          "engine_warning_lights": null,
+          "servicing": null,
+          "levels": null,
+          "cleanliness": false,
+          "driver_checks": null
+        },
+        "inspected_at": "2024-12-17T16:42:00Z"
+      },
+      "relationships": {
+        "author": {
+          "data": {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "type": "users"
+          }
+        },
+        "vehicle": {
+          "data": {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "type": "vehicles"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2025-02-11T09:43:45.558Z",
+        "passed": 1,
+        "failed": 1,
+        "not_applicable": 17
+      }
+    }
+  ],
+  "meta": {
+    "features": {
+      "params": {
+        "include": {
+          "options": [
+            "author",
+            "vehicle"
+          ]
+        },
+        "sort": {
+          "default": "",
+          "options": null
+        },
+        "filter": {
+          "options": null
+        }
+      }
+    },
+    "count": 1,
+    "pagination": {
+      "current_page": 1,
+      "counts": {
+        "resources": 1,
+        "pages": 1
+      },
+      "requested": {
+        "offset": 0,
+        "limit": 100
+      },
+      "offsets": {
+        "previous": null,
+        "next": null
+      }
+    }
+  },
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {}
+  },
+  "links": {
+    "self": "https://api.ctrl-hub.dev/v3/orgs/00000000-0000-0000-0000-000000000000/assets/vehicles/00000000-0000-0000-0000-000000000000/inspections"
+  }
+}
