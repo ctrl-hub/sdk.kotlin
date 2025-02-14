@@ -46,40 +46,54 @@ abstract class Router(val httpClient: HttpClient) {
         }
     }
 
-    protected suspend inline fun <reified T> fetchJsonApiResource(endpoint: String, queryParameters: Map<String, String> = emptyMap()): T {
+    protected suspend inline fun <reified T> fetchJsonApiResource(
+        endpoint: String,
+        queryParameters: Map<String, String> = emptyMap(),
+        vararg includedClasses: Class<*>
+    ): T {
         return try {
             val rawResponse = performGet(endpoint, queryParameters)
-            val resourceConverter = ResourceConverter(getObjectMapper(), T::class.java).apply {
+
+            val resourceConverter = ResourceConverter(getObjectMapper(), T::class.java, *includedClasses).apply {
                 enableSerializationOption(SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES)
             }
-            val jsonApiResponse = resourceConverter.readDocument<T>(rawResponse.body<ByteArray>(), T::class.java)
+
+            val jsonApiResponse = resourceConverter.readDocument<T>(
+                rawResponse.body<ByteArray>(), T::class.java
+            )
 
             jsonApiResponse.get() ?: throw ApiException("Failed to parse response for $endpoint", Exception())
         } catch (e: ClientRequestException) {
             if (e.response.status == HttpStatusCode.Unauthorized) {
-                throw UnauthorizedException("Unauthorised action: $endpoint", e.response, e)
+                throw UnauthorizedException("Unauthorized action: $endpoint", e.response, e)
             }
-
             throw ApiClientException("Request failed: $endpoint", e.response, e)
         } catch (e: Exception) {
             throw ApiException("Request failed: $endpoint", e)
         }
     }
 
-    protected suspend inline fun <reified T> fetchJsonApiResources(endpoint: String, queryParameters: Map<String, String> = emptyMap()): List<T> {
+    protected suspend inline fun <reified T> fetchJsonApiResources(
+        endpoint: String,
+        queryParameters: Map<String, String> = emptyMap(),
+        vararg includedClasses: Class<*>
+    ): List<T> {
         return try {
             val rawResponse = performGet(endpoint, queryParameters)
-            val resourceConverter = ResourceConverter(getObjectMapper(), T::class.java).apply {
+
+            val resourceConverter = ResourceConverter(getObjectMapper(), T::class.java, *includedClasses).apply {
                 enableSerializationOption(SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES)
             }
-            val jsonApiResponse = resourceConverter.readDocumentCollection<T>(rawResponse.body<ByteArray>(), T::class.java)
+
+            val jsonApiResponse = resourceConverter.readDocumentCollection<T>(
+                rawResponse.body<ByteArray>(), T::class.java
+            )
 
             jsonApiResponse.get() ?: throw ApiException("Failed to parse response for $endpoint", Exception())
         } catch (e: ClientRequestException) {
             if (e.response.status == HttpStatusCode.Unauthorized) {
-                throw UnauthorizedException("Unauthorised action: $endpoint", e.response, e)
+                throw UnauthorizedException("Unauthorized action: $endpoint", e.response, e)
             }
-
             throw ApiClientException("Request failed: $endpoint", e.response, e)
         } catch (e: Exception) {
             throw ApiException("Request failed: $endpoint", e)

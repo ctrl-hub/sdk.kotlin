@@ -3,6 +3,7 @@ package com.ctrlhub.core.assets.vehicles
 import com.ctrlhub.core.Api
 import com.ctrlhub.core.assets.vehicles.VehicleRequestParameters
 import com.ctrlhub.core.assets.vehicles.response.Vehicle
+import com.ctrlhub.core.iam.response.User
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.FilterOption
 import com.ctrlhub.core.router.request.JsonApiIncludes
@@ -51,7 +52,11 @@ class VehiclesRouter(httpClient: HttpClient) : Router(httpClient) {
         organisationId: String,
         requestParameters: VehicleRequestParameters = VehicleRequestParameters()
     ): List<Vehicle> {
-        return fetchJsonApiResources("/v3/orgs/$organisationId/assets/vehicles", requestParameters.toMap())
+        return fetchJsonApiResources(
+            "/v3/orgs/$organisationId/assets/vehicles",
+            requestParameters.toMap(),
+            User::class.java
+        )
     }
 
     suspend fun one(
@@ -59,7 +64,11 @@ class VehiclesRouter(httpClient: HttpClient) : Router(httpClient) {
         vehicleId: String,
         requestParameters: VehicleRequestParameters = VehicleRequestParameters()
     ): Vehicle {
-        return fetchJsonApiResource("/v3/orgs/$organisationId/assets/vehicles/$vehicleId", requestParameters.toMap())
+        return fetchJsonApiResource(
+            "/v3/orgs/$organisationId/assets/vehicles/$vehicleId",
+            requestParameters.toMap(),
+            User::class.java
+        )
     }
 }
 
