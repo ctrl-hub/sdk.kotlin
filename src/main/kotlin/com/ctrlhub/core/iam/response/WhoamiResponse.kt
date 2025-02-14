@@ -10,10 +10,10 @@ import com.github.jasminb.jsonapi.annotations.Type
 @Type("users")
 class User : Assignable {
     @Id(StringIdHandler::class)
-    lateinit var id: String
-    lateinit var email: String
-    lateinit var profile: Profile
-    lateinit var identities: List<Identity>
+    override var id: String? = null
+    var email: String? = null
+    var profile: Profile? = null
+    var identities: List<Identity> = emptyList()
 }
 
 class Identity {
