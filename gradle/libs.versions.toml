@@ -5,6 +5,7 @@ ktor = "3.0.3"
 kotlinSerialization = "1.7.3"
 mockk = "1.9.3"
 jsonapi = "0.14"
+jacksonKotlin = "2.18.2"
 
 [libraries]
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
@@ -18,3 +19,4 @@ jetbrains-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 jsonapi-converter = { module = "com.github.jasminb:jsonapi-converter", version.ref = "jsonapi" }
 jackson-datatype-jsr = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "datatypeJsr" }
+jackson-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jacksonKotlin" }

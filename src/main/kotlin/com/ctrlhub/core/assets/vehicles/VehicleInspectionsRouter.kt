@@ -1,13 +1,9 @@
 package com.ctrlhub.core.assets.vehicles
 
-import com.ctrlhub.core.api.ApiException
-import com.ctrlhub.core.api.ApiResourcePayload
-import com.ctrlhub.core.assets.vehicles.payload.VehicleInspectionPayload
-import com.ctrlhub.core.assets.vehicles.response.VehicleInspection
+import com.ctrlhub.core.assets.vehicles.resource.VehicleInspection
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.RequestParameters
 import io.ktor.client.*
-import io.ktor.http.*
 
 /**
  * A router that interacts with the vehicle inspections realm of the Ctrl Hub API
@@ -64,21 +60,13 @@ class VehicleInspectionsRouter(httpClient: HttpClient) : Router(httpClient) {
      *
      * @return A result representing the outcome of this operation
      */
-    suspend fun create(organisationId: String, vehicleId: String, payload: VehicleInspectionPayload): VehicleInspection {
+    suspend fun create(organisationId: String, vehicleId: String, payload: VehicleInspection): VehicleInspection {
         val endpoint = "/v3/orgs/$organisationId/assets/vehicles/$vehicleId/inspections"
 
-        val response = performPost(
-            endpoint, body = ApiResourcePayload(
-                type = resourceType,
-                data = payload
-            )
+        return postJsonApiResource(
+            endpoint = endpoint,
+            requestBody = payload
         )
-
-        if (response.status !== HttpStatusCode.Created) {
-            throw ApiException("Unable to create vehicle inspection")
-        }
-
-        return fetchJsonApiResource(response)
     }
 }
 

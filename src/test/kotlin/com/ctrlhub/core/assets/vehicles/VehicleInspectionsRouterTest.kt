@@ -1,8 +1,7 @@
 package com.ctrlhub.core.assets.vehicles
 
-import com.ctrlhub.core.assets.vehicles.payload.VehicleInspectionChecksPayload
-import com.ctrlhub.core.assets.vehicles.payload.VehicleInspectionPayload
-import com.ctrlhub.core.assets.vehicles.response.VehicleInspection
+import com.ctrlhub.core.assets.vehicles.resource.VehicleInspection
+import com.ctrlhub.core.assets.vehicles.resource.VehicleInspectionChecks
 import com.ctrlhub.core.configureForTest
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
@@ -14,7 +13,6 @@ import java.nio.file.Paths
 import java.time.LocalDateTime
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
 
 class VehicleInspectionsRouterTest {
     @Test
@@ -89,8 +87,8 @@ class VehicleInspectionsRouterTest {
             val result = vehicleInspectionsRouter.create(
                 organisationId = "org-123",
                 vehicleId = "vehicle-123",
-                payload = VehicleInspectionPayload(
-                    checks = VehicleInspectionChecksPayload(
+                payload = VehicleInspection(
+                    checks = VehicleInspectionChecks(
                         accessories = listOf(true, false, null).random(),
                         beacons = listOf(true, false, null).random(),
                         chemicalsAndFuel = listOf(true, false, null).random(),

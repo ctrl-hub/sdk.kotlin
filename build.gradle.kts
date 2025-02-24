@@ -25,6 +25,7 @@ dependencies {
     implementation(libs.jetbrains.kotlinx.serialization.json)
     implementation(libs.jsonapi.converter)
     implementation(libs.jackson.datatype.jsr)
+    implementation(libs.jackson.kotlin)
 
     testImplementation(kotlin("test"))
     testImplementation(libs.mockk)

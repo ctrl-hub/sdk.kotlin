@@ -1,7 +1,6 @@
 package com.ctrlhub.core.assets.vehicles.response
 
 import com.ctrlhub.core.api.Assignable
-import com.ctrlhub.core.iam.response.User
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.github.jasminb.jsonapi.StringIdHandler
