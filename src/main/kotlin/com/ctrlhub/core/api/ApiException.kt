@@ -5,7 +5,10 @@ import io.ktor.client.statement.*
 /**
  * Represents an exception that occurred when interacting with the API
  */
-open class ApiException(message: String, e: Throwable) : Exception(message, e)
+open class ApiException : Exception {
+    constructor(message: String, e: Throwable) : super(message, e)
+    constructor(message: String) : super(message)
+}
 
 /**
  * Represents an authorized error that occurs when interacting with the API.

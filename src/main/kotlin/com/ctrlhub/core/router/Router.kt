@@ -73,6 +73,30 @@ abstract class Router(val httpClient: HttpClient) {
         }
     }
 
+    protected suspend inline fun <reified T> fetchJsonApiResource(
+        response: HttpResponse,
+        vararg includedClasses: Class<*>
+    ): T {
+        return try {
+            val resourceConverter = ResourceConverter(getObjectMapper(), T::class.java, *includedClasses).apply {
+                enableSerializationOption(SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES)
+            }
+
+            val jsonApiResponse = resourceConverter.readDocument<T>(
+                response.body<ByteArray>(), T::class.java
+            )
+
+            jsonApiResponse.get() ?: throw ApiException("Failed to parse response", Exception())
+        } catch (e: ClientRequestException) {
+            if (e.response.status == HttpStatusCode.Unauthorized) {
+                throw UnauthorizedException("Unauthorized action", e.response, e)
+            }
+            throw ApiClientException("Request failed", e.response, e)
+        } catch (e: Exception) {
+            throw ApiException("Request failed", e)
+        }
+    }
+
     protected suspend inline fun <reified T> fetchJsonApiResources(
         endpoint: String,
         queryParameters: Map<String, String> = emptyMap(),

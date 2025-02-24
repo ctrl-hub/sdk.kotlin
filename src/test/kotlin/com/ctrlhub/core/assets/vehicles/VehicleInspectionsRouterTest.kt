@@ -11,6 +11,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.time.LocalDateTime
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -71,9 +72,12 @@ class VehicleInspectionsRouterTest {
 
     @Test
     fun `can create a vehicle inspection`() {
+        val jsonFilePath = Paths.get("src/test/resources/assets/vehicles/one-vehicle-inspection-response.json")
+        val jsonContent = Files.readString(jsonFilePath)
+
         val mockEngine = MockEngine { request ->
             respond(
-                content = "",
+                content = jsonContent,
                 status = HttpStatusCode.Created,
                 headers = headersOf(HttpHeaders.ContentType, "application/json")
             )
@@ -105,11 +109,12 @@ class VehicleInspectionsRouterTest {
                         visibleDamage = listOf(true, false, null).random(),
                         washersAndWipers = listOf(true, false, null).random(),
                         windscreen = listOf(true, false, null).random()
-                    )
+                    ),
+                    inspectedAt = LocalDateTime.now()
                 )
             )
 
-            assertTrue(result.isSuccess)
+            assertNotNull(result.id)
         }
     }
 }
