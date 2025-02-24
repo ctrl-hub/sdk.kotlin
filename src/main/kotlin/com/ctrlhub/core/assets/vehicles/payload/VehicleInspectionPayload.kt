@@ -1,11 +1,16 @@
 package com.ctrlhub.core.assets.vehicles.payload
 
+import com.ctrlhub.core.serializer.LocalDateTimeSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import java.time.LocalDateTime
 
 @Serializable
 data class VehicleInspectionPayload(
-    val checks: VehicleInspectionChecksPayload
+    val checks: VehicleInspectionChecksPayload,
+
+    @Serializable(with = LocalDateTimeSerializer::class)
+    @SerialName("inspected_at") val inspectedAt: LocalDateTime
 )
 
 @Serializable
