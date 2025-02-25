@@ -1,11 +1,8 @@
 package com.ctrlhub.core.assets.vehicles.resource
 
-import com.ctrlhub.core.assets.vehicles.resource.VehicleInspectionChecks
-import com.ctrlhub.core.serializer.JacksonLocalDateTimeSerializer
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.github.jasminb.jsonapi.StringIdHandler
 import com.github.jasminb.jsonapi.annotations.Id
 import com.github.jasminb.jsonapi.annotations.Type
