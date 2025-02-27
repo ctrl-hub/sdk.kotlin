@@ -1,13 +1,11 @@
 package com.ctrlhub.core.assets.vehicles
 
 import com.ctrlhub.core.Api
-import com.ctrlhub.core.assets.vehicles.VehicleRequestParameters
 import com.ctrlhub.core.assets.vehicles.response.Vehicle
 import com.ctrlhub.core.iam.response.User
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.FilterOption
 import com.ctrlhub.core.router.request.JsonApiIncludes
-import com.ctrlhub.core.router.request.RequestParameters
 import com.ctrlhub.core.router.request.RequestParametersWithIncludes
 import io.ktor.client.*
 
