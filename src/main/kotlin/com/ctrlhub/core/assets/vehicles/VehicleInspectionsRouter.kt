@@ -56,7 +56,7 @@ class VehicleInspectionsRouter(httpClient: HttpClient) : Router(httpClient) {
      *
      * @param organisationId String The associated organisation ID to create a vehicle inspection for
      * @param vehicleId String The vehicle ID to create a vehicle inspection against
-     * @param payload VehicleInspectionPayload The payload to send
+     * @param payload VehicleInspection The inspection item to create
      *
      * @return A result representing the outcome of this operation
      */
