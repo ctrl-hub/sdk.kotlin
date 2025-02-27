@@ -1,8 +1,7 @@
 package com.ctrlhub.core.assets.vehicles
 
-import com.ctrlhub.core.assets.vehicles.response.Vehicle
+import com.ctrlhub.core.assets.vehicles.resource.Vehicle
 import com.ctrlhub.core.configureForTest
-import com.ctrlhub.core.router.request.RequestParameters
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
 import io.ktor.client.engine.mock.respond

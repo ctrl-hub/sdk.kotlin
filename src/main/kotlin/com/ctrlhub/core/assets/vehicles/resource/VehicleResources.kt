@@ -1,4 +1,4 @@
-package com.ctrlhub.core.assets.vehicles.response
+package com.ctrlhub.core.assets.vehicles.resource
 
 import com.ctrlhub.core.api.Assignable
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties

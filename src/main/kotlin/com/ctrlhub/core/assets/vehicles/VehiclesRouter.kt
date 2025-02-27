@@ -1,7 +1,7 @@
 package com.ctrlhub.core.assets.vehicles
 
 import com.ctrlhub.core.Api
-import com.ctrlhub.core.assets.vehicles.response.Vehicle
+import com.ctrlhub.core.assets.vehicles.resource.Vehicle
 import com.ctrlhub.core.iam.response.User
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.FilterOption
@@ -42,7 +42,7 @@ class VehiclesRouter(httpClient: HttpClient) : Router(httpClient) {
      * Request all vehicles
      *
      * @param organisationId String The organisation ID to retrieve all vehicles for
-     * @param requestParameters RequestParameters An instance of RequestParameters, capturing sorting, filtering and pagination based request params
+     * @param requestParameters RequestParameters An instance of VehicleRequestParameters, capturing sorting, filtering and pagination based request params
      *
      * @return A list of all vehicles
      */

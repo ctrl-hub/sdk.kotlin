@@ -1,8 +1,8 @@
 package com.ctrlhub.core.assets.vehicles
 
 import com.ctrlhub.core.Api
-import com.ctrlhub.core.assets.vehicles.response.VehicleManufacturer
-import com.ctrlhub.core.assets.vehicles.response.VehicleModel
+import com.ctrlhub.core.assets.vehicles.resource.VehicleManufacturer
+import com.ctrlhub.core.assets.vehicles.resource.VehicleModel
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.JsonApiIncludes
 import com.ctrlhub.core.router.request.RequestParameters

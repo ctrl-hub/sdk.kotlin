@@ -1,6 +1,6 @@
 package com.ctrlhub.core.assets.vehicles
 
-import com.ctrlhub.core.assets.vehicles.response.VehicleCategory
+import com.ctrlhub.core.assets.vehicles.resource.VehicleCategory
 import com.ctrlhub.core.configureForTest
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*

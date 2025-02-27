@@ -1,7 +1,7 @@
 package com.ctrlhub.core.assets.vehicles
 
 import com.ctrlhub.core.Api
-import com.ctrlhub.core.assets.vehicles.response.VehicleCategory
+import com.ctrlhub.core.assets.vehicles.resource.VehicleCategory
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.RequestParameters
 import io.ktor.client.*
