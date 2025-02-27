@@ -1,0 +1,187 @@
+{
+  "data": [
+    {
+      "id": "11111111-1111-1111-1111-111111111111",
+      "type": "equipment-items",
+      "attributes": {
+        "serial": "CH001-A",
+        "status": "active"
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "22222222-2222-2222-2222-222222222222",
+            "type": "equipment-models"
+          }
+        },
+        "vehicle": {
+          "data": {
+            "id": "33333333-3333-3333-3333-333333333333",
+            "type": "vehicles"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2024-11-13T17:48:00Z",
+        "modified_at": "2024-12-19T15:17:03Z",
+        "exposure_count": 7
+      }
+    },
+    {
+      "id": "44444444-4444-4444-4444-444444444444",
+      "type": "equipment-items",
+      "attributes": {
+        "serial": "CH001-B",
+        "status": "active"
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "55555555-5555-5555-5555-555555555555",
+            "type": "equipment-models"
+          }
+        },
+        "vehicle": {
+          "data": {
+            "id": "33333333-3333-3333-3333-333333333333",
+            "type": "vehicles"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2024-09-13T06:48:13Z",
+        "modified_at": "2024-09-13T06:48:13Z",
+        "exposure_count": 0
+      }
+    },
+    {
+      "id": "66666666-6666-6666-6666-666666666666",
+      "type": "equipment-items",
+      "attributes": {
+        "serial": "CH001-C",
+        "status": "active"
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "22222222-2222-2222-2222-222222222222",
+            "type": "equipment-models"
+          }
+        },
+        "vehicle": {
+          "data": {
+            "id": "33333333-3333-3333-3333-333333333333",
+            "type": "vehicles"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2024-09-12T17:48:00Z",
+        "modified_at": "2025-01-27T08:14:00Z",
+        "exposure_count": 0
+      }
+    },
+    {
+      "id": "77777777-7777-7777-7777-777777777777",
+      "type": "equipment-items",
+      "attributes": {
+        "serial": "CH002-A",
+        "status": null
+      },
+      "relationships": {
+        "model": {
+          "data": {
+            "id": "88888888-8888-8888-8888-888888888888",
+            "type": "equipment-models"
+          }
+        },
+        "vehicle": {
+          "data": null
+        }
+      },
+      "meta": {
+        "created_at": "2024-12-17T18:04:37Z",
+        "modified_at": "2024-12-17T18:04:37Z",
+        "exposure_count": 0
+      }
+    }
+  ],
+  "included": [
+    {
+      "id": "22222222-2222-2222-2222-222222222222",
+      "type": "equipment-models",
+      "attributes": {
+        "description": "Circular Saw 110",
+        "documentation": [
+          {
+            "name": "Instruction Manual",
+            "description": "The official manual from Festool",
+            "link": "https://www.festoolusa.com/-/media/tts/fcp/festool-usa/downloads/manuals/703959_003_ts_55_req_usa.pdf"
+          }
+        ],
+        "name": "TS55",
+        "specification": {
+          "vibration": {
+            "magnitude": 2.5
+          }
+        }
+      }
+    },
+    {
+      "id": "88888888-8888-8888-8888-888888888888",
+      "type": "equipment-models",
+      "attributes": {
+        "description": "Impact wrench 3/4\" 110v",
+        "documentation": [],
+        "name": "6906",
+        "specification": {
+          "vibration": {
+            "magnitude": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "55555555-5555-5555-5555-555555555555",
+      "type": "equipment-models",
+      "attributes": {
+        "description": "Diamond drill 110v/240v",
+        "documentation": [],
+        "name": "8406",
+        "specification": {
+          "vibration": {
+            "magnitude": 7
+          }
+        }
+      }
+    },
+    {
+      "id": "99999999-9999-9999-9999-999999999999",
+      "type": "equipment-manufacturers",
+      "attributes": {
+        "name": "Festool"
+      }
+    },
+    {
+      "id": "10101010-1010-1010-1010-101010101010",
+      "type": "equipment-manufacturers",
+      "attributes": {
+        "name": "Makita"
+      }
+    },
+    {
+      "id": "12121212-1212-1212-1212-121212121212",
+      "type": "equipment-categories",
+      "attributes": {
+        "name": "Hand Tools"
+      }
+    },
+    {
+      "id": "13131313-1313-1313-1313-131313131313",
+      "type": "equipment-categories",
+      "attributes": {
+        "name": "Saw"
+      }
+    }
+  ]
+}
