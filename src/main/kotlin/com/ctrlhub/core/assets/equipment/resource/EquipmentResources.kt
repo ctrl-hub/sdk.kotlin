@@ -71,7 +71,7 @@ class EquipmentModel @JsonCreator constructor(
 }
 
 class EquipmentModelSpecification @JsonCreator constructor(
-    @JsonProperty("vibration") vibration: EquipmentSpecificationVibration? = null
+    @JsonProperty("vibration") val vibration: EquipmentSpecificationVibration? = null
 ) {
     constructor(): this(
         vibration = null
@@ -79,7 +79,7 @@ class EquipmentModelSpecification @JsonCreator constructor(
 }
 
 class EquipmentSpecificationVibration @JsonCreator constructor(
-    @JsonProperty("magnitude") magnitude: Double = 0.0
+    @JsonProperty("magnitude") val magnitude: Double = 0.0
 ) {
     constructor(): this(
         magnitude = 0.0
