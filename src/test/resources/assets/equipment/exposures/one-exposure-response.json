@@ -1,0 +1,42 @@
+{
+  "data": {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "type": "equipment-exposures",
+    "attributes": {
+      "end_time": "2024-11-13T19:13:00Z",
+      "location": null,
+      "ppe": {
+        "mask": true,
+        "ear_defenders": false
+      },
+      "start_time": "2024-11-13T17:48:00Z"
+    },
+    "relationships": {
+      "author": {
+        "data": null
+      },
+      "equipment": {
+        "data": {
+          "id": "00000000-0000-0000-0000-000000000000",
+          "type": "equipment-items"
+        }
+      }
+    },
+    "meta": {
+      "created_at": "2024-12-19T21:05:41Z",
+      "trigger_time": 85,
+      "havs": {
+        "points": 18,
+        "a8": 1.0520317644127166
+      }
+    }
+  },
+  "meta": {},
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {}
+  },
+  "links": {
+    "self": "https://api.ctrl-hub.dev/v3/orgs/00000000-0000-0000-0000-000000000000/assets/equipment/00000000-0000-0000-0000-000000000000/exposures/00000000-0000-0000-0000-000000000000"
+  }
+}

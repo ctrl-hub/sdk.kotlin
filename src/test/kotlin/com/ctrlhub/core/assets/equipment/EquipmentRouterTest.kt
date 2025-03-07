@@ -1,10 +1,6 @@
 package com.ctrlhub.core.assets.equipment
 
 import com.ctrlhub.core.assets.equipment.resource.EquipmentItem
-import com.ctrlhub.core.assets.vehicles.VehicleIncludes
-import com.ctrlhub.core.assets.vehicles.VehicleRequestParameters
-import com.ctrlhub.core.assets.vehicles.VehiclesRouter
-import com.ctrlhub.core.assets.vehicles.resource.Vehicle
 import com.ctrlhub.core.configureForTest
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.mock.MockEngine
