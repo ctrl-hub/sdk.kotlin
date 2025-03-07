@@ -54,8 +54,8 @@ class EquipmentModel @JsonCreator constructor(
     @JsonProperty("description") var description: String? = null,
     @JsonProperty("specification") var specification: EquipmentModelSpecification? = null,
 
-    @Relationship("categories")
-    var categories: List<EquipmentCategory> = emptyList(),
+    @Relationship("category")
+    var category: EquipmentCategory? = null,
 
     @Relationship("manufacturer")
     var manufacturer: EquipmentManufacturer? = null,
@@ -63,15 +63,15 @@ class EquipmentModel @JsonCreator constructor(
     constructor(): this(
         id = "",
         name = "",
-        categories = emptyList(),
         description = null,
         specification = null,
+        category = null,
         manufacturer = null
     )
 }
 
 class EquipmentModelSpecification @JsonCreator constructor(
-    @JsonProperty("vibration") val vibration: EquipmentSpecificationVibration? = null
+    @JsonProperty("vibration") var vibration: EquipmentSpecificationVibration? = null
 ) {
     constructor(): this(
         vibration = null
@@ -79,7 +79,7 @@ class EquipmentModelSpecification @JsonCreator constructor(
 }
 
 class EquipmentSpecificationVibration @JsonCreator constructor(
-    @JsonProperty("magnitude") val magnitude: Double = 0.0
+    @JsonProperty("magnitude") var magnitude: Double = 0.0
 ) {
     constructor(): this(
         magnitude = 0.0
