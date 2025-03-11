@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.github.jasminb.jsonapi.StringIdHandler
 import com.github.jasminb.jsonapi.annotations.Id
+import com.github.jasminb.jsonapi.annotations.Meta
 import com.github.jasminb.jsonapi.annotations.Relationship
 import com.github.jasminb.jsonapi.annotations.Type
 
@@ -23,6 +24,9 @@ class Vehicle {
 
     @Relationship("assignee")
     var assignee: Assignable? = null
+
+    @Meta
+    var meta: VehicleMeta? = null
 }
 
 @Type("vehicle-categories")
