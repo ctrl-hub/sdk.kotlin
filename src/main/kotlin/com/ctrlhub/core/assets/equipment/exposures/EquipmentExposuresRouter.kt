@@ -2,6 +2,7 @@ package com.ctrlhub.core.assets.equipment.exposures
 
 import com.ctrlhub.core.assets.equipment.EquipmentRouter
 import com.ctrlhub.core.assets.equipment.exposures.resource.EquipmentExposureResource
+import com.ctrlhub.core.assets.equipment.resource.EquipmentItem
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.FilterOption
 import com.ctrlhub.core.router.request.JsonApiIncludes
@@ -85,7 +86,11 @@ class EquipmentExposuresRouter(httpClient: HttpClient) : Router(httpClient) {
         equipmentId: String,
         resource: EquipmentExposureResource
     ): EquipmentExposureResource {
-        return postJsonApiResource("/v3/orgs/$organisationId/assets/equipment/$equipmentId/exposures", resource)
+        val request = EquipmentExposureRequestParameters()
+        return postJsonApiResource(
+            "/v3/orgs/$organisationId/assets/equipment/$equipmentId/exposures", resource, request.toMap(),
+            EquipmentItem::class.java
+        )
     }
 }
 
