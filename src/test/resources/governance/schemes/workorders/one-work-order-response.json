@@ -1,0 +1,70 @@
+{
+  "data": {
+    "id": "b4cd0154-9e6f-442b-84d1-d1f1a888d2e4",
+    "type": "work-orders",
+    "attributes": {
+      "code": "xx.1.x",
+      "description": null,
+      "end_date": null,
+      "labels": [],
+      "name": "xx.1",
+      "start_date": null
+    },
+    "relationships": {
+      "operations": {
+        "data": [
+          {
+            "id": "9e2a4c21-6dbb-438d-8202-7505e2f12391",
+            "type": "operations"
+          },
+          {
+            "id": "bb7d5b49-c49e-4f17-9b99-5fd88fcd82fe",
+            "type": "operations"
+          }
+        ]
+      },
+      "permits": {
+        "data": []
+      },
+      "scheme": {
+        "data": {
+          "id": "cf7a3628-bfe1-4d98-9a9f-eae6fa623d10",
+          "type": "schemes"
+        }
+      }
+    },
+    "meta": {
+      "completeness": {
+        "percentage": {
+          "completed": 0,
+          "aborted": 0,
+          "unknown": 100,
+          "cancelled": 0
+        },
+        "counts": {
+          "completed": 0,
+          "aborted": 0,
+          "unknown": 2,
+          "cancelled": 0
+        }
+      },
+      "counts": {
+        "properties": 0,
+        "streets": 0,
+        "work_orders": 0,
+        "operations": 2
+      },
+      "created_at": "2025-02-16T16:49:09Z",
+      "updated_at": "2025-02-16T16:49:18Z",
+      "modified_at": "2025-03-14T10:04:18Z"
+    }
+  },
+  "meta": {},
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {}
+  },
+  "links": {
+    "self": "https://api.ctrl-hub.dev/v3/orgs/50d04a88-e9be-4f7c-842a-e2b37b2fd2f1/governance/schemes/cf7a3628-bfe1-4d98-9a9f-eae6fa623d10/work-orders/b4cd0154-9e6f-442b-84d1-d1f1a888d2e4"
+  }
+}
