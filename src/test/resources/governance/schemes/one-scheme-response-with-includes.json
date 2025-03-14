@@ -1,0 +1,208 @@
+{
+  "data": {
+    "id": "b3f27376-41b2-450e-b648-bd5e0b0bb0f2",
+    "type": "schemes",
+    "attributes": {
+      "code": "loremipsum",
+      "description": null,
+      "end_date": null,
+      "labels": [],
+      "name": "LoremIpsum",
+      "start_date": null
+    },
+    "relationships": {
+      "work_orders": {
+        "data": [
+          {
+            "id": "f7a4b12e-6b21-47c5-a39f-ff2f7b937728",
+            "type": "work-orders"
+          }
+        ]
+      }
+    },
+    "meta": {
+      "completeness": {
+        "percentage": {
+          "completed": 0,
+          "aborted": 0,
+          "unknown": 100,
+          "cancelled": 0
+        },
+        "counts": {
+          "completed": 0,
+          "aborted": 0,
+          "unknown": 2,
+          "cancelled": 0
+        }
+      },
+      "counts": {
+        "properties": 0,
+        "streets": 0,
+        "work_orders": 1,
+        "operations": 2
+      },
+      "created_at": "2025-02-14T18:14:04Z",
+      "updated_at": "2025-02-16T16:37:46Z",
+      "modified_at": "2025-03-14T10:04:18Z"
+    }
+  },
+  "meta": {},
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {}
+  },
+  "links": {
+    "self": "https://api.ctrl-hub.dev/v3/orgs/ef0fcfd6-2a18-4c27-b2c2-b2563859b3b1/governance/schemes/b3f27376-41b2-450e-b648-bd5e0b0bb0f2?include=work_orders,work_orders.operations"
+  },
+  "included": [
+    {
+      "id": "f7a4b12e-6b21-47c5-a39f-ff2f7b937728",
+      "type": "work-orders",
+      "attributes": {
+        "code": "loremipsum.1.b",
+        "description": null,
+        "end_date": null,
+        "labels": [],
+        "name": "LoremIpsum.1",
+        "start_date": null
+      },
+      "relationships": {
+        "operations": {
+          "data": [
+            {
+              "id": "5adf9e93-d1b2-4d6f-85db-0d9bf3d11690",
+              "type": "operations"
+            },
+            {
+              "id": "397f45da-bd1c-4237-ae16-f2a4b87148db",
+              "type": "operations"
+            }
+          ]
+        },
+        "permits": {
+          "data": []
+        },
+        "scheme": {
+          "data": {
+            "id": "b3f27376-41b2-450e-b648-bd5e0b0bb0f2",
+            "type": "schemes"
+          }
+        }
+      },
+      "meta": {
+        "completeness": {
+          "percentage": {
+            "completed": 0,
+            "aborted": 0,
+            "unknown": 100,
+            "cancelled": 0
+          },
+          "counts": {
+            "completed": 0,
+            "aborted": 0,
+            "unknown": 2,
+            "cancelled": 0
+          }
+        },
+        "counts": {
+          "properties": 0,
+          "streets": 0,
+          "work_orders": 0,
+          "operations": 2
+        },
+        "created_at": "2025-02-16T16:49:09Z",
+        "updated_at": "2025-02-16T16:49:18Z",
+        "modified_at": "2025-03-14T10:04:18Z"
+      }
+    },
+    {
+      "id": "5adf9e93-d1b2-4d6f-85db-0d9bf3d11690",
+      "type": "operations",
+      "attributes": {
+        "aborted": false,
+        "cancelled": false,
+        "code": "loremipsum.1.1",
+        "completed": false,
+        "description": null,
+        "end_date": null,
+        "labels": [],
+        "name": "LoremIpsum.1.1",
+        "start_date": null,
+        "type": null,
+        "uprns": [],
+        "usrns": []
+      },
+      "relationships": {
+        "assignees": {
+          "data": [
+            {
+              "id": "fa3b2146-b8b9-4a0f-bf3d-5080e98adbf4",
+              "type": "users"
+            }
+          ]
+        },
+        "properties": {
+          "data": []
+        },
+        "streets": {
+          "data": []
+        },
+        "template": {
+          "data": null
+        },
+        "work_order": {
+          "data": {
+            "id": "f7a4b12e-6b21-47c5-a39f-ff2f7b937728",
+            "type": "work-orders"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2025-02-16T16:50:29Z",
+        "updated_at": "2025-02-16T16:50:29Z"
+      }
+    },
+    {
+      "id": "397f45da-bd1c-4237-ae16-f2a4b87148db",
+      "type": "operations",
+      "attributes": {
+        "aborted": false,
+        "cancelled": false,
+        "code": "loremipsum.1.2",
+        "completed": false,
+        "description": null,
+        "end_date": null,
+        "labels": [],
+        "name": "LoremIpsum.1.2",
+        "start_date": null,
+        "type": null,
+        "uprns": [],
+        "usrns": []
+      },
+      "relationships": {
+        "assignees": {
+          "data": []
+        },
+        "properties": {
+          "data": []
+        },
+        "streets": {
+          "data": []
+        },
+        "template": {
+          "data": null
+        },
+        "work_order": {
+          "data": {
+            "id": "f7a4b12e-6b21-47c5-a39f-ff2f7b937728",
+            "type": "work-orders"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2025-02-16T16:51:00Z",
+        "updated_at": "2025-02-16T16:51:00Z"
+      }
+    }
+  ]
+}

@@ -28,7 +28,7 @@ class SchemesRouter(httpClient: HttpClient) : Router(httpClient) {
     /**
      * Retrieve a list of all schemes
      *
-     * @param organisationId String The organisation ID to retrieve all equipment items for
+     * @param organisationId String The organisation ID to retrieve all schemes for
      * @param requestParameters RequestParameters An instance of SchemeRequestParameters, capturing sorting, filtering and pagination based request params
      *
      * @return A list of all schemes
