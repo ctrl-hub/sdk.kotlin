@@ -24,7 +24,7 @@ class Organisation {
     lateinit var name: String
     var description: String? = null
     lateinit var slug: String
-    lateinit var settings: Settings
+    var settings: Settings? = null
 
     @Meta
     lateinit var meta: OrganisationMeta
