@@ -1,6 +1,6 @@
 package com.ctrlhub.core.governance.schemes.workorders.operations.response
 
-import com.ctrlhub.core.iam.response.User
+import com.ctrlhub.core.api.Assignable
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -27,7 +27,7 @@ class Operation @JsonCreator constructor(
     @JsonProperty("cancelled") var cancelled: Boolean = false,
 
     @Relationship("assignees")
-    var assignees: List<User> = emptyList()
+    var assignees: java.util.List<Assignable>? = null
 ) {
     constructor(): this(
         name = "",

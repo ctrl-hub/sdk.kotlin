@@ -3,6 +3,7 @@ package com.ctrlhub.core.governance.schemes
 import com.ctrlhub.core.Api
 import com.ctrlhub.core.governance.schemes.response.Scheme
 import com.ctrlhub.core.governance.schemes.workorders.response.WorkOrder
+import com.ctrlhub.core.iam.response.User
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.FilterOption
 import com.ctrlhub.core.router.request.JsonApiIncludes
@@ -35,7 +36,7 @@ class SchemesRouter(httpClient: HttpClient) : Router(httpClient) {
      */
     suspend fun all(organisationId: String, requestParameters: SchemeRequestParameters = SchemeRequestParameters()): List<Scheme> {
         return fetchJsonApiResources("/v3/orgs/$organisationId/governance/schemes", requestParameters.toMap(), Scheme::class.java,
-            WorkOrder::class.java)
+            WorkOrder::class.java, User::class.java)
     }
 
     /**
