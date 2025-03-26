@@ -98,7 +98,7 @@ class SchemesRouterTest {
             assertIs<Scheme>(response)
             assertNotNull(response.id)
             assertNotNull(response.workOrders)
-            assertNotNull(response.workOrders?.get(0)?.id)
+            assertNotNull(response.workOrders.get(0).id)
         }
     }
 }

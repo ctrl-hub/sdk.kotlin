@@ -49,7 +49,7 @@ class SchemesRouter(httpClient: HttpClient) : Router(httpClient) {
      * @return A single scheme
      */
     suspend fun one(organisationId: String, schemeId: String, requestParameters: SchemeRequestParameters = SchemeRequestParameters()) : Scheme {
-        return fetchJsonApiResource("/v3/orgs/$organisationId/governance/schemes/$schemeId", requestParameters.toMap())
+        return fetchJsonApiResource("/v3/orgs/$organisationId/governance/schemes/$schemeId", requestParameters.toMap(), Scheme::class.java, WorkOrder::class.java, User::class.java)
     }
 }
 
