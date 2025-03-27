@@ -17,7 +17,15 @@ class Api(
     fun applySessionToken(sessionToken: String) {
         httpClient = KtorClientFactory.create(httpClient) {
             defaultRequest {
-                headers.append("X-Session-Token", sessionToken)
+                headers["X-Session-Token"] = sessionToken
+            }
+        }
+    }
+
+    fun clearSessionToken() {
+        httpClient = KtorClientFactory.create(httpClient) {
+            defaultRequest {
+                headers.remove("X-Session-Token")
             }
         }
     }
