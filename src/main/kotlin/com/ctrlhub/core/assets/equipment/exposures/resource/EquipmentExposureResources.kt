@@ -15,8 +15,8 @@ class EquipmentExposureResource @JsonCreator constructor(
     @JsonProperty("id") @Id(StringIdHandler::class) var id: String = "",
     @JsonProperty("start_time") var startTime: LocalDateTime? = null,
     @JsonProperty("end_time") var endTime: LocalDateTime? = null,
+    @JsonProperty("location") var location: EquipmentExposureLocation? = null,
     @JsonProperty("ppe") var ppe: EquipmentExposurePpe? = EquipmentExposurePpe(),
-
     @Meta var meta: EquipmentExposureMeta = EquipmentExposureMeta()
 )
 
@@ -49,5 +49,17 @@ class EquipmentExposureHavsExposureValues @JsonCreator constructor(
     constructor(): this(
         points = null,
         a8 = null
+    )
+}
+
+class EquipmentExposureLocation @JsonCreator constructor(
+    @JsonProperty("type")
+    val type: String = "Point",
+
+    @JsonProperty("coordinates")
+    val coordinates: List<Double>
+) {
+    constructor(): this(
+        coordinates = emptyList()
     )
 }
