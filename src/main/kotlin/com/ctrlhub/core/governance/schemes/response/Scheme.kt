@@ -16,8 +16,8 @@ import java.time.LocalDate
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Scheme @JsonCreator constructor(
     @Id(StringIdHandler::class) var id: String = "",
-    @JsonProperty("name") var name: String = "",
-    @JsonProperty("code") var code: String = "",
+    @JsonProperty("name") var name: String? = "",
+    @JsonProperty("code") var code: String? = "",
     @JsonProperty("description") var description: String? = null,
     @JsonProperty("start_date") var startDate: LocalDate? = null,
     @JsonProperty("end_date") var endDate: LocalDate? = null,
