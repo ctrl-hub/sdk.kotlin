@@ -31,7 +31,7 @@ class Profile {
     var address: ProfileAddress? = null
     var contact: ProfileContact? = null
     var personal: ProfilePersonal? = null
-    var settings: ProfileSettings = ProfileSettings()
+    var settings: ProfileSettings? = null
     var work: ProfileWork? = null
 }
 
