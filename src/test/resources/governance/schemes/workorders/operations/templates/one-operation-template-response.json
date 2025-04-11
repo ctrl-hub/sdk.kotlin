@@ -1,0 +1,28 @@
+{
+  "data": {
+    "id": "f3c6de1f-20f2-4c8a-9e0b-65e89d8df3a2",
+    "type": "operation-templates",
+    "attributes": {
+      "labels": [
+        {
+          "key": "a",
+          "value": "b"
+        }
+      ],
+      "name": "Test",
+      "requirements": null
+    },
+    "meta": {
+      "created_at": "2025-03-20T13:22:11Z",
+      "updated_at": "2025-03-20T13:22:11Z"
+    }
+  },
+  "meta": {},
+  "jsonapi": {
+    "version": "1.0",
+    "meta": {}
+  },
+  "links": {
+    "self": "https://api.ctrl-hub.dev/v3/orgs/f3c6de1f-20f2-4c8a-9e0b-65e89d8df3a2/governance/operation-templates/f3c6de1f-20f2-4c8a-9e0b-65e89d8df3a2"
+  }
+}
