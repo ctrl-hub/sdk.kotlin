@@ -14,6 +14,7 @@ import java.time.LocalDateTime
 @Type("operation-templates")
 class OperationTemplate @JsonCreator constructor(
     @Id(StringIdHandler::class) var id: String = "",
+    @JsonProperty("name") var name: String = "",
     @JsonProperty("labels") var labels: List<Label> = emptyList(),
     @JsonProperty("requirements") var requirements: OperationTemplateRequirements? = null,
 
