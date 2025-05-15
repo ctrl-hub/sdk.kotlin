@@ -1,0 +1,43 @@
+{
+  "data": [
+    {
+      "id": "2fa82b8b-6fc3-4c0b-8e47-196b3b67f3b9",
+      "type": "forms",
+      "attributes": {
+        "description": "...",
+        "name": "Form 3",
+        "status": "active"
+      },
+      "relationships": {
+        "categories": {
+          "data": [
+            {
+              "id": "0f99ec15-9172-4994-bb5a-ff22e0185a47",
+              "type": "form-categories"
+            }
+          ]
+        },
+        "organisation": {
+          "data": {
+            "id": "705adf65-e1cf-4b45-97b0-f3d055245b56",
+            "type": "organisations"
+          }
+        },
+        "schemas": {
+          "data": []
+        }
+      },
+      "meta": {
+        "created_at": "2025-05-07T07:31:52.473Z",
+        "updated_at": "2025-05-12T11:49:20.536Z",
+        "counts": {
+          "schemas": 0,
+          "categories": 1
+        }
+      }
+    }
+  ],
+  "jsonapi": {
+    "version": "1.0"
+  }
+}
