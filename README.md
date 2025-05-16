@@ -94,6 +94,6 @@ runBlocking {
 
     api.applySessionToken(response.sessionToken)
     val vehicles = api.vehicles.all("org-123")
-    println(vehicles.size)
+    println(vehicles.data.size)
 }
 ```
