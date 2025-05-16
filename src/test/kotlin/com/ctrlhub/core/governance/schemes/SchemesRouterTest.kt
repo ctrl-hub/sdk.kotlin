@@ -1,5 +1,6 @@
 package com.ctrlhub.core.governance.schemes
 
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.configureForTest
 import com.ctrlhub.core.governance.schemes.response.Scheme
 import io.ktor.client.HttpClient
@@ -40,8 +41,8 @@ class SchemesRouterTest {
                 )
             ))
 
-            assertIs<List<Scheme>>(response)
-            assertNotNull(response[0].id)
+            assertIs<PaginatedList<Scheme>>(response)
+            assertNotNull(response.data[0].id)
         }
     }
 

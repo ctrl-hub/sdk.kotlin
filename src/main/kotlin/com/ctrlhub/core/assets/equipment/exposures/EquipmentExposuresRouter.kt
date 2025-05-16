@@ -1,5 +1,6 @@
 package com.ctrlhub.core.assets.equipment.exposures
 
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.assets.equipment.EquipmentRouter
 import com.ctrlhub.core.assets.equipment.exposures.resource.EquipmentExposureResource
 import com.ctrlhub.core.assets.equipment.resource.EquipmentItem
@@ -45,8 +46,8 @@ class EquipmentExposuresRouter(httpClient: HttpClient) : Router(httpClient) {
         organisationId: String,
         equipmentId: String,
         requestParameters: EquipmentExposureRequestParameters = EquipmentExposureRequestParameters()
-    ): List<EquipmentExposureResource> {
-        return fetchJsonApiResources(
+    ): PaginatedList<EquipmentExposureResource> {
+        return fetchPaginatedJsonApiResources(
             "/v3/orgs/$organisationId/assets/equipment/$equipmentId/exposures",
             requestParameters.toMap()
         )

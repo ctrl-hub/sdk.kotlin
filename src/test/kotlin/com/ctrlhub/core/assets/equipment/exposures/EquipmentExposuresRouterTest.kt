@@ -1,5 +1,6 @@
 package com.ctrlhub.core.assets.equipment.exposures
 
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.assets.equipment.exposures.resource.EquipmentExposureResource
 import com.ctrlhub.core.configureForTest
 import io.ktor.client.HttpClient
@@ -33,8 +34,8 @@ class EquipmentExposuresRouterTest {
 
         runBlocking {
             val response = exposuresRouter.all(organisationId = "000", equipmentId = "000")
-            assertIs<List<EquipmentExposureResource>>(response)
-            assertNotNull(response[0].id)
+            assertIs<PaginatedList<EquipmentExposureResource>>(response)
+            assertNotNull(response.data[0].id)
         }
     }
 

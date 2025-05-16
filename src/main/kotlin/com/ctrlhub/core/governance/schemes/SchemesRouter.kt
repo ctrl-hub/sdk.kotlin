@@ -1,6 +1,7 @@
 package com.ctrlhub.core.governance.schemes
 
 import com.ctrlhub.core.Api
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.governance.schemes.response.Scheme
 import com.ctrlhub.core.governance.schemes.workorders.response.WorkOrder
 import com.ctrlhub.core.iam.response.User
@@ -36,8 +37,8 @@ class SchemesRouter(httpClient: HttpClient) : Router(httpClient) {
      *
      * @return A list of all schemes
      */
-    suspend fun all(organisationId: String, requestParameters: SchemeRequestParameters = SchemeRequestParameters()): List<Scheme> {
-        return fetchJsonApiResources("/v3/orgs/$organisationId/governance/schemes", requestParameters.toMap(), Scheme::class.java,
+    suspend fun all(organisationId: String, requestParameters: SchemeRequestParameters = SchemeRequestParameters()): PaginatedList<Scheme> {
+        return fetchPaginatedJsonApiResources("/v3/orgs/$organisationId/governance/schemes", requestParameters.toMap(), Scheme::class.java,
             WorkOrder::class.java, User::class.java)
     }
 
