@@ -1,5 +1,6 @@
 package com.ctrlhub.core.assets.vehicles
 
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.assets.vehicles.resource.VehicleManufacturer
 import com.ctrlhub.core.assets.vehicles.resource.VehicleModel
 import com.ctrlhub.core.configureForTest
@@ -34,8 +35,8 @@ class VehiclesManufacturersRouterTest {
 
         runBlocking {
             val response = vehicleManufacturersRouter.all()
-            assertIs<List<VehicleManufacturer>>(response)
-            assertNotNull(response[0].id)
+            assertIs<PaginatedList<VehicleManufacturer>>(response)
+            assertNotNull(response.data[0].id)
         }
     }
 

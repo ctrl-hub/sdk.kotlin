@@ -1,6 +1,7 @@
 package com.ctrlhub.core.assets.equipment
 
 import com.ctrlhub.core.Api
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.assets.equipment.resource.EquipmentItem
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.FilterOption
@@ -25,9 +26,11 @@ enum class EquipmentIncludes(val value: String) : JsonApiIncludes {
 }
 
 class EquipmentRequestParameters(
+    offset: Int = 0,
+    limit: Int = 100,
     filterOptions: List<FilterOption> = emptyList(),
     includes: List<EquipmentIncludes> = emptyList()
-) : RequestParametersWithIncludes<EquipmentIncludes>(filterOptions, includes)
+) : RequestParametersWithIncludes<EquipmentIncludes>(offset, limit, filterOptions, includes)
 
 enum class EquipmentSort(val value: String) {
     Name("name");
@@ -46,8 +49,8 @@ class EquipmentRouter (httpClient: HttpClient) : Router(httpClient) {
     suspend fun all(
         organisationId: String,
         requestParameters: EquipmentRequestParameters = EquipmentRequestParameters()
-    ) : List<EquipmentItem> {
-        return fetchJsonApiResources(
+    ) : PaginatedList<EquipmentItem> {
+        return fetchPaginatedJsonApiResources(
             "/v3/orgs/$organisationId/assets/equipment",
             requestParameters.toMap()
         )

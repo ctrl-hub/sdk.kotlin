@@ -3,6 +3,12 @@ package com.ctrlhub.core.router
 import com.ctrlhub.core.api.ApiClientException
 import com.ctrlhub.core.api.ApiException
 import com.ctrlhub.core.api.UnauthorizedException
+import com.ctrlhub.core.api.response.CountsMeta
+import com.ctrlhub.core.api.response.OffsetsMeta
+import com.ctrlhub.core.api.response.PageMeta
+import com.ctrlhub.core.api.response.PaginatedList
+import com.ctrlhub.core.api.response.PaginationMeta
+import com.ctrlhub.core.api.response.RequestedMeta
 import com.ctrlhub.core.serializer.JacksonLocalDateTimeDeserializer
 import com.ctrlhub.core.serializer.JacksonLocalDateTimeSerializer
 import com.fasterxml.jackson.module.kotlin.kotlinModule
@@ -117,12 +123,15 @@ abstract class Router(val httpClient: HttpClient) {
 
             val resourceConverter = ResourceConverter(getObjectMapper(), T::class.java, *includedClasses).apply {
                 enableSerializationOption(SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES)
+                enableSerializationOption(SerializationFeature.INCLUDE_META)
             }
 
             val jsonApiResponse = resourceConverter.readDocumentCollection<T>(
                 rawResponse.body<ByteArray>(), T::class.java
             )
 
+            val data = jsonApiResponse.meta
+            println(data?.size)
             jsonApiResponse.get() ?: throw ApiException("Failed to parse response for $endpoint", Exception())
         } catch (e: ClientRequestException) {
             if (e.response.status == HttpStatusCode.Unauthorized) {
@@ -144,6 +153,34 @@ abstract class Router(val httpClient: HttpClient) {
             registerModule(JavaTimeModule())
             registerModule(module)
             registerModule(kotlinModule())
+        }
+    }
+
+    protected suspend inline fun <reified T> fetchPaginatedJsonApiResources(
+        endpoint: String,
+        queryParameters: Map<String, String> = emptyMap(),
+        vararg includedClasses: Class<*>
+    ): PaginatedList<T> {
+        return try {
+            val rawResponse = performGet(endpoint, queryParameters)
+
+            val resourceConverter = ResourceConverter(getObjectMapper(), T::class.java, *includedClasses).apply {
+                enableSerializationOption(SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES)
+                enableSerializationOption(SerializationFeature.INCLUDE_META)
+            }
+
+            val documentCollection = resourceConverter.readDocumentCollection<T>(
+                rawResponse.body<ByteArray>(), T::class.java
+            )
+
+            buildPaginatedResponse(documentCollection)
+        } catch (e: ClientRequestException) {
+            if (e.response.status == HttpStatusCode.Unauthorized) {
+                throw UnauthorizedException("Unauthorized action: $endpoint", e.response, e)
+            }
+            throw ApiClientException("Request failed: $endpoint", e.response, e)
+        } catch (e: Exception) {
+            throw ApiException("Request failed: $endpoint", e)
         }
     }
 
@@ -180,5 +217,39 @@ abstract class Router(val httpClient: HttpClient) {
         } catch (e: Exception) {
             throw ApiException("Request failed: $endpoint", e)
         }
+    }
+
+    fun <T> buildPaginatedResponse(documentCollection: JSONAPIDocument<List<T>>): PaginatedList<T> {
+        val metaMap = documentCollection.meta as? Map<*, *> ?: emptyMap<Any, Any>()
+
+        val paginationMap = metaMap["pagination"] as? Map<*, *>
+        val countsMap = paginationMap?.get("counts") as? Map<*, *>
+        val requestedMap = paginationMap?.get("requested") as? Map<*, *>
+        val offsetsMap = paginationMap?.get("offsets") as? Map<*, *>
+
+        val paginationMeta = PaginationMeta(
+            page = PageMeta(
+                currentPage = (paginationMap?.get("current_page") as? Number)?.toInt() ?: 1
+            ),
+            counts = CountsMeta(
+                resources = (countsMap?.get("resources") as? Number)?.toInt() ?: 0,
+                pages = (countsMap?.get("pages") as? Number)?.toInt() ?: 0
+            ),
+            requested = RequestedMeta(
+                offset = (requestedMap?.get("offset") as? Number)?.toInt(),
+                limit = (requestedMap?.get("limit") as? Number)?.toInt()
+            ),
+            offsets = OffsetsMeta(
+                previous = (offsetsMap?.get("previous") as? Number)?.toInt(),
+                next = (offsetsMap?.get("next") as? Number)?.toInt()
+            )
+        )
+
+        val data: List<T> = documentCollection.get()?.toList() ?: emptyList()
+
+        return PaginatedList(
+            data = data,
+            pagination = paginationMeta
+        )
     }
 }

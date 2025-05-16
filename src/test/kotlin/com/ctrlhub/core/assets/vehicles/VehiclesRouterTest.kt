@@ -1,5 +1,6 @@
 package com.ctrlhub.core.assets.vehicles
 
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.assets.vehicles.resource.Vehicle
 import com.ctrlhub.core.configureForTest
 import io.ktor.client.HttpClient
@@ -33,8 +34,8 @@ class VehiclesRouterTest {
 
         runBlocking {
             val response = vehiclesRouter.all(organisationId = "123")
-            assertIs<List<Vehicle>>(response)
-            assertNotNull(response[0].id)
+            assertIs<PaginatedList<Vehicle>>(response)
+            assertNotNull(response.data[0].id)
         }
     }
 
@@ -80,8 +81,8 @@ class VehiclesRouterTest {
                 includes = listOf(VehicleIncludes.SpecificationModel)
             ))
 
-            assertIs<List<Vehicle>>(response)
-            val first = response[0]
+            assertIs<PaginatedList<Vehicle>>(response)
+            val first = response.data[0]
             assertNotNull(first.specification?.model)
         }
     }

@@ -1,5 +1,6 @@
 package com.ctrlhub.core.governance.schemes.workorders
 
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.governance.schemes.workorders.response.WorkOrder
 import com.ctrlhub.core.configureForTest
 import io.ktor.client.HttpClient
@@ -35,8 +36,8 @@ class WorkOrdersRouterTest {
         runBlocking {
             val response = workOrdersRouter.all(organisationId = "abc123", schemeId = "e3fbd3a4-4c96-4b97-8033-8a1a3b4c2e4c")
 
-            assertIs<List<WorkOrder>>(response)
-            assertNotNull(response[0].id)
+            assertIs<PaginatedList<WorkOrder>>(response)
+            assertNotNull(response.data[0].id)
         }
     }
 

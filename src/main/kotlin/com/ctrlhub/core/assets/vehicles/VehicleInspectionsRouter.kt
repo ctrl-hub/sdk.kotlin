@@ -1,5 +1,6 @@
 package com.ctrlhub.core.assets.vehicles
 
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.assets.vehicles.resource.VehicleInspection
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.RequestParameters
@@ -24,10 +25,10 @@ class VehicleInspectionsRouter(httpClient: HttpClient) : Router(httpClient) {
         organisationId: String,
         vehicleId: String,
         requestParameters: RequestParameters = RequestParameters()
-    ): List<VehicleInspection> {
+    ): PaginatedList<VehicleInspection> {
         val endpoint = "/v3/orgs/$organisationId/assets/vehicles/$vehicleId/inspections"
 
-        return fetchJsonApiResources(endpoint, requestParameters.toMap())
+        return fetchPaginatedJsonApiResources(endpoint, requestParameters.toMap())
     }
 
     /**

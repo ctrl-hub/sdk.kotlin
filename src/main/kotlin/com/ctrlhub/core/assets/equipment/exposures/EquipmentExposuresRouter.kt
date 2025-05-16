@@ -21,9 +21,11 @@ enum class EquipmentExposureIncludes(val value: String) : JsonApiIncludes {
 }
 
 class EquipmentExposureRequestParameters(
+    offset: Int = 0,
+    limit: Int = 100,
     filterOptions: List<FilterOption> = emptyList(),
     includes: List<EquipmentExposureIncludes> = emptyList()
-) : RequestParametersWithIncludes<EquipmentExposureIncludes>(filterOptions, includes)
+) : RequestParametersWithIncludes<EquipmentExposureIncludes>(offset, limit, filterOptions, includes)
 
 /**
  * An equipment exposure router that deals with the exposures realm of the Ctrl Hub API

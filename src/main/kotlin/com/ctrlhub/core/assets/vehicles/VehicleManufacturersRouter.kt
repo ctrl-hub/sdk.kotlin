@@ -1,6 +1,7 @@
 package com.ctrlhub.core.assets.vehicles
 
 import com.ctrlhub.core.Api
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.assets.vehicles.resource.VehicleManufacturer
 import com.ctrlhub.core.assets.vehicles.resource.VehicleModel
 import com.ctrlhub.core.router.Router
@@ -29,8 +30,8 @@ class VehicleManufacturersRouter(httpClient: HttpClient) : Router(httpClient) {
      *
      * @return A list of vehicle manufacturers
      */
-    suspend fun all(requestParameters: RequestParameters = RequestParameters()): List<VehicleManufacturer> {
-        return fetchJsonApiResources(endpoint, requestParameters.toMap())
+    suspend fun all(requestParameters: RequestParameters = RequestParameters()): PaginatedList<VehicleManufacturer> {
+        return fetchPaginatedJsonApiResources(endpoint, requestParameters.toMap())
     }
 
     suspend fun models(manufacturerId: String, requestParameters: RequestParameters = RequestParameters()): List<VehicleModel> {

@@ -34,9 +34,9 @@ class OrganisationRouterTest {
         runBlocking {
             val response = organisationRouter.all()
 
-            assertEquals(3, response.size)
-            assertEquals("00000000-0000-0000-0000-000000000001", response[0].id)
-            assertEquals("00000000-0000-0000-0000-000000000002", response[1].id)
+            assertEquals(3, response.data.size)
+            assertEquals("00000000-0000-0000-0000-000000000001", response.data[0].id)
+            assertEquals("00000000-0000-0000-0000-000000000002", response.data[1].id)
         }
     }
 }

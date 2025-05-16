@@ -38,9 +38,9 @@ class FormsRouterTest {
             val response = formsRouter.all(organisationId)
 
             // Assuming the mock response includes 1 form as in your earlier example
-            assertEquals(1, response.size)
-            assertEquals("Form 3", response[0].name)
-            assertEquals("active", response[0].status)
+            assertEquals(1, response.data.size)
+            assertEquals("Form 3", response.data[0].name)
+            assertEquals("active", response.data[0].status)
         }
     }
 }

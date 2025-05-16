@@ -1,14 +1,15 @@
 package com.ctrlhub.core.governance.schemes.workorders.operations.templates
 
 import com.ctrlhub.core.Api
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.governance.schemes.workorders.operations.OperationsRouter
 import com.ctrlhub.core.governance.schemes.workorders.operations.templates.response.OperationTemplate
 import com.ctrlhub.core.router.Router
 import io.ktor.client.HttpClient
 
 class OperationTemplatesRouter(httpClient: HttpClient) : Router(httpClient) {
-    suspend fun all(organisationId: String): List<OperationTemplate> {
-        return fetchJsonApiResources("/v3/orgs/$organisationId/governance/operation-templates")
+    suspend fun all(organisationId: String): PaginatedList<OperationTemplate> {
+        return fetchPaginatedJsonApiResources("/v3/orgs/$organisationId/governance/operation-templates")
     }
 
     suspend fun one(organisationId: String, operationTemplateId: String): OperationTemplate {

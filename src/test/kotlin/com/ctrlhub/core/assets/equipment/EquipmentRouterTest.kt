@@ -1,5 +1,6 @@
 package com.ctrlhub.core.assets.equipment
 
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.assets.equipment.resource.EquipmentItem
 import com.ctrlhub.core.configureForTest
 import io.ktor.client.HttpClient
@@ -38,8 +39,8 @@ class EquipmentRouterTest {
                     EquipmentIncludes.ModelCategory
                 )
             ))
-            assertIs<List<EquipmentItem>>(response)
-            assertNotNull(response[0].id)
+            assertIs<PaginatedList<EquipmentItem>>(response)
+            assertNotNull(response.data[0].id)
         }
     }
 

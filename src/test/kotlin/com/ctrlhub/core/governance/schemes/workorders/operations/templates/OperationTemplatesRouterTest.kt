@@ -1,5 +1,6 @@
 package com.ctrlhub.core.governance.schemes.workorders.operations.templates
 
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.configureForTest
 import com.ctrlhub.core.governance.schemes.workorders.operations.templates.response.OperationTemplate
 import io.ktor.client.*
@@ -34,8 +35,8 @@ class OperationTemplatesRouterTest {
                 organisationId = "org-123"
             )
 
-            assertIs<List<OperationTemplate>>(response)
-            assertNotNull(response.first().id)
+            assertIs<PaginatedList<OperationTemplate>>(response)
+            assertNotNull(response.data.first().id)
         }
     }
 

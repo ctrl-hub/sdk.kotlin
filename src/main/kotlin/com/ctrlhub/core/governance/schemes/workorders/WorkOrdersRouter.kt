@@ -1,6 +1,7 @@
 package com.ctrlhub.core.governance.schemes.workorders
 
 import com.ctrlhub.core.Api
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.governance.schemes.SchemesRouter
 import com.ctrlhub.core.governance.schemes.workorders.response.WorkOrder
 import com.ctrlhub.core.router.Router
@@ -16,8 +17,8 @@ class WorkOrdersRouter(httpClient: HttpClient) : Router(httpClient) {
      *
      * @return A list of all work orders
      */
-    suspend fun all(organisationId: String, schemeId: String): List<WorkOrder> {
-        return fetchJsonApiResources("/v3/orgs/$organisationId/governance/schemes/$schemeId/work-orders")
+    suspend fun all(organisationId: String, schemeId: String): PaginatedList<WorkOrder> {
+        return fetchPaginatedJsonApiResources("/v3/orgs/$organisationId/governance/schemes/$schemeId/work-orders")
     }
 
     /**

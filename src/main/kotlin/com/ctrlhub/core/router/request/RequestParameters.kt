@@ -6,14 +6,14 @@ data class FilterOption(
 )
 
 abstract class AbstractRequestParameters(
+    val offset: Int? = null,
+    val limit: Int? = null,
     val filterOptions: List<FilterOption>
 ) {
-    fun withFilters(vararg filters: FilterOption): RequestParameters {
-        return RequestParameters(filterOptions = this.filterOptions + filters)
-    }
-
     open fun toMap(): Map<String, String> {
         val queryParams = mutableMapOf<String, String>()
+        offset?.let { queryParams["offset"] = it.toString() }
+        limit?.let { queryParams["limit"] = it.toString() }
 
         filterOptions.forEach { queryParams["filter[${it.field}]"] = it.value }
 
@@ -22,13 +22,17 @@ abstract class AbstractRequestParameters(
 }
 
 class RequestParameters(
+    offset: Int? = null,
+    limit: Int? = null,
     filterOptions: List<FilterOption> = emptyList()
-) : AbstractRequestParameters(filterOptions)
+) : AbstractRequestParameters(offset, limit, filterOptions)
 
 open class RequestParametersWithIncludes<TIncludes>(
+    offset: Int? = null,
+    limit: Int? = null,
     filterOptions: List<FilterOption> = emptyList(),
     val includes: List<TIncludes> = emptyList()
-) : AbstractRequestParameters(filterOptions) where TIncludes : JsonApiIncludes {
+) : AbstractRequestParameters(offset, limit, filterOptions) where TIncludes : JsonApiIncludes {
 
     fun withIncludes(vararg includes: TIncludes): RequestParametersWithIncludes<TIncludes> {
         return copy(includes = this.includes + includes)
@@ -51,5 +55,5 @@ open class RequestParametersWithIncludes<TIncludes>(
     private fun copy(
         filterOptions: List<FilterOption> = this.filterOptions,
         includes: List<TIncludes> = this.includes
-    ) = RequestParametersWithIncludes(filterOptions, includes)
+    ) = RequestParametersWithIncludes(offset, limit, filterOptions, includes)
 }

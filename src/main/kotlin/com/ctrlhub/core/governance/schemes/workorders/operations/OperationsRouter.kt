@@ -1,6 +1,7 @@
 package com.ctrlhub.core.governance.schemes.workorders.operations
 
 import com.ctrlhub.core.Api
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.governance.schemes.workorders.WorkOrdersRouter
 import com.ctrlhub.core.governance.schemes.workorders.operations.response.Operation
 import com.ctrlhub.core.iam.response.User
@@ -18,10 +19,10 @@ class OperationsRouter(httpClient: HttpClient) : Router(httpClient) {
      *
      * @return A list of all operations
      */
-    suspend fun all(organisationId: String, schemeId: String, workOrderId: String): List<Operation> {
+    suspend fun all(organisationId: String, schemeId: String, workOrderId: String): PaginatedList<Operation> {
         val endpoint = "/v3/orgs/$organisationId/governance/schemes/$schemeId/work-orders/$workOrderId/operations"
 
-        return fetchJsonApiResources(endpoint, emptyMap(), Operation::class.java, User::class.java)
+        return fetchPaginatedJsonApiResources(endpoint, emptyMap(), Operation::class.java, User::class.java)
     }
 
     /**

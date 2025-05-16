@@ -1,6 +1,7 @@
 package com.ctrlhub.core.assets.vehicles
 
 import com.ctrlhub.core.Api
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.assets.vehicles.resource.Vehicle
 import com.ctrlhub.core.iam.response.User
 import com.ctrlhub.core.router.Router
@@ -29,9 +30,11 @@ enum class VehicleIncludes(val value: String) : JsonApiIncludes {
 }
 
 class VehicleRequestParameters(
+    offset: Int = 0,
+    limit: Int = 100,
     filterOptions: List<FilterOption> = emptyList(),
     includes: List<VehicleIncludes> = emptyList()
-) : RequestParametersWithIncludes<VehicleIncludes>(filterOptions, includes)
+) : RequestParametersWithIncludes<VehicleIncludes>(offset, limit, filterOptions, includes)
 
 /**
  * A vehicles router that deals with the vehicles realm of the Ctrl Hub API
@@ -49,8 +52,8 @@ class VehiclesRouter(httpClient: HttpClient) : Router(httpClient) {
     suspend fun all(
         organisationId: String,
         requestParameters: VehicleRequestParameters = VehicleRequestParameters()
-    ): List<Vehicle> {
-        return fetchJsonApiResources(
+    ): PaginatedList<Vehicle> {
+        return fetchPaginatedJsonApiResources(
             "/v3/orgs/$organisationId/assets/vehicles",
             requestParameters.toMap(),
             User::class.java

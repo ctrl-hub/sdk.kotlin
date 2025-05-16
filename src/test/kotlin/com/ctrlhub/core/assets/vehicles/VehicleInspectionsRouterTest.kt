@@ -1,5 +1,6 @@
 package com.ctrlhub.core.assets.vehicles
 
+import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.assets.vehicles.resource.VehicleInspection
 import com.ctrlhub.core.assets.vehicles.resource.VehicleInspectionChecks
 import com.ctrlhub.core.configureForTest
@@ -35,9 +36,9 @@ class VehicleInspectionsRouterTest {
                 organisationId = "org-123",
                 vehicleId = "vehicle-123"
             )
-            assertIs<List<VehicleInspection>>(response)
-            assertNotNull(response[0].id)
-            assertNotNull(response[0].checks)
+            assertIs<PaginatedList<VehicleInspection>>(response)
+            assertNotNull(response.data[0].id)
+            assertNotNull(response.data[0].checks)
         }
     }
 
