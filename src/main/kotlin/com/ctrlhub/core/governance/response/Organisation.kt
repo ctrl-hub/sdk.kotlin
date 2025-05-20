@@ -32,7 +32,7 @@ class Organisation {
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Settings {
-    lateinit var nomenclature: Nomenclature
+    var nomenclature: Nomenclature? = null
 }
 
 /**
@@ -68,7 +68,7 @@ class OrganisationResponseMetaPage {
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 class Nomenclature {
-    lateinit var governance: GovernanceNomenclature
+    var governance: GovernanceNomenclature? = null
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)
