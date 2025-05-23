@@ -1,5 +1,6 @@
 package com.ctrlhub.core.datacapture
 
+import com.ctrlhub.core.Api
 import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.datacapture.response.FormSchema
 import com.ctrlhub.core.extractPaginationFromMeta
@@ -68,3 +69,6 @@ class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
 
     private fun JsonElement.jsonObjectOrNull(): JsonObject? = this as? JsonObject
 }
+
+val Api.formSchemas: FormSchemasRouter
+    get() = FormSchemasRouter(httpClient)
