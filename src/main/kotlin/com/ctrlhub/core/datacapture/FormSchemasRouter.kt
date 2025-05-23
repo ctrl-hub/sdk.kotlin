@@ -2,26 +2,69 @@ package com.ctrlhub.core.datacapture
 
 import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.datacapture.response.FormSchema
+import com.ctrlhub.core.extractPaginationFromMeta
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.RequestParameters
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import kotlinx.serialization.json.*
 
-/**
- * A router that interacts with the form schemas realm of the Ctrl Hub API
- */
-class FormSchemasRouter(httpClient: HttpClient): Router(httpClient) {
+class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
 
-    /**
-     * Get all form schemas for a given form and organisation
-     *
-     * @param organisationId String The organisation ID to retrieve all for schemas for
-     * @param formId String The form ID to retrieve all schemas for
-     *
-     * @return A paginated response of all form schemas
-     */
-    suspend fun all(organisationId: String, formId: String, requestParameters: RequestParameters = RequestParameters()): PaginatedList<FormSchema> {
+    suspend fun all(
+        organisationId: String,
+        formId: String,
+        requestParameters: RequestParameters = RequestParameters()
+    ): PaginatedList<FormSchema> {
         val endpoint = "/v3/orgs/${organisationId}/data-capture/forms/{$formId}/schemas"
 
-        return fetchPaginatedJsonApiResources(endpoint, requestParameters.toMap(), FormSchema::class.java)
+        val response = performGet(endpoint, requestParameters.toMap())
+        val jsonContent = Json.parseToJsonElement(response.body<String>()).jsonObject
+
+        val dataArray = jsonContent["data"]?.jsonArray ?: JsonArray(emptyList())
+        val formSchemas = dataArray.mapNotNull { item ->
+            item.jsonObjectOrNull()?.let { instantiateFormSchemaFromJson(it) }
+        }
+
+        return PaginatedList(
+            data = formSchemas,
+            pagination = extractPaginationFromMeta(jsonContent)
+        )
     }
+
+    suspend fun one(
+        organisationId: String,
+        formId: String,
+        schemaId: String,
+        requestParameters: RequestParameters = RequestParameters()
+    ): FormSchema {
+        val endpoint = "/v3/orgs/$organisationId/data-capture/forms/$formId/schemas/$schemaId"
+
+        val response = performGet(endpoint, requestParameters.toMap())
+        val jsonContent = Json.parseToJsonElement(response.body<String>()).jsonObject
+
+        val dataObject = jsonContent["data"]?.jsonObject
+            ?: throw IllegalStateException("Missing data object")
+
+        return instantiateFormSchemaFromJson(dataObject)
+    }
+
+    private fun instantiateFormSchemaFromJson(json: JsonObject): FormSchema {
+        val id = json["id"]?.jsonPrimitive?.content
+            ?: throw IllegalStateException("Missing id")
+
+        val attributes = json["attributes"]?.jsonObject ?: JsonObject(emptyMap())
+        val model = attributes["model"]?.jsonObjectOrNull()
+        val views = attributes["views"]?.jsonObjectOrNull()
+
+        return FormSchema(
+            id = id,
+            modelConfig = model,
+            viewsConfig = views,
+            modelConfigStr = model?.toString() ?: "",
+            viewsConfigStr = views?.toString() ?: ""
+        )
+    }
+
+    private fun JsonElement.jsonObjectOrNull(): JsonObject? = this as? JsonObject
 }

@@ -16,7 +16,9 @@
           },
           "type": "object"
         },
-        "views": null
+        "views": {
+          "test": true
+        }
       },
       "relationships": {
         "form": {
