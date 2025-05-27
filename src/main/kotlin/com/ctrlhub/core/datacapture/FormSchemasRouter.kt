@@ -17,7 +17,7 @@ class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
         formId: String,
         requestParameters: RequestParameters = RequestParameters()
     ): PaginatedList<FormSchema> {
-        val endpoint = "/v3/orgs/${organisationId}/data-capture/forms/{$formId}/schemas"
+        val endpoint = "/v3/orgs/$organisationId/data-capture/forms/{$formId}/schemas"
 
         val response = performGet(endpoint, requestParameters.toMap())
         val jsonContent = Json.parseToJsonElement(response.body<String>()).jsonObject

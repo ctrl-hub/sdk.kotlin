@@ -24,7 +24,7 @@ class FormsRouter(httpClient: HttpClient) : Router(httpClient) {
         requestParameters: RequestParameters = RequestParameters()
     ): PaginatedList<Form> {
         return fetchPaginatedJsonApiResources(
-            "/v3/orgs/${organisationId}/data-capture/forms",
+            "/v3/orgs/$organisationId/data-capture/forms",
             requestParameters.toMap(),
             Form::class.java
         )
@@ -38,7 +38,7 @@ class FormsRouter(httpClient: HttpClient) : Router(httpClient) {
      * @return FOrm
      */
     suspend fun one(organisationId: String, formId: String): Form {
-        return fetchJsonApiResource("/v3/orgs/${organisationId}/data-capture-forms/${formId}")
+        return fetchJsonApiResource("/v3/orgs/$organisationId/data-capture-forms/$formId")
     }
 }
 
