@@ -1,0 +1,155 @@
+{
+  "data": [
+    {
+      "id": "6c9d9e18-1f1d-4b98-81d2-7a8017c7eaa3",
+      "type": "images",
+      "attributes": {
+        "bytes": 18722,
+        "dimensions": [
+          {
+            "width": 160,
+            "height": 160
+          },
+          {
+            "width": 320,
+            "height": 320
+          },
+          {
+            "width": 480,
+            "height": 480
+          },
+          {
+            "width": 100,
+            "height": 56
+          }
+        ],
+        "extension": ".png",
+        "height": 56,
+        "mime_type": "image/png",
+        "width": 100
+      },
+      "relationships": {
+        "organisation": {
+          "data": {
+            "id": "4e5c97c3-ced7-4e17-812d-2d7dfd10be19",
+            "type": "organisations"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2025-05-12T17:34:13.229Z"
+      }
+    },
+    {
+      "id": "f409fef9-6b53-4a5b-b4a7-4bafde0d9c77",
+      "type": "images",
+      "attributes": {
+        "bytes": 18722,
+        "dimensions": [
+          {
+            "width": 160,
+            "height": 160
+          },
+          {
+            "width": 320,
+            "height": 320
+          },
+          {
+            "width": 480,
+            "height": 480
+          },
+          {
+            "width": 100,
+            "height": 56
+          }
+        ],
+        "extension": ".png",
+        "height": 56,
+        "mime_type": "image/png",
+        "width": 100
+      },
+      "relationships": {
+        "organisation": {
+          "data": {
+            "id": "4e5c97c3-ced7-4e17-812d-2d7dfd10be19",
+            "type": "organisations"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2025-05-16T16:15:39.033Z"
+      }
+    },
+    {
+      "id": "87937f03-f7c7-466b-82b6-91ac0fdbd5ab",
+      "type": "images",
+      "attributes": {
+        "bytes": 18722,
+        "dimensions": [
+          {
+            "width": 160,
+            "height": 160
+          },
+          {
+            "width": 320,
+            "height": 320
+          },
+          {
+            "width": 480,
+            "height": 480
+          },
+          {
+            "width": 100,
+            "height": 56
+          }
+        ],
+        "extension": ".png",
+        "height": 56,
+        "mime_type": "image/png",
+        "width": 100
+      },
+      "relationships": {
+        "organisation": {
+          "data": {
+            "id": "4e5c97c3-ced7-4e17-812d-2d7dfd10be19",
+            "type": "organisations"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2025-05-16T16:17:07.337Z"
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "current_page": 1,
+      "counts": {
+        "resources": 3,
+        "pages": 1
+      },
+      "requested": {
+        "offset": 0,
+        "limit": 100
+      },
+      "offsets": {
+        "previous": null,
+        "next": null
+      }
+    },
+    "features": {
+      "params": {
+        "include": {
+          "options": null
+        },
+        "sort": {
+          "default": "",
+          "options": null
+        }
+      }
+    }
+  },
+  "jsonapi": {
+    "version": "1.0"
+  }
+}

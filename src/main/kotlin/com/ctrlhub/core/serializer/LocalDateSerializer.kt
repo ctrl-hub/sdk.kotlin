@@ -8,6 +8,7 @@ import kotlinx.serialization.encoding.Encoder
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializer(forClass = LocalDate::class)
 class LocalDateSerializer : KSerializer<LocalDate?> {
     private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
