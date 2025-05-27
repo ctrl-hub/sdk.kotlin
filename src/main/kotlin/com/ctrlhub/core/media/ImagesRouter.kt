@@ -1,5 +1,6 @@
 package com.ctrlhub.core.media
 
+import com.ctrlhub.core.Api
 import com.ctrlhub.core.api.ApiClientException
 import com.ctrlhub.core.api.ApiException
 import com.ctrlhub.core.api.UnauthorizedException
@@ -111,3 +112,6 @@ class ImagesRouter(httpClient: HttpClient): Router(httpClient) {
         }
     }
 }
+
+val Api.images: ImagesRouter
+    get() = ImagesRouter(httpClient)
