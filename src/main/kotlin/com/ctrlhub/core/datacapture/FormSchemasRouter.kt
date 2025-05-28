@@ -17,7 +17,7 @@ class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
         formId: String,
         requestParameters: RequestParameters = RequestParameters()
     ): PaginatedList<FormSchema> {
-        val endpoint = "/v3/orgs/$organisationId/data-capture/forms/{$formId}/schemas"
+        val endpoint = "/v3/orgs/$organisationId/data-capture/forms/$formId/schemas"
 
         val response = performGet(endpoint, requestParameters.toMap())
         val jsonContent = Json.parseToJsonElement(response.body<String>()).jsonObject
@@ -42,28 +42,21 @@ class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
         val endpoint = "/v3/orgs/$organisationId/data-capture/forms/$formId/schemas/$schemaId"
 
         val response = performGet(endpoint, requestParameters.toMap())
-        val jsonContent = Json.parseToJsonElement(response.body<String>()).jsonObject
+        val jsonContent = Json.parseToJsonElement(response.body<String>()).jsonObjectOrNull()
+            ?: throw IllegalStateException("Missing JSON content")
 
-        val dataObject = jsonContent["data"]?.jsonObject
-            ?: throw IllegalStateException("Missing data object")
-
-        return instantiateFormSchemaFromJson(dataObject)
+        return instantiateFormSchemaFromJson(jsonContent)
     }
 
     private fun instantiateFormSchemaFromJson(json: JsonObject): FormSchema {
         val id = json["id"]?.jsonPrimitive?.content
             ?: throw IllegalStateException("Missing id")
 
-        val attributes = json["attributes"]?.jsonObject ?: JsonObject(emptyMap())
-        val model = attributes["model"]?.jsonObjectOrNull()
-        val views = attributes["views"]?.jsonObjectOrNull()
+        val rawContent = json.toString()
 
         return FormSchema(
             id = id,
-            modelConfig = model,
-            viewsConfig = views,
-            modelConfigStr = model?.toString() ?: "",
-            viewsConfigStr = views?.toString() ?: ""
+            rawSchema = rawContent
         )
     }
 

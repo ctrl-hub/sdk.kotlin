@@ -43,8 +43,7 @@ class FormSchemasRouterTest {
             assertEquals(1, response.data.size)
             val formSchema = response.data[0]
             assertEquals("1.0.0", formSchema.id)
-            assertTrue(formSchema.modelConfigStr.isNotEmpty())
-            assertTrue(formSchema.viewsConfigStr.isNotEmpty())
+            assertTrue(formSchema.rawSchema.isNotEmpty())
         }
     }
 }
