@@ -3,7 +3,7 @@ package com.ctrlhub.core.governance.schemes
 import com.ctrlhub.core.Api
 import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.governance.schemes.response.Scheme
-import com.ctrlhub.core.governance.schemes.workorders.response.WorkOrder
+import com.ctrlhub.core.governance.workorders.response.WorkOrder
 import com.ctrlhub.core.iam.response.User
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.FilterOption

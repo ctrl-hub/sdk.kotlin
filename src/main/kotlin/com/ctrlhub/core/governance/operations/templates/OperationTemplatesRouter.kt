@@ -1,9 +1,9 @@
-package com.ctrlhub.core.governance.schemes.workorders.operations.templates
+package com.ctrlhub.core.governance.operations.templates
 
 import com.ctrlhub.core.Api
 import com.ctrlhub.core.api.response.PaginatedList
-import com.ctrlhub.core.governance.schemes.workorders.operations.OperationsRouter
-import com.ctrlhub.core.governance.schemes.workorders.operations.templates.response.OperationTemplate
+import com.ctrlhub.core.governance.operations.OperationsRouter
+import com.ctrlhub.core.governance.operations.templates.response.OperationTemplate
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.RequestParameters
 import io.ktor.client.HttpClient

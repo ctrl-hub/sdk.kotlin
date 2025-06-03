@@ -2,7 +2,8 @@ package com.ctrlhub.core.governance.schemes.workorders.operations
 
 import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.configureForTest
-import com.ctrlhub.core.governance.schemes.workorders.operations.response.Operation
+import com.ctrlhub.core.governance.operations.OperationsRouter
+import com.ctrlhub.core.governance.operations.response.Operation
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
@@ -16,7 +17,7 @@ import kotlin.test.assertNotNull
 class OperationsRouterTest {
     @Test
     fun `can retrieve all operations for work order`() {
-        val jsonFilePath = Paths.get("src/test/resources/governance/schemes/workorders/operations/all-operations-response.json")
+        val jsonFilePath = Paths.get("src/test/resources/governance/operations/all-operations-response.json")
         val jsonContent = Files.readString(jsonFilePath)
 
         val mockEngine = MockEngine { request ->
@@ -32,8 +33,6 @@ class OperationsRouterTest {
         runBlocking {
             val response = operationsRouter.all(
                 organisationId = "123",
-                schemeId = "abc",
-                workOrderId = "def"
             )
 
             assertIs<PaginatedList<Operation>>(response)
@@ -43,7 +42,7 @@ class OperationsRouterTest {
 
     @Test
     fun `can retrieve a single operation`() {
-        val jsonFilePath = Paths.get("src/test/resources/governance/schemes/workorders/operations/one-operation-response.json")
+        val jsonFilePath = Paths.get("src/test/resources/governance/operations/one-operation-response.json")
         val jsonContent = Files.readString(jsonFilePath)
 
         val mockEngine = MockEngine { request ->
@@ -59,8 +58,6 @@ class OperationsRouterTest {
         runBlocking {
             val response = operationsRouter.one(
                 organisationId = "123",
-                schemeId = "abc",
-                workOrderId = "def",
                 operationId = "ghi"
             )
 

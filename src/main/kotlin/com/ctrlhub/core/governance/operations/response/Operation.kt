@@ -1,7 +1,7 @@
-package com.ctrlhub.core.governance.schemes.workorders.response
+package com.ctrlhub.core.governance.operations.response
 
+import com.ctrlhub.core.api.Assignable
 import com.ctrlhub.core.governance.response.Label
-import com.ctrlhub.core.governance.schemes.workorders.operations.response.Operation
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -10,28 +10,35 @@ import com.github.jasminb.jsonapi.annotations.Id
 import com.github.jasminb.jsonapi.annotations.Relationship
 import com.github.jasminb.jsonapi.annotations.Type
 import java.time.LocalDate
+import java.time.LocalDateTime
 
-@Type("work-orders")
+@Type("operations")
 @JsonIgnoreProperties(ignoreUnknown = true)
-class WorkOrder @JsonCreator constructor(
+class Operation @JsonCreator constructor(
     @Id(StringIdHandler::class) var id: String = "",
     @JsonProperty("name") var name: String = "",
     @JsonProperty("code") var code: String = "",
-    @JsonProperty("description") var description: String? = null,
-    @JsonProperty("start_date") var startDate: LocalDate? = null,
-    @JsonProperty("end_date") var endDate: LocalDate? = null,
+    @JsonProperty("description") var description: String? = "",
+    @JsonProperty("type") var type: String? = null,
+    @JsonProperty("scheduled") var scheduledDates: OperationScheduledDates? = null,
 
     @JsonProperty("labels")
     var labels: List<Label> = emptyList(),
 
-    @Relationship("operations", resolve = true)
-    var operations: List<Operation> = emptyList()
+    @Relationship("assignees")
+    var assignees: java.util.List<Assignable>? = null
 ) {
-    constructor() : this(
+    constructor(): this(
         name = "",
         code = "",
         description = "",
-        startDate = null,
-        endDate = null
+        type = null,
+        scheduledDates = null,
+        labels = emptyList()
     )
 }
+
+data class OperationScheduledDates(
+    val start: LocalDateTime? = null,
+    var end: LocalDateTime? = null,
+)

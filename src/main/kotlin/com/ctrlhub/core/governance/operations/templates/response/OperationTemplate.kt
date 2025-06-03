@@ -1,4 +1,4 @@
-package com.ctrlhub.core.governance.schemes.workorders.operations.templates.response
+package com.ctrlhub.core.governance.operations.templates.response
 
 import com.ctrlhub.core.governance.response.Label
 import com.fasterxml.jackson.annotation.JsonCreator

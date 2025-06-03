@@ -1,7 +1,7 @@
 package com.ctrlhub.core.governance.schemes.response
 
 import com.ctrlhub.core.governance.response.Label
-import com.ctrlhub.core.governance.schemes.workorders.response.WorkOrder
+import com.ctrlhub.core.governance.workorders.response.WorkOrder
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
