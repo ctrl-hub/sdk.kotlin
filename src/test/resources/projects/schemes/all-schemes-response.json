@@ -1,0 +1,112 @@
+{
+  "data": [
+    {
+      "id": "435c118a-9303-489f-95d9-cf46dbf3acb3",
+      "type": "schemes",
+      "attributes": {
+        "name": "Your Project",
+        "code": "CH.001",
+        "description": "Your project description",
+        "dates": {
+          "anticipated": {
+            "start": "2023-01-01T00:00:00Z",
+            "end": "2023-12-31T23:59:59Z"
+          }
+        },
+        "labels": [
+          {
+            "key": "status",
+            "value": "ready"
+          }
+        ]
+      },
+      "relationships": {
+        "organisation": {
+          "data": {
+            "id": "c000c344-8847-47da-a091-32e75902d3b1",
+            "type": "organisations"
+          }
+        },
+        "template": {
+          "data": {
+            "id": "f473a24a-0dea-4e08-8f01-e33872a90815",
+            "type": "scheme-templates"
+          }
+        },
+        "work_orders": {
+          "data": [
+            {
+              "id": "fb082ee5-b678-4451-b02b-8269aaf262a3",
+              "type": "work-orders"
+            }
+          ]
+        },
+        "operations": {
+          "data": [
+            {
+              "id": "a8a41819-be0c-48b9-9883-1378fc63a637",
+              "type": "operations"
+            }
+          ]
+        }
+      },
+      "meta": {
+        "created_at": "2025-05-06T18:37:12Z",
+        "updated_at": "2025-05-07T21:12:46Z",
+        "dates": {
+          "scheduled": {
+            "start": "2023-01-01T00:00:00Z",
+            "end": "2023-12-31T23:59:59Z"
+          }
+        },
+        "counts": {
+          "work_orders": 1,
+          "operations": 1,
+          "streets": 2,
+          "properties": 1
+        },
+        "completeness": {
+          "percentage": {
+            "completed": 0,
+            "aborted": 0,
+            "unknown": 100,
+            "cancelled": 0
+          },
+          "counts": {
+            "completed": 0,
+            "aborted": 0,
+            "unknown": 1,
+            "cancelled": 0
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "features": {
+      "include": {
+        "options": [
+          "related.resource"
+        ]
+      }
+    },
+    "pagination": {
+      "counts": {
+        "pages": 1,
+        "resources": 1
+      },
+      "current_page": 1,
+      "offsets": {
+        "next": null,
+        "previous": null
+      },
+      "requested": {
+        "limit": 10,
+        "offset": 0
+      }
+    }
+  },
+  "jsonapi": {
+    "version": "1.0"
+  }
+}

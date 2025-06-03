@@ -1,0 +1,119 @@
+{
+  "data": [
+    {
+      "id": "a8a41819-be0c-48b9-9883-1378fc63a637",
+      "type": "operations",
+      "attributes": {
+        "name": "Your Operation",
+        "code": "CH.001.001.001",
+        "description": "Your operation description",
+        "dates": {
+          "scheduled": {
+            "start": "2023-01-01T00:00:00Z",
+            "end": "2023-12-31T23:59:59Z"
+          }
+        },
+        "labels": [
+          {
+            "key": "status",
+            "value": "ready"
+          }
+        ]
+      },
+      "relationships": {
+        "organisation": {
+          "data": {
+            "id": "c000c344-8847-47da-a091-32e75902d3b1",
+            "type": "organisations"
+          }
+        },
+        "scheme": {
+          "data": {
+            "id": "435c118a-9303-489f-95d9-cf46dbf3acb3",
+            "type": "schemes"
+          }
+        },
+        "work_order": {
+          "data": {
+            "id": "fb082ee5-b678-4451-b02b-8269aaf262a3",
+            "type": "work-orders"
+          }
+        },
+        "assignees": {
+          "data": [
+            {
+              "id": "c742992c-a722-4ca6-8e50-f3585db322a5",
+              "type": "users"
+            }
+          ]
+        },
+        "permits": {
+          "data": [
+            {
+              "id": "42e751e1-0fac-4669-ad45-0b9767851fa8",
+              "type": "permits"
+            }
+          ]
+        },
+        "streets": {
+          "data": [
+            {
+              "id": 1234,
+              "type": "streets"
+            }
+          ]
+        },
+        "properties": {
+          "data": [
+            {
+              "id": 5678,
+              "type": "properties"
+            }
+          ]
+        },
+        "template": {
+          "data": {
+            "id": "4c4f3893-9187-4336-8a0d-19eab2bd78cc",
+            "type": "operation-templates"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2025-05-06T18:37:12Z",
+        "updated_at": "2025-05-07T21:12:46Z",
+        "from_template": true,
+        "counts": {
+          "streets": 2,
+          "properties": 1
+        }
+      }
+    }
+  ],
+  "meta": {
+    "features": {
+      "include": {
+        "options": [
+          "related.resource"
+        ]
+      }
+    },
+    "pagination": {
+      "counts": {
+        "pages": 1,
+        "resources": 1
+      },
+      "current_page": 1,
+      "offsets": {
+        "next": null,
+        "previous": null
+      },
+      "requested": {
+        "limit": 10,
+        "offset": 0
+      }
+    }
+  },
+  "jsonapi": {
+    "version": "1.0"
+  }
+}
