@@ -21,7 +21,7 @@ class OperationsRouter(httpClient: HttpClient) : Router(httpClient) {
     suspend fun all(organisationId: String, requestParameters: RequestParameters = RequestParameters()): PaginatedList<Operation> {
         val endpoint = "/v3/orgs/$organisationId/projects/operations"
 
-        return fetchPaginatedJsonApiResources(endpoint, emptyMap(), Operation::class.java, User::class.java)
+        return fetchPaginatedJsonApiResources(endpoint, requestParameters.toMap(), Operation::class.java, User::class.java)
     }
 
     /**
