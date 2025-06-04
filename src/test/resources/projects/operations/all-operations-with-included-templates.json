@@ -1,0 +1,152 @@
+{
+  "data": [
+    {
+      "id": "f3a1c9e5-9f48-42f5-8a3e-c2bfc26ebf5c",
+      "type": "operations",
+      "attributes": {
+        "code": "",
+        "dates": {
+          "scheduled": {}
+        },
+        "description": "Lorem ipsum dolor sit amet",
+        "labels": [
+          {
+            "key": "category",
+            "value": "example"
+          }
+        ],
+        "name": "Sample Operation Name"
+      },
+      "relationships": {
+        "assignees": {
+          "data": [
+            {
+              "id": "d9c332e2-80fc-4d1b-9f60-1e945cc6a9f3",
+              "type": "users"
+            }
+          ]
+        },
+        "organisation": {
+          "data": {
+            "id": "7c15ae62-91e3-45d4-babc-2652764d0125",
+            "type": "organisations"
+          }
+        },
+        "permits": {
+          "data": []
+        },
+        "properties": {
+          "data": []
+        },
+        "scheme": {
+          "data": {
+            "id": "eec9252a-0322-44c2-8fd2-b0fc75f885b6",
+            "type": "schemes"
+          }
+        },
+        "streets": {
+          "data": []
+        },
+        "teams": {
+          "data": []
+        },
+        "template": {
+          "data": {
+            "id": "96bc0c11-7f6a-403a-a499-7f9e1bb6811d",
+            "type": "operation-templates"
+          }
+        },
+        "work_order": {
+          "data": {
+            "id": "144b3a60-68a6-4206-81e7-f6fa85ce7c53",
+            "type": "work-orders"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2025-06-04T12:50:03.013Z",
+        "updated_at": "2025-06-04T12:50:09.727Z",
+        "counts": {
+          "properties": 0,
+          "streets": 0
+        }
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "current_page": 1,
+      "counts": {
+        "resources": 1,
+        "pages": 1
+      },
+      "requested": {
+        "offset": 0,
+        "limit": 100
+      },
+      "offsets": {
+        "previous": null,
+        "next": null
+      }
+    },
+    "features": {
+      "params": {
+        "include": {
+          "options": [
+            "template"
+          ]
+        },
+        "sort": {
+          "default": "",
+          "options": null
+        }
+      }
+    }
+  },
+  "jsonapi": {
+    "version": "1.0"
+  },
+  "included": [
+    {
+      "id": "96bc0c11-7f6a-403a-a499-7f9e1bb6811d",
+      "type": "operation-templates",
+      "attributes": {
+        "labels": [
+          {
+            "key": "type",
+            "value": "form"
+          }
+        ],
+        "name": "Example Template Name",
+        "requirements": {
+          "forms": [
+            {
+              "id": "bba23233-bb35-4d42-a1d1-5d33fcaa6d6b",
+              "required": true
+            }
+          ]
+        }
+      },
+      "relationships": {
+        "forms": {
+          "data": [
+            {
+              "id": "bba23233-bb35-4d42-a1d1-5d33fcaa6d6b",
+              "type": "forms"
+            }
+          ]
+        },
+        "organisation": {
+          "data": {
+            "id": "7c15ae62-91e3-45d4-babc-2652764d0125",
+            "type": "organisations"
+          }
+        }
+      },
+      "meta": {
+        "created_at": "2025-06-04T12:48:27.452Z",
+        "updated_at": "2025-06-04T12:48:27.452Z"
+      }
+    }
+  ]
+}

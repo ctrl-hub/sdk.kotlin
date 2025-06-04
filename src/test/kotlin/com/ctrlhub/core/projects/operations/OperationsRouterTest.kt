@@ -7,9 +7,11 @@ import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import java.nio.file.Files
 import java.nio.file.Paths
+import kotlin.test.assertEquals
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
@@ -62,6 +64,37 @@ class OperationsRouterTest {
 
             assertIs<Operation>(response)
             assertNotNull(response.id)
+        }
+    }
+
+    @Test
+    fun `can retrieve all operations with included templates`() {
+        val jsonFilePath = Paths.get("src/test/resources/projects/operations/all-operations-with-included-templates.json")
+        val jsonContent = Files.readString(jsonFilePath)
+
+        val mockEngine = MockEngine { request ->
+            respond(
+                content = jsonContent,
+                status = HttpStatusCode.OK,
+                headers = headersOf(HttpHeaders.ContentType, "application/json")
+            )
+        }
+
+        val operationsRouter = OperationsRouter(httpClient = HttpClient(mockEngine).configureForTest())
+
+        runBlocking {
+            val response = operationsRouter.all(
+                organisationId = "123",
+                requestParameters = OperationRequestParameters(
+                    includes = listOf(
+                        OperationIncludes.Template
+                    )
+                )
+            )
+
+            assertNotNull(response.data[0].template)
+            assertEquals("96bc0c11-7f6a-403a-a499-7f9e1bb6811d", response.data[0].template?.id)
+            assertEquals("Example Template Name", response.data[0].template?.name)
         }
     }
 }
