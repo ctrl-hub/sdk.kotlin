@@ -15,7 +15,7 @@ abstract class AbstractRequestParameters(
         offset?.let { queryParams["offset"] = it.toString() }
         limit?.let { queryParams["limit"] = it.toString() }
 
-        filterOptions.forEach { queryParams["filter[${it.field}]"] = it.value }
+        filterOptions.forEach { queryParams["filter=${it.field}"] = it.value }
 
         return queryParams
     }
