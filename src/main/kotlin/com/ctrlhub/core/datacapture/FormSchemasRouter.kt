@@ -3,12 +3,16 @@ package com.ctrlhub.core.datacapture
 import com.ctrlhub.core.Api
 import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.datacapture.response.FormSchema
+import com.ctrlhub.core.datacapture.response.FormSchemaMeta
 import com.ctrlhub.core.extractPaginationFromMeta
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.RequestParameters
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import kotlinx.serialization.json.*
+import java.time.LocalDateTime
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
 
@@ -53,10 +57,26 @@ class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
             ?: throw IllegalStateException("Missing id")
 
         val rawContent = json.toString()
+        val isoFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+
+        val formSchemaMeta = json["meta"]?.jsonObject?.let {
+            val createdAtStr = it["created_at"]?.jsonPrimitive?.content
+            val updatedAtStr = it["updated_at"]?.jsonPrimitive?.contentOrNull
+
+            FormSchemaMeta(
+                createdAt = createdAtStr?.let { ZonedDateTime.parse(it, isoFormatter).toLocalDateTime() }
+                    ?: throw IllegalStateException("Missing created_at"),
+                updatedAt = updatedAtStr?.takeIf { it.isNotEmpty() }?.let {
+                    ZonedDateTime.parse(it, isoFormatter).toLocalDateTime()
+                },
+                latest = it["latest"]?.jsonPrimitive?.content.orEmpty()
+            )
+        }
 
         return FormSchema(
             id = id,
-            rawSchema = rawContent
+            rawSchema = rawContent,
+            meta = formSchemaMeta,
         )
     }
 
