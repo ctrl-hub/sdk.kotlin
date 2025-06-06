@@ -32,6 +32,31 @@ dependencies {
     testImplementation(libs.ktor.client.mock)
 }
 
+val generateBuildConfig by tasks.registering {
+    val outputDir = layout.buildDirectory.dir("generated/source/buildConfig/com/ctrlhub")
+    val packageName = "com.ctrlhub"
+    val versionName = project.getGitTag()
+
+    outputs.dir(outputDir)
+
+    doLast {
+        val packageDir = outputDir.get().asFile.resolve(packageName.replace('.', '/'))
+        packageDir.mkdirs()
+        val buildConfigFile = packageDir.resolve("BuildConfig.kt")
+        buildConfigFile.writeText(
+            """
+            package $packageName
+
+            object BuildConfig {
+                const val VERSION_NAME = "$versionName"
+            }
+            """.trimIndent()
+        )
+    }
+}
+
+kotlin.sourceSets["main"].kotlin.srcDir(layout.buildDirectory.dir("generated/source/buildConfig"))
+
 fun Project.getGitTag(): String {
     return try {
         val process = ProcessBuilder("git", "describe", "--tags", "--abbrev=0")
@@ -70,4 +95,8 @@ publishing {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.named("compileKotlin") {
+    dependsOn(generateBuildConfig)
 }
