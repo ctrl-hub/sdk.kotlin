@@ -9,6 +9,7 @@ import com.ctrlhub.core.router.request.FilterOption
 import com.ctrlhub.core.router.request.JsonApiIncludes
 import com.ctrlhub.core.router.request.RequestParametersWithIncludes
 import io.ktor.client.HttpClient
+import io.ktor.http.ContentType
 
 enum class EquipmentExposureIncludes(val value: String) : JsonApiIncludes {
     Equipment("equipment"),
@@ -92,6 +93,7 @@ class EquipmentExposuresRouter(httpClient: HttpClient) : Router(httpClient) {
         val request = EquipmentExposureRequestParameters()
         return postJsonApiResource(
             "/v3/orgs/$organisationId/assets/equipment/$equipmentId/exposures", resource, request.toMap(),
+            contentType = ContentType.Application.Json,
             EquipmentItem::class.java
         )
     }

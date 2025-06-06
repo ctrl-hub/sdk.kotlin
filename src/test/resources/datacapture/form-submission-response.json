@@ -1,0 +1,19 @@
+{
+  "data": {
+    "type": "form-submission-versions",
+    "id": "submission-123",
+    "attributes": {
+      "payload": {
+        "Test": "value"
+      }
+    },
+    "relationships": {
+      "schema": {
+        "data": {
+          "type": "form-schema",
+          "id": "schema-789"
+        }
+      }
+    }
+  }
+}

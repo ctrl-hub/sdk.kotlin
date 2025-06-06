@@ -38,10 +38,11 @@ abstract class Router(val httpClient: HttpClient) {
     protected suspend inline fun <reified T> performPost(
         endpoint: String,
         body: T,
-        queryParameters: Map<String, String> = emptyMap()
+        queryParameters: Map<String, String> = emptyMap(),
+        contentType: ContentType = ContentType.Application.Json
     ): HttpResponse {
         return httpClient.post(endpoint) {
-            contentType(ContentType.Application.Json)
+            contentType(contentType)
             url {
                 queryParameters.forEach { key, value -> parameters.append(key, value) }
             }
@@ -188,6 +189,7 @@ abstract class Router(val httpClient: HttpClient) {
         endpoint: String,
         requestBody: T,
         queryParameters: Map<String, String> = emptyMap(),
+        contentType: ContentType = ContentType.Application.Json,
         vararg includedClasses: Class<*>
     ): T {
         return try {
@@ -201,6 +203,7 @@ abstract class Router(val httpClient: HttpClient) {
             val response: HttpResponse = performPost(
                 endpoint = endpoint,
                 body = jsonApiRequest,
+                contentType = contentType,
                 queryParameters = queryParameters
             )
 
