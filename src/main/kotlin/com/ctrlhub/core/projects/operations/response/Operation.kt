@@ -32,7 +32,7 @@ class Operation @JsonCreator constructor(
     var template: OperationTemplate? = null,
 
     @Relationship("properties")
-    var property: java.util.List<Property>? = null,
+    var properties: java.util.List<Property>? = null,
 ) {
     constructor(): this(
         name = "",
