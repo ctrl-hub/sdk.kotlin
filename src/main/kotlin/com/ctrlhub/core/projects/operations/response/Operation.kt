@@ -22,6 +22,9 @@ class Operation @JsonCreator constructor(
     @JsonProperty("description") var description: String? = "",
     @JsonProperty("dates") var dates: OperationDates? = null,
 
+    @JsonProperty("requirements")
+    val requirements: OperationRequirements? = null,
+
     @JsonProperty("labels")
     var labels: List<Label> = emptyList(),
 
@@ -51,3 +54,14 @@ data class OperationScheduledDates(
     val start: LocalDateTime? = null,
     var end: LocalDateTime? = null,
 )
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class OperationRequirements(
+    val forms: java.util.List<OperationFormRequirement>? = null,
+)
+
+data class OperationFormRequirement(
+    @JsonProperty("id") val formId: String,
+    @JsonProperty("required") val required: Boolean
+)
+

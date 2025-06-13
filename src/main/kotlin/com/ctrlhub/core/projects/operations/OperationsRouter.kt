@@ -14,7 +14,8 @@ import com.ctrlhub.core.router.request.RequestParametersWithIncludes
 import io.ktor.client.HttpClient
 
 enum class OperationIncludes(val value: String) : JsonApiIncludes {
-    Template("template");
+    Template("template"),
+    Forms("forms");
 
     override fun value(): String {
         return value
