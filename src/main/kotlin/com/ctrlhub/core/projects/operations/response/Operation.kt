@@ -1,6 +1,7 @@
 package com.ctrlhub.core.projects.operations.response
 
 import com.ctrlhub.core.api.Assignable
+import com.ctrlhub.core.geo.Property
 import com.ctrlhub.core.projects.operations.templates.response.OperationTemplate
 import com.ctrlhub.core.projects.response.Label
 import com.fasterxml.jackson.annotation.JsonCreator
@@ -28,14 +29,17 @@ class Operation @JsonCreator constructor(
     var assignees: java.util.List<Assignable>? = null,
 
     @Relationship("template")
-    var template: OperationTemplate? = null
+    var template: OperationTemplate? = null,
+
+    @Relationship("properties")
+    var property: java.util.List<Property>? = null,
 ) {
     constructor(): this(
         name = "",
         code = "",
         description = "",
         dates = null,
-        labels = emptyList()
+        labels = emptyList(),
     )
 }
 @JsonIgnoreProperties(ignoreUnknown = true)
