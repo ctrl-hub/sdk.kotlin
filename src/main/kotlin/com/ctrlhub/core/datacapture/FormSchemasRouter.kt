@@ -53,7 +53,7 @@ class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
     }
 
     private fun instantiateFormSchemaFromJson(json: JsonObject): FormSchema {
-        val id = json["id"]?.jsonPrimitive?.content
+        val id = json["data"]?.jsonObject["id"]?.jsonPrimitive?.content
             ?: throw IllegalStateException("Missing id")
 
         val rawContent = json.toString()
