@@ -7,11 +7,13 @@ import com.ctrlhub.core.api.UnauthorizedException
 import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.media.request.CreateImagePayload
 import com.ctrlhub.core.media.request.CreateImagePayloadAttributes
+import com.ctrlhub.core.media.request.CreateImagePayloadData
 import com.ctrlhub.core.media.response.Image
 import com.ctrlhub.core.router.Router
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
+import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import java.io.File
 import java.nio.file.Files
@@ -96,10 +98,12 @@ class ImagesRouter(httpClient: HttpClient): Router(httpClient) {
             val dataUri = "data:$mimeType;base64,$base64Data"
 
             val response = performPost(endpoint, body = CreateImagePayload(
-                attributes = CreateImagePayloadAttributes(
-                    content = dataUri
+                data = CreateImagePayloadData(
+                    attributes = CreateImagePayloadAttributes(
+                        content = dataUri
+                    ),
                 )
-            ))
+            ), contentType = ContentType.parse("application/vnd.api+json"))
 
             fetchJsonApiResource(response)
         } catch (e: ClientRequestException) {
