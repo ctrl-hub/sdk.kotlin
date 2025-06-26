@@ -1,5 +1,6 @@
 package com.ctrlhub.core.serializer
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializer
 import kotlinx.serialization.encoding.Decoder
@@ -8,6 +9,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializer(forClass = LocalDateTime::class)
 class LocalDateTimeSerializer : KSerializer<LocalDateTime> {
     private val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
