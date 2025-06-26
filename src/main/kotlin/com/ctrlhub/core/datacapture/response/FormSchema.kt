@@ -23,5 +23,11 @@ data class FormSchema(
 data class FormSchemaMeta @JsonCreator constructor(
     @JsonProperty("created_at") var createdAt: LocalDateTime,
     @JsonProperty("updated_at") var updatedAt: LocalDateTime?,
-    @JsonProperty("latest") var latest: String,
+    @JsonProperty("latest") var latest: FormSchemaLatestMeta? = null,
+)
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+data class FormSchemaLatestMeta(
+    @JsonProperty("id") val id: String = "",
+    @JsonProperty("version") val version: String = "",
 )

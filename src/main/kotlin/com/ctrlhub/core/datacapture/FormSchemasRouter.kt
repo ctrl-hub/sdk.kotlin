@@ -3,6 +3,7 @@ package com.ctrlhub.core.datacapture
 import com.ctrlhub.core.Api
 import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.datacapture.response.FormSchema
+import com.ctrlhub.core.datacapture.response.FormSchemaLatestMeta
 import com.ctrlhub.core.datacapture.response.FormSchemaMeta
 import com.ctrlhub.core.extractPaginationFromMeta
 import com.ctrlhub.core.router.Router
@@ -59,7 +60,7 @@ class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
         val rawContent = json.toString()
         val isoFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
-        val formSchemaMeta = json["meta"]?.jsonObject?.let {
+        val formSchemaMeta = json["meta"]?.jsonObject?.let { it ->
             val createdAtStr = it["created_at"]?.jsonPrimitive?.content
             val updatedAtStr = it["updated_at"]?.jsonPrimitive?.contentOrNull
 
@@ -69,7 +70,12 @@ class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
                 updatedAt = updatedAtStr?.takeIf { it.isNotEmpty() }?.let {
                     ZonedDateTime.parse(it, isoFormatter).toLocalDateTime()
                 },
-                latest = it["latest"]?.jsonPrimitive?.content.orEmpty()
+                latest = it["latest"]?.let { latestJson ->
+                    FormSchemaLatestMeta(
+                        id = latestJson.jsonObject["id"]?.jsonPrimitive?.content ?: "",
+                        version = latestJson.jsonObject["version"]?.jsonPrimitive?.content ?: "",
+                    )
+                }
             )
         }
 
