@@ -50,8 +50,11 @@ kotlin {
 }
 
 val generateBuildConfig by tasks.registering {
-    val outputDir = layout.buildDirectory.dir("generated/source/buildConfig/com/ctrlhub")
+    val outputDir = layout.buildDirectory.dir("generated/source/buildConfig")
     val packageName = "com.ctrlhub"
+    val versionName = providers.exec {
+        commandLine("git", "describe", "--tags", "--abbrev=0")
+    }.standardOutput.asText.map { it.trim() }.orElse("0.0.0")
 
     outputs.dir(outputDir)
 
@@ -64,7 +67,7 @@ val generateBuildConfig by tasks.registering {
             package $packageName
 
             object BuildConfig {
-                const val VERSION_NAME = "$version"
+                const val VERSION_NAME = "$versionName"
             }
             """.trimIndent()
         )
@@ -109,11 +112,11 @@ publishing {
     }
 }
 
-//tasks.test {
-//    useJUnitPlatform()
-//}
-
 tasks.matching { it.name.startsWith("compileKotlin") }
     .configureEach {
         dependsOn(generateBuildConfig)
     }
+
+tasks.named("jvmSourcesJar") {
+    dependsOn(generateBuildConfig)
+}
