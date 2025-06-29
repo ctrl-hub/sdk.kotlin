@@ -113,6 +113,7 @@ publishing {
 //    useJUnitPlatform()
 //}
 
-//tasks.named("compileKotlin") {
-//    dependsOn(generateBuildConfig)
-//}
+tasks.matching { it.name.startsWith("compileKotlin") }
+    .configureEach {
+        dependsOn(generateBuildConfig)
+    }
