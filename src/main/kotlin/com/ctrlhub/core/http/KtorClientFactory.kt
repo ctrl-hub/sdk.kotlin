@@ -3,7 +3,7 @@ package com.ctrlhub.core.http
 import com.ctrlhub.core.Config
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
-import io.ktor.client.engine.cio.CIO
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.UserAgent
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -11,7 +11,6 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.util.appendIfNameAbsent
 import kotlinx.serialization.json.Json
-import java.util.concurrent.atomic.AtomicReference
 
 /**
  * A wrapper around the Ktor client. This allows default configuration
@@ -20,7 +19,7 @@ import java.util.concurrent.atomic.AtomicReference
  */
 object KtorClientFactory {
     fun create(
-        httpClient: HttpClient = HttpClient(CIO),
+        httpClient: HttpClient = HttpClient(OkHttp),
         configBlock: HttpClientConfig<*>.() -> Unit = {}
     ): HttpClient {
         return configureHttpClient(httpClient, configBlock)
