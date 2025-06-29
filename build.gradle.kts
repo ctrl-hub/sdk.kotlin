@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "2.0.21"
+    kotlin("multiplatform") version "2.1.0"
     kotlin("plugin.serialization") version "2.1.0"
     `maven-publish`
 }
@@ -15,27 +15,43 @@ repositories {
     }
 }
 
-dependencies {
-    implementation(libs.kotlin.reflect)
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.cio)
-    implementation(libs.ktor.serialization.kotlinx.json)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.logging.plugin)
-    implementation(libs.jetbrains.kotlinx.serialization.json)
-    implementation(libs.jsonapi.converter)
-    implementation(libs.jackson.datatype.jsr)
-    implementation(libs.jackson.kotlin)
+kotlin {
+    jvm()
 
-    testImplementation(kotlin("test"))
-    testImplementation(libs.mockk)
-    testImplementation(libs.ktor.client.mock)
+    sourceSets {
+        jvmMain {
+            dependencies {
+                implementation(libs.ktor.client.cio)
+            }
+        }
+
+        commonMain {
+            dependencies {
+                implementation(libs.kotlin.reflect)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.serialization.kotlinx.json)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.logging.plugin)
+                implementation(libs.jetbrains.kotlinx.serialization.json)
+                implementation(libs.jsonapi.converter)
+                implementation(libs.jackson.datatype.jsr)
+                implementation(libs.jackson.kotlin)
+            }
+        }
+
+        commonTest {
+            dependencies {
+                implementation(kotlin("test"))
+                implementation(libs.mockk)
+                implementation(libs.ktor.client.mock)
+            }
+        }
+    }
 }
 
 val generateBuildConfig by tasks.registering {
     val outputDir = layout.buildDirectory.dir("generated/source/buildConfig/com/ctrlhub")
     val packageName = "com.ctrlhub"
-    val versionName = project.getGitTag()
 
     outputs.dir(outputDir)
 
@@ -48,14 +64,14 @@ val generateBuildConfig by tasks.registering {
             package $packageName
 
             object BuildConfig {
-                const val VERSION_NAME = "$versionName"
+                const val VERSION_NAME = "$version"
             }
             """.trimIndent()
         )
     }
 }
 
-kotlin.sourceSets["main"].kotlin.srcDir(layout.buildDirectory.dir("generated/source/buildConfig"))
+kotlin.sourceSets["commonMain"].kotlin.srcDir(layout.buildDirectory.dir("generated/source/buildConfig"))
 
 fun Project.getGitTag(): String {
     return try {
@@ -93,10 +109,10 @@ publishing {
     }
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
+//tasks.test {
+//    useJUnitPlatform()
+//}
 
-tasks.named("compileKotlin") {
-    dependsOn(generateBuildConfig)
-}
+//tasks.named("compileKotlin") {
+//    dependsOn(generateBuildConfig)
+//}

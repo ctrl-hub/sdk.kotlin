@@ -1,0 +1,65 @@
+package com.ctrlhub.core.assets.vehicles
+
+import com.ctrlhub.core.api.response.PaginatedList
+import com.ctrlhub.core.assets.vehicles.resource.VehicleManufacturer
+import com.ctrlhub.core.assets.vehicles.resource.VehicleModel
+import com.ctrlhub.core.configureForTest
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.respond
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.headersOf
+import kotlinx.coroutines.runBlocking
+import java.nio.file.Files
+import java.nio.file.Paths
+import kotlin.test.Test
+import kotlin.test.assertIs
+import kotlin.test.assertNotNull
+
+class VehiclesManufacturersRouterTest {
+    @Test
+    fun `can retrieve all vehicles`() {
+        val jsonFilePath = Paths.get("src/commonTest/resources/assets/vehicles/all-vehicle-manufacturers-response.json")
+        val jsonContent = Files.readString(jsonFilePath)
+
+        val mockEngine = MockEngine { request ->
+            respond(
+                content = jsonContent,
+                status = HttpStatusCode.OK,
+                headers = headersOf(HttpHeaders.ContentType, "application/json")
+            )
+        }
+
+        val vehicleManufacturersRouter = VehicleManufacturersRouter(httpClient = HttpClient(mockEngine).configureForTest())
+
+        runBlocking {
+            val response = vehicleManufacturersRouter.all()
+            assertIs<PaginatedList<VehicleManufacturer>>(response)
+            assertNotNull(response.data[0].id)
+        }
+    }
+
+    @Test
+    fun `can retrieve all vehicle models for a manufacturer`() {
+        val jsonFilePath = Paths.get("src/commonTest/resources/assets/vehicles/all-vehicle-models-response.json")
+        val jsonContent = Files.readString(jsonFilePath)
+
+        val mockEngine = MockEngine { request ->
+            respond(
+                content = jsonContent,
+                status = HttpStatusCode.OK,
+                headers = headersOf(HttpHeaders.ContentType, "application/json")
+            )
+        }
+
+        val vehicleManufacturersRouter = VehicleManufacturersRouter(httpClient = HttpClient(mockEngine).configureForTest())
+
+        runBlocking {
+            val response = vehicleManufacturersRouter.models(manufacturerId = "123")
+            assertIs<List<VehicleModel>>(response)
+            val first = response[0]
+            assertNotNull(first.id)
+        }
+    }
+}
