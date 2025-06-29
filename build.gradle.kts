@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "org.ctrlhub"
-version = "1.0-SNAPSHOT"
+version = project.getGitTag()
 
 repositories {
     mavenCentral()
