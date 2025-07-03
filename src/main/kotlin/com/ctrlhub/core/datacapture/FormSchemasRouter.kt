@@ -7,7 +7,10 @@ import com.ctrlhub.core.datacapture.response.FormSchemaLatestMeta
 import com.ctrlhub.core.datacapture.response.FormSchemaMeta
 import com.ctrlhub.core.extractPaginationFromMeta
 import com.ctrlhub.core.router.Router
+import com.ctrlhub.core.router.request.FilterOption
+import com.ctrlhub.core.router.request.JsonApiIncludes
 import com.ctrlhub.core.router.request.RequestParameters
+import com.ctrlhub.core.router.request.RequestParametersWithIncludes
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import kotlinx.serialization.json.*
@@ -15,12 +18,27 @@ import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
+enum class FormSchemaIncludes(val value: String) : JsonApiIncludes {
+    Xsources("x-sources");
+
+    override fun value(): String {
+        return value
+    }
+}
+
+class FormSchemaRequestParameters(
+    offset: Int = 0,
+    limit: Int = 100,
+    filterOptions: List<FilterOption> = emptyList(),
+    includes: List<FormSchemaIncludes> = emptyList()
+) : RequestParametersWithIncludes<FormSchemaIncludes>()
+
 class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
 
     suspend fun all(
         organisationId: String,
         formId: String,
-        requestParameters: RequestParameters = RequestParameters()
+        requestParameters: FormSchemaRequestParameters = FormSchemaRequestParameters()
     ): PaginatedList<FormSchema> {
         val endpoint = "/v3/orgs/$organisationId/data-capture/forms/$formId/schemas"
 
@@ -42,7 +60,7 @@ class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
         organisationId: String,
         formId: String,
         schemaId: String,
-        requestParameters: RequestParameters = RequestParameters()
+        requestParameters: FormSchemaRequestParameters = FormSchemaRequestParameters()
     ): FormSchema {
         val endpoint = "/v3/orgs/$organisationId/data-capture/forms/$formId/schemas/$schemaId"
 
