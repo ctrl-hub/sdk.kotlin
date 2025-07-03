@@ -9,12 +9,10 @@ import com.ctrlhub.core.extractPaginationFromMeta
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.FilterOption
 import com.ctrlhub.core.router.request.JsonApiIncludes
-import com.ctrlhub.core.router.request.RequestParameters
 import com.ctrlhub.core.router.request.RequestParametersWithIncludes
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import kotlinx.serialization.json.*
-import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -31,7 +29,12 @@ class FormSchemaRequestParameters(
     limit: Int = 100,
     filterOptions: List<FilterOption> = emptyList(),
     includes: List<FormSchemaIncludes> = emptyList()
-) : RequestParametersWithIncludes<FormSchemaIncludes>()
+) : RequestParametersWithIncludes<FormSchemaIncludes>(
+    offset = offset,
+    limit = limit,
+    filterOptions = filterOptions,
+    includes = includes,
+)
 
 class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
 
