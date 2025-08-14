@@ -5,16 +5,18 @@ import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.projects.workorders.WorkOrdersRouter
 import com.ctrlhub.core.projects.operations.response.Operation
 import com.ctrlhub.core.iam.response.User
+import com.ctrlhub.core.projects.appointments.response.Appointment
 import com.ctrlhub.core.projects.operations.templates.response.OperationTemplate
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.FilterOption
 import com.ctrlhub.core.router.request.JsonApiIncludes
-import com.ctrlhub.core.router.request.RequestParameters
 import com.ctrlhub.core.router.request.RequestParametersWithIncludes
 import io.ktor.client.HttpClient
 
 enum class OperationIncludes(val value: String) : JsonApiIncludes {
     Template("template"),
+    Appointments("appointment"),
+    Properties("properties"),
     Forms("forms");
 
     override fun value(): String {
@@ -46,7 +48,7 @@ class OperationsRouter(httpClient: HttpClient) : Router(httpClient) {
 
         return fetchPaginatedJsonApiResources(
             endpoint, requestParameters.toMap(), Operation::class.java,
-            OperationTemplate::class.java, User::class.java
+            OperationTemplate::class.java, User::class.java, Appointment::class.java
         )
     }
 

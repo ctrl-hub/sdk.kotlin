@@ -2,6 +2,7 @@ package com.ctrlhub.core.projects.operations.response
 
 import com.ctrlhub.core.api.Assignable
 import com.ctrlhub.core.geo.Property
+import com.ctrlhub.core.projects.appointments.response.Appointment
 import com.ctrlhub.core.projects.operations.templates.response.OperationTemplate
 import com.ctrlhub.core.projects.response.Label
 import com.fasterxml.jackson.annotation.JsonCreator
@@ -36,6 +37,9 @@ class Operation @JsonCreator constructor(
 
     @Relationship("properties")
     var properties: java.util.List<Property>? = null,
+
+    @Relationship("appointment")
+    var appointment: Appointment? = null
 ) {
     constructor(): this(
         name = "",
