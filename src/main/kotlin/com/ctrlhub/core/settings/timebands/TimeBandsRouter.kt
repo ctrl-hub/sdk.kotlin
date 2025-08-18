@@ -20,10 +20,11 @@ class TimeBandsRouter(httpClient: HttpClient) : Router(httpClient) {
      * @return A list of all time bands
      */
     suspend fun all(
+        organisationId: String,
         requestParameters: TimeBandsRequestParameters = TimeBandsRequestParameters()
-    ): java.util.List<TimeBand> {
-        val endpoint = "/settings/time-bands"
-        return fetchJsonApiResource(endpoint, requestParameters.toMap())
+    ): List<TimeBand> {
+        val endpoint = "/orgs/$organisationId/settings/time-bands"
+        return fetchJsonApiResources(endpoint, requestParameters.toMap())
     }
 
     /**
@@ -33,10 +34,11 @@ class TimeBandsRouter(httpClient: HttpClient) : Router(httpClient) {
      * @return The time band with the given ID
      */
     suspend fun one(
+        organisationId: String,
         timeBandId: String,
         requestParameters: TimeBandsRequestParameters = TimeBandsRequestParameters()
     ): TimeBand {
-        val endpoint = "/settings/time-bands/$timeBandId"
+        val endpoint = "/orgs/$organisationId/settings/time-bands/$timeBandId"
         return fetchJsonApiResource(endpoint, requestParameters.toMap(), TimeBand::class.java)
     }
 }
