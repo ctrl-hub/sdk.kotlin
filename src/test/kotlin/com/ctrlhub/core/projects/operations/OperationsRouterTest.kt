@@ -135,6 +135,10 @@ class OperationsRouterTest {
             assertEquals("appointment-1", appointment?.id)
             assertEquals("2025-08-15T07:00:00Z", appointment?.startTime)
             assertEquals("2025-08-15T11:00:00Z", appointment?.endTime)
+
+            // Validate the timeband relationship is hydrated (just the ID)
+            assertNotNull(appointment?.timeBand, "TimeBand should not be null")
+            assertEquals("timeband-1", appointment?.timeBand?.id)
         }
     }
 }

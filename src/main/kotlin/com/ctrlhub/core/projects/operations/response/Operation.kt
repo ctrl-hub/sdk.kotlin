@@ -5,6 +5,7 @@ import com.ctrlhub.core.geo.Property
 import com.ctrlhub.core.projects.appointments.response.Appointment
 import com.ctrlhub.core.projects.operations.templates.response.OperationTemplate
 import com.ctrlhub.core.projects.response.Label
+import com.ctrlhub.core.settings.timebands.response.TimeBand
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -68,4 +69,3 @@ data class OperationFormRequirement(
     @JsonProperty("id") val formId: String,
     @JsonProperty("required") val required: Boolean
 )
-
