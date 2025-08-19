@@ -23,7 +23,7 @@ class TimeBandsRouter(httpClient: HttpClient) : Router(httpClient) {
         organisationId: String,
         requestParameters: TimeBandsRequestParameters = TimeBandsRequestParameters()
     ): List<TimeBand> {
-        val endpoint = "/orgs/$organisationId/settings/time-bands"
+        val endpoint = "/v3/orgs/$organisationId/settings/time-bands"
         return fetchJsonApiResources(endpoint, requestParameters.toMap())
     }
 
