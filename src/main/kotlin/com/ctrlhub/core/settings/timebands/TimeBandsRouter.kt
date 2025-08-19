@@ -38,7 +38,7 @@ class TimeBandsRouter(httpClient: HttpClient) : Router(httpClient) {
         timeBandId: String,
         requestParameters: TimeBandsRequestParameters = TimeBandsRequestParameters()
     ): TimeBand {
-        val endpoint = "/orgs/$organisationId/settings/time-bands/$timeBandId"
+        val endpoint = "/v3/orgs/$organisationId/settings/time-bands/$timeBandId"
         return fetchJsonApiResource(endpoint, requestParameters.toMap(), TimeBand::class.java)
     }
 }
