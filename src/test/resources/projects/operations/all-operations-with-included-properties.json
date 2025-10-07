@@ -1,0 +1,186 @@
+{
+    "data": {
+        "id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+        "type": "operations",
+        "attributes": {
+            "code": "",
+            "dates": {
+                "scheduled": {
+                    "start": "2025-08-15T07:00:00Z",
+                    "end": "2025-08-15T11:00:00Z"
+                }
+            },
+            "description": "",
+            "done_reason": "",
+            "labels": [],
+            "name": "Lorem Ipsum Operation",
+            "requirements": {
+                "forms": [
+                    {
+                        "id": "f1a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c",
+                        "required": true
+                    }
+                ]
+            },
+            "status": "todo"
+        },
+        "relationships": {
+            "appointment": {
+                "data": {
+                    "id": "b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e",
+                    "type": "appointments"
+                }
+            },
+            "assignees": {
+                "data": [
+                    {
+                        "id": "c3d4e5f6-a7b8-4c9d-0e1f-2a3b4c5d6e7f",
+                        "type": "users"
+                    }
+                ]
+            },
+            "forms": {
+                "data": [
+                    {
+                        "id": "f1a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c",
+                        "type": "forms"
+                    }
+                ]
+            },
+            "organisation": {
+                "data": {
+                    "id": "d4e5f6a7-b8c9-4d0e-1f2a-3b4c5d6e7f8a",
+                    "type": "organisations"
+                }
+            },
+            "permits": {
+                "data": []
+            },
+            "properties": {
+                "data": [
+                    {
+                        "id": "e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9b",
+                        "type": "properties"
+                    },
+                    {
+                        "id": "f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b0c",
+                        "type": "properties"
+                    }
+                ]
+            },
+            "scheme": {
+                "data": {
+                    "id": "a7b8c9d0-e1f2-4a3b-4c5d-6e7f8a9b0c1d",
+                    "type": "schemes"
+                }
+            },
+            "streets": {
+                "data": []
+            },
+            "teams": {
+                "data": []
+            },
+            "template": {
+                "data": null
+            },
+            "work_order": {
+                "data": {
+                    "id": "b8c9d0e1-f2a3-4b4c-5d6e-7f8a9b0c1d2e",
+                    "type": "work-orders"
+                }
+            }
+        },
+        "meta": {
+            "created_at": "2025-08-14T09:23:43.023Z",
+            "updated_at": "2025-10-07T10:41:18.231Z",
+            "counts": {
+                "properties": 2,
+                "streets": 0
+            }
+        }
+    },
+    "jsonapi": {
+        "version": "1.0"
+    },
+    "included": [
+        {
+            "id": "f6a7b8c9-d0e1-4f2a-3b4c-5d6e7f8a9b0c",
+            "type": "properties",
+            "attributes": {
+                "address": {
+                    "description": "42, Lorem Street, AB12 3CD",
+                    "department": "Department of Lorem",
+                    "organisation": "Ipsum Corporation",
+                    "number": "42",
+                    "name": "Lorem House",
+                    "thoroughfare": "Lorem Street",
+                    "dependent_thoroughfare": "Ipsum Lane",
+                    "post_town": "DOLOR",
+                    "postcode": "AB12 3CD",
+                    "po_box": "",
+                    "country": "United Kingdom"
+                },
+                "location": {
+                    "british_national_grid": null,
+                    "lat_long": {
+                        "latitude": 51.5074,
+                        "longitude": -0.1278
+                    }
+                },
+                "meters": [
+                    {
+                        "type": "mprn",
+                        "number": 1234567890
+                    }
+                ],
+                "psr": {
+                    "indicator": false,
+                    "priority": null,
+                    "notes": null,
+                    "contact": null
+                },
+                "uprn": 100000000001
+            }
+        },
+        {
+            "id": "e5f6a7b8-c9d0-4e1f-2a3b-4c5d6e7f8a9b",
+            "type": "properties",
+            "attributes": {
+                "address": {
+                    "description": "15, Dolor Avenue, EF45 6GH",
+                    "department": "Sit Amet Department",
+                    "organisation": "Consectetur Limited",
+                    "number": "15",
+                    "name": "Amet Building",
+                    "thoroughfare": "Dolor Avenue",
+                    "dependent_thoroughfare": "Consectetur Road",
+                    "post_town": "ADIPISCING",
+                    "postcode": "EF45 6GH",
+                    "po_box": "",
+                    "country": "United Kingdom"
+                },
+                "location": {
+                    "british_national_grid": null,
+                    "lat_long": {
+                        "latitude": 51.5145,
+                        "longitude": -0.0945
+                    }
+                },
+                "meters": [
+                    {
+                        "type": "mprn",
+                        "number": 9876543210
+                    }
+                ],
+                "psr": {
+                    "indicator": true,
+                    "priority": "high",
+                    "notes": "Lorem ipsum dolor sit amet",
+                    "contact": "John Doe"
+                },
+                "uprn": 100000000002
+            }
+        }
+    ]
+}
+
