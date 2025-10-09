@@ -1,23 +1,30 @@
 package com.ctrlhub.core.datacapture
 
 import com.ctrlhub.core.Api
-import com.ctrlhub.core.datacapture.resource.FormSubmissionVersion
-import com.ctrlhub.core.datacapture.response.FormSchema
+import com.ctrlhub.core.datacapture.response.FormSubmission
+import com.ctrlhub.core.datacapture.response.Form
+import com.ctrlhub.core.iam.response.User
+import com.ctrlhub.core.projects.response.Organisation
 import com.ctrlhub.core.router.Router
 import io.ktor.client.HttpClient
-import io.ktor.http.ContentType
+import com.ctrlhub.core.api.response.PaginatedList
 
 class FormSubmissionsRouter(httpClient: HttpClient) : Router(httpClient) {
-    suspend fun create(organisationId: String, formId: String, schemaId: String, payload: Map<String, Any>): FormSubmissionVersion {
-        return postJsonApiResource("/v3/orgs/$organisationId/data-capture/forms/$formId/submissions", requestBody = FormSubmissionVersion(
-            payload = payload,
-            id = "",
-            schema = FormSchema(
-                id = schemaId,
-                rawSchema = null,
-            )
-        ), queryParameters = emptyMap(), contentType = ContentType.parse("application/vnd.api+json"), FormSubmissionVersion::class.java,
-            FormSchema::class.java)
+    /**
+     * Get paginated form-submission resources (hydrated with relationships)
+     *
+     * @return PaginatedList of FormSubmission
+     */
+    suspend fun all(organisationId: String, formId: String): PaginatedList<FormSubmission> {
+        return fetchPaginatedJsonApiResources(
+            "/v3/orgs/$organisationId/data-capture/forms/$formId/submissions",
+            queryParameters = emptyMap<String, String>(),
+            FormSubmission::class.java,
+            User::class.java,
+            Form::class.java,
+            Organisation::class.java,
+            com.ctrlhub.core.datacapture.resource.FormSubmissionVersion::class.java
+        )
     }
 }
 

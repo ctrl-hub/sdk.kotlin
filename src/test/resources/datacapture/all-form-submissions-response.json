@@ -1,0 +1,232 @@
+{
+  "data": [
+    {
+      "id": "6a3b9f2d-1c4e-4f6b-8a2d-0e1f2a3b4c5d",
+      "type": "form-submissions",
+      "relationships": {
+        "contributors": {
+          "data": [
+            {
+              "id": "b2c3d4e5-f6a7-4890-8123-456789abcdef",
+              "type": "users"
+            }
+          ]
+        },
+        "creator": {
+          "data": {
+            "id": "b2c3d4e5-f6a7-4890-8123-456789abcdef",
+            "type": "users"
+          }
+        },
+        "form": {
+          "data": {
+            "id": "c3d4e5f6-1234-5678-9abc-def012345678",
+            "type": "forms"
+          }
+        },
+        "organisation": {
+          "data": {
+            "id": "d4e5f6a7-2345-6789-abcd-ef0123456789",
+            "type": "organisations"
+          }
+        },
+        "versions": {
+          "data": [
+            {
+              "id": "e5f6a7b8-3456-789a-bcde-f01234567890",
+              "type": "form-submission-versions"
+            }
+          ]
+        }
+      },
+      "meta": {
+        "created_at": "2025-06-27T09:58:46.057Z",
+        "modified_at": "2025-06-27T09:58:46.057Z",
+        "counts": {
+          "versions": 1,
+          "contributors": 1
+        },
+        "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      }
+    },
+    {
+      "id": "7b4c0a3e-2d5f-4a7b-9c3e-1f2b3c4d5e6f",
+      "type": "form-submissions",
+      "relationships": {
+        "contributors": {
+          "data": [
+            {
+              "id": "f6a7b8c9-0123-4567-89ab-cdef01234567",
+              "type": "users"
+            }
+          ]
+        },
+        "creator": {
+          "data": {
+            "id": "f6a7b8c9-0123-4567-89ab-cdef01234567",
+            "type": "users"
+          }
+        },
+        "form": {
+          "data": {
+            "id": "c3d4e5f6-1234-5678-9abc-def012345678",
+            "type": "forms"
+          }
+        },
+        "organisation": {
+          "data": {
+            "id": "d4e5f6a7-2345-6789-abcd-ef0123456789",
+            "type": "organisations"
+          }
+        },
+        "versions": {
+          "data": [
+            {
+              "id": "a7b8c9d0-4567-89ab-cdef-0123456789ab",
+              "type": "form-submission-versions"
+            }
+          ]
+        }
+      },
+      "meta": {
+        "created_at": "2025-07-17T10:07:25.281Z",
+        "modified_at": "2025-07-17T10:07:25.281Z",
+        "counts": {
+          "versions": 1,
+          "contributors": 1
+        },
+        "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      }
+    },
+    {
+      "id": "8c5d1b4f-3e60-4b8c-ade1-2b3c4d5e6f70",
+      "type": "form-submissions",
+      "relationships": {
+        "contributors": {
+          "data": [
+            {
+              "id": "c8d9e0f1-2345-6789-abcd-ef0123456789",
+              "type": "users"
+            }
+          ]
+        },
+        "creator": {
+          "data": {
+            "id": "c8d9e0f1-2345-6789-abcd-ef0123456789",
+            "type": "users"
+          }
+        },
+        "form": {
+          "data": {
+            "id": "c3d4e5f6-1234-5678-9abc-def012345678",
+            "type": "forms"
+          }
+        },
+        "organisation": {
+          "data": {
+            "id": "d4e5f6a7-2345-6789-abcd-ef0123456789",
+            "type": "organisations"
+          }
+        },
+        "versions": {
+          "data": [
+            {
+              "id": "b9c0d1e2-5678-9abc-def0-1234567890ab",
+              "type": "form-submission-versions"
+            }
+          ]
+        }
+      },
+      "meta": {
+        "created_at": "2025-09-26T09:32:38.428Z",
+        "modified_at": "2025-09-26T09:32:38.428Z",
+        "counts": {
+          "versions": 1,
+          "contributors": 1
+        },
+        "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      }
+    },
+    {
+      "id": "9d6e2c60-4f71-4c9d-bef2-3c4d5e6f7081",
+      "type": "form-submissions",
+      "relationships": {
+        "contributors": {
+          "data": [
+            {
+              "id": "d0e1f2a3-6789-0abc-def1-234567890abc",
+              "type": "users"
+            }
+          ]
+        },
+        "creator": {
+          "data": {
+            "id": "d0e1f2a3-6789-0abc-def1-234567890abc",
+            "type": "users"
+          }
+        },
+        "form": {
+          "data": {
+            "id": "c3d4e5f6-1234-5678-9abc-def012345678",
+            "type": "forms"
+          }
+        },
+        "organisation": {
+          "data": {
+            "id": "d4e5f6a7-2345-6789-abcd-ef0123456789",
+            "type": "organisations"
+          }
+        },
+        "versions": {
+          "data": [
+            {
+              "id": "c0d1e2f3-6789-0abc-def1-234567890bcd",
+              "type": "form-submission-versions"
+            }
+          ]
+        }
+      },
+      "meta": {
+        "created_at": "2025-09-26T09:34:50.129Z",
+        "modified_at": "2025-09-26T09:34:50.129Z",
+        "counts": {
+          "versions": 1,
+          "contributors": 1
+        },
+        "note": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "current_page": 1,
+      "counts": {
+        "resources": 4,
+        "pages": 1
+      },
+      "requested": {
+        "offset": 0,
+        "limit": 100
+      },
+      "offsets": {
+        "previous": null,
+        "next": null
+      }
+    },
+    "features": {
+      "params": {
+        "include": {
+          "options": null
+        },
+        "sort": {
+          "default": "",
+          "options": null
+        }
+      }
+    }
+  },
+  "jsonapi": {
+    "version": "1.0"
+  }
+}
+
