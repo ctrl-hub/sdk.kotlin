@@ -1,7 +1,7 @@
 package com.ctrlhub.core.router.request
 
 data class FilterOption(
-    val field: String,
+    val field: String?,
     val value: String
 )
 
@@ -15,7 +15,17 @@ abstract class AbstractRequestParameters(
         offset?.let { queryParams["offset"] = it.toString() }
         limit?.let { queryParams["limit"] = it.toString() }
 
-        filterOptions.forEach { queryParams["filter"] = "${it.field}('${it.value}')" }
+        filterOptions.forEach {
+            // compute key once; if field is null use plain "filter", otherwise use "filter[field]"
+            val key = it.field?.let { f -> "filter[$f]" } ?: "filter"
+            val existing = queryParams[key]
+            queryParams[key] = if (existing.isNullOrEmpty()) {
+                it.value
+            } else {
+                // append multiple filter values with a comma
+                "$existing,${it.value}"
+            }
+        }
 
         return queryParams
     }
@@ -26,6 +36,7 @@ class RequestParameters(
     limit: Int? = null,
     filterOptions: List<FilterOption> = emptyList()
 ) : AbstractRequestParameters(offset, limit, filterOptions)
+
 
 open class RequestParametersWithIncludes<TIncludes>(
     offset: Int? = null,
