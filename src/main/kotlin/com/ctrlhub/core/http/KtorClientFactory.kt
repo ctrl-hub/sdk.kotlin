@@ -4,6 +4,7 @@ import com.ctrlhub.core.Config
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.UserAgent
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -40,6 +41,11 @@ object KtorClientFactory {
                     ignoreUnknownKeys = true
                     encodeDefaults = true
                 })
+            }
+            install(HttpTimeout) {
+                requestTimeoutMillis = 15_000
+                connectTimeoutMillis = 15_000
+                socketTimeoutMillis = 15_000
             }
             install(UserAgent) {
                 agent = Config.userAgent
