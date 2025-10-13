@@ -6,6 +6,8 @@ import com.ctrlhub.core.geo.Property
 import com.ctrlhub.core.iam.response.User
 import com.ctrlhub.core.media.response.Image
 import com.ctrlhub.core.projects.operations.response.Operation
+import com.ctrlhub.core.projects.schemes.response.Scheme
+import com.ctrlhub.core.projects.workorders.response.WorkOrder
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
@@ -49,4 +51,10 @@ class FormSubmissionVersion @JsonCreator constructor(
 
     @Relationship("payload_users")
     var payloadUsers: List<User>? = null,
+
+    @Relationship("payload_work_orders")
+    var payloadWorkOrders: List<WorkOrder>? = null,
+
+    @Relationship("payload_schemes")
+    var payloadSchemes: List<Scheme>? = null,
 )

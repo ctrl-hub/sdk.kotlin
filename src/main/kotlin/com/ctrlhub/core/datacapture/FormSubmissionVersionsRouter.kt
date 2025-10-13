@@ -24,7 +24,9 @@ enum class FormSubmissionVersionIncludes(val key: String) : JsonApiIncludes {
     PayloadImages("payload_images"),
     PayloadOperations("payload_operations"),
     PayloadProperties("payload_properties"),
-    PayloadUsers("payload_users");
+    PayloadUsers("payload_users"),
+    PayloadWorkOrders("payload_work_orders"),
+    PayloadSchemes("payload_schemes");
 
     override fun value(): String = key
 }
