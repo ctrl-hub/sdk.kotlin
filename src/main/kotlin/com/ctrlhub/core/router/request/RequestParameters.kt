@@ -1,7 +1,7 @@
 package com.ctrlhub.core.router.request
 
 data class FilterOption(
-    val field: String?,
+    val field: String? = null,
     val value: String
 )
 
