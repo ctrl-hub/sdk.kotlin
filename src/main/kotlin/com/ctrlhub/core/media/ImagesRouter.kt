@@ -16,6 +16,7 @@ import io.ktor.client.plugins.ClientRequestException
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import java.io.File
+import java.net.URLConnection
 import java.nio.file.Files
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -93,7 +94,8 @@ class ImagesRouter(httpClient: HttpClient): Router(httpClient) {
 
         return try {
             val bytes = image.readBytes()
-            val mimeType = Files.probeContentType(image.toPath())
+            val mimeType = URLConnection.guessContentTypeFromName(image.name)
+                ?: "image/png"
             val base64Data = Base64.encode(bytes)
             val dataUri = "data:$mimeType;base64,$base64Data"
 
