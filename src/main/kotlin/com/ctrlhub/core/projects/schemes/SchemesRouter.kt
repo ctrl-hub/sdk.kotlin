@@ -23,9 +23,9 @@ enum class SchemeIncludes(val value: String): JsonApiIncludes {
 class SchemeRequestParameters(
     offset: Int = 0,
     limit: Int = 100,
-    filterOptions: List<FilterOption> = emptyList(),
+    filters: List<FilterOption> = emptyList(),
     includes: List<SchemeIncludes> = emptyList()
-) : RequestParametersWithIncludes<SchemeIncludes>(offset, limit, filterOptions, includes)
+) : RequestParametersWithIncludes<SchemeIncludes>(offset, limit, filters, includes)
 
 class SchemesRouter(httpClient: HttpClient) : Router(httpClient) {
 
