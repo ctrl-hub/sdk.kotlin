@@ -24,12 +24,8 @@ class RequestParametersFiltersTest {
     fun `and of functions formats correctly`() {
         val expr = AndExpression(
             listOf(
-                ValueFilterExpression(
-                    listOf(
-                        "is_latest()",
-                        "no_start()"
-                    )
-                ),
+                ValueFilterExpression("is_latest()"),
+                ValueFilterExpression("no_start()"),
             )
         )
 
@@ -44,7 +40,7 @@ class RequestParametersFiltersTest {
         val expr = AndExpression(
             listOf(
                 FieldFilterExpression("status", listOf("active")),
-                FunctionFilterExpression("is_latest")
+                ValueFilterExpression("is_latest()")
             )
         )
 

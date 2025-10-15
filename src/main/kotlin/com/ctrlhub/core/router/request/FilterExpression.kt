@@ -11,19 +11,8 @@ class FieldFilterExpression(val field: String, val values: List<String>) : Filte
     }
 }
 
-class ValueFilterExpression(val values: List<String>) : FilterOption {
-    override fun format(): String = values.joinToString(",")
-}
-
-class FunctionFilterExpression(val name: String, val args: List<String> = emptyList()) : FilterOption {
-    override fun format(): String {
-        return if (args.isEmpty()) {
-            "${name}()"
-        } else {
-            val joined = args.joinToString(",") { it }
-            "${name}(${joined})"
-        }
-    }
+class ValueFilterExpression(val value: String) : FilterOption {
+    override fun format(): String = value
 }
 
 class AndExpression(val parts: List<FilterOption>) : FilterOption {
