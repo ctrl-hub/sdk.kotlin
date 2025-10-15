@@ -9,8 +9,8 @@ class RequestParametersFiltersTest {
     fun `and of two field expressions formats correctly`() {
         val expr = AndExpression(
             listOf(
-                FieldFilterExpression("status", listOf("open")),
-                FieldFilterExpression("category", listOf("news"))
+                FieldFilterExpression("status", "open"),
+                FieldFilterExpression("category", "news")
             )
         )
 
@@ -39,7 +39,7 @@ class RequestParametersFiltersTest {
     fun `mixed and expression with field and function`() {
         val expr = AndExpression(
             listOf(
-                FieldFilterExpression("status", listOf("active")),
+                FieldFilterExpression("status", "active"),
                 ValueFilterExpression("is_latest()")
             )
         )
