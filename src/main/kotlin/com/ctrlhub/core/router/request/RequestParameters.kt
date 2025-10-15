@@ -1,21 +1,24 @@
 package com.ctrlhub.core.router.request
 
-data class FilterOption(
-    val field: String,
-    val value: String
-)
-
 abstract class AbstractRequestParameters(
     val offset: Int? = null,
     val limit: Int? = null,
-    val filterOptions: List<FilterOption>
+    val filters: List<FilterOption> = emptyList()
 ) {
     open fun toMap(): Map<String, String> {
         val queryParams = mutableMapOf<String, String>()
         offset?.let { queryParams["offset"] = it.toString() }
         limit?.let { queryParams["limit"] = it.toString() }
 
-        filterOptions.forEach { queryParams["filter"] = "${it.field}('${it.value}')" }
+        val parts = mutableListOf<String>()
+
+        for (expr in filters) {
+            parts += expr.format()
+        }
+
+        if (parts.isNotEmpty()) {
+            queryParams["filter"] = parts.joinToString(",")
+        }
 
         return queryParams
     }
@@ -30,10 +33,11 @@ class RequestParameters(
 open class RequestParametersWithIncludes<TIncludes>(
     offset: Int? = null,
     limit: Int? = null,
-    filterOptions: List<FilterOption> = emptyList(),
+    filters: List<FilterOption> = emptyList(),
     val includes: List<TIncludes> = emptyList()
-) : AbstractRequestParameters(offset, limit, filterOptions) where TIncludes : JsonApiIncludes {
+) : AbstractRequestParameters(offset, limit, filters) where TIncludes : JsonApiIncludes {
 
+    @Suppress("unused")
     fun withIncludes(vararg includes: TIncludes): RequestParametersWithIncludes<TIncludes> {
         return copy(includes = this.includes + includes)
     }
@@ -53,7 +57,7 @@ open class RequestParametersWithIncludes<TIncludes>(
     }
 
     private fun copy(
-        filterOptions: List<FilterOption> = this.filterOptions,
-        includes: List<TIncludes> = this.includes
-    ) = RequestParametersWithIncludes(offset, limit, filterOptions, includes)
+        includes: List<TIncludes> = this.includes,
+        filters: List<FilterOption> = this.filters
+    ) = RequestParametersWithIncludes(offset, limit, filters, includes)
 }
