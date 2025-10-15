@@ -27,8 +27,8 @@ abstract class AbstractRequestParameters(
 class RequestParameters(
     offset: Int? = null,
     limit: Int? = null,
-    filterOptions: List<FilterOption> = emptyList()
-) : AbstractRequestParameters(offset, limit, filterOptions)
+    filters: List<FilterOption> = emptyList()
+) : AbstractRequestParameters(offset, limit, filters)
 
 open class RequestParametersWithIncludes<TIncludes>(
     offset: Int? = null,

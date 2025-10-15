@@ -32,9 +32,9 @@ enum class VehicleIncludes(val value: String) : JsonApiIncludes {
 class VehicleRequestParameters(
     offset: Int = 0,
     limit: Int = 100,
-    filterOptions: List<FilterOption> = emptyList(),
+    filters: List<FilterOption> = emptyList(),
     includes: List<VehicleIncludes> = emptyList()
-) : RequestParametersWithIncludes<VehicleIncludes>(offset, limit, filterOptions, includes)
+) : RequestParametersWithIncludes<VehicleIncludes>(offset, limit, filters, includes)
 
 /**
  * A vehicles router that deals with the vehicles realm of the Ctrl Hub API

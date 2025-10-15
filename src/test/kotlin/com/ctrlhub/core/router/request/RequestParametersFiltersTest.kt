@@ -14,7 +14,7 @@ class RequestParametersFiltersTest {
             )
         )
 
-        val params = RequestParameters(filterOptions = listOf(expr))
+        val params = RequestParameters(filters = listOf(expr))
         val map = params.toMap()
 
         assertEquals("and(status('open'),category('news'))", map["filter"])
@@ -29,7 +29,7 @@ class RequestParametersFiltersTest {
             )
         )
 
-        val params = RequestParameters(filterOptions = listOf(expr))
+        val params = RequestParameters(filters = listOf(expr))
         val map = params.toMap()
 
         assertEquals("and(is_latest(),no_start())", map["filter"])
@@ -44,7 +44,7 @@ class RequestParametersFiltersTest {
             )
         )
 
-        val params = RequestParameters(filterOptions = listOf(expr))
+        val params = RequestParameters(filters = listOf(expr))
         val map = params.toMap()
 
         assertEquals("and(status('active'),is_latest())", map["filter"])

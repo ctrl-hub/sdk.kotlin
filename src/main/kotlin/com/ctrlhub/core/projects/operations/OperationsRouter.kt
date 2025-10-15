@@ -27,9 +27,9 @@ enum class OperationIncludes(val value: String) : JsonApiIncludes {
 class OperationRequestParameters(
     offset: Int = 0,
     limit: Int = 100,
-    filterOptions: List<FilterOption> = emptyList(),
+    filters: List<FilterOption> = emptyList(),
     includes: List<OperationIncludes> = emptyList()
-) : RequestParametersWithIncludes<OperationIncludes>(offset, limit, filterOptions, includes)
+) : RequestParametersWithIncludes<OperationIncludes>(offset, limit, filters, includes)
 
 class OperationsRouter(httpClient: HttpClient) : Router(httpClient) {
 

@@ -10,8 +10,8 @@ import io.ktor.client.HttpClient
 class TimeBandsRequestParameters(
     offset: Int? = 0,
     limit: Int? = 100,
-    filterOptions: List<FilterOption> = emptyList()
-) : AbstractRequestParameters(offset, limit, filterOptions)
+    filters: List<FilterOption> = emptyList()
+) : AbstractRequestParameters(offset, limit, filters)
 
 class TimeBandsRouter(httpClient: HttpClient) : Router(httpClient) {
     /**

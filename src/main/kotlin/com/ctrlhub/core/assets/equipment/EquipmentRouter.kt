@@ -28,9 +28,9 @@ enum class EquipmentIncludes(val value: String) : JsonApiIncludes {
 class EquipmentRequestParameters(
     offset: Int = 0,
     limit: Int = 100,
-    filterOptions: List<FilterOption> = emptyList(),
+    filters: List<FilterOption> = emptyList(),
     includes: List<EquipmentIncludes> = emptyList()
-) : RequestParametersWithIncludes<EquipmentIncludes>(offset, limit, filterOptions, includes)
+) : RequestParametersWithIncludes<EquipmentIncludes>(offset, limit, filters, includes)
 
 enum class EquipmentSort(val value: String) {
     Name("name");
