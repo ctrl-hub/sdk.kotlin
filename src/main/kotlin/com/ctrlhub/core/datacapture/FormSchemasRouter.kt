@@ -27,12 +27,12 @@ enum class FormSchemaIncludes(val value: String) : JsonApiIncludes {
 class FormSchemaRequestParameters(
     offset: Int = 0,
     limit: Int = 100,
-    filterOptions: List<FilterOption> = emptyList(),
+    filters: List<FilterOption> = emptyList(),
     includes: List<FormSchemaIncludes> = emptyList()
 ) : RequestParametersWithIncludes<FormSchemaIncludes>(
     offset = offset,
     limit = limit,
-    filterOptions = filterOptions,
+    filters = filters,
     includes = includes,
 )
 

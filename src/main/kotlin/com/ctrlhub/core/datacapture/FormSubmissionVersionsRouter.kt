@@ -34,12 +34,12 @@ enum class FormSubmissionVersionIncludes(val key: String) : JsonApiIncludes {
 class FormSubmissionVersionRequestParameters(
     offset: Int = 0,
     limit: Int = 100,
-    filterOptions: List<FilterOption> = emptyList(),
+    filters: List<FilterOption> = emptyList(),
     includes: List<FormSubmissionVersionIncludes> = emptyList()
 ) : RequestParametersWithIncludes<FormSubmissionVersionIncludes>(
     offset = offset,
     limit = limit,
-    filterOptions = filterOptions,
+    filters = filters,
     includes = includes,
 )
 
