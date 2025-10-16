@@ -49,5 +49,45 @@ class RequestParametersFiltersTest {
 
         assertEquals("and(status('active'),is_latest())", map["filter"])
     }
-}
 
+    @Test
+    fun `field list formats correctly`() {
+        val ids = listOf(
+            "06e55d1c-f816-48b2-b11b-debdb3115b2f",
+            "5f43b904-8d5b-4b81-9258-b14aafe858d4",
+            "9b31bdd1-2785-4419-b1b3-36ccd35d22c6"
+        )
+
+        val expr = FieldFilterExpression("payload_operations", ids)
+        val params = RequestParameters(filters = listOf(expr))
+        val map = params.toMap()
+
+        assertEquals(
+            "payload_operations('06e55d1c-f816-48b2-b11b-debdb3115b2f','5f43b904-8d5b-4b81-9258-b14aafe858d4','9b31bdd1-2785-4419-b1b3-36ccd35d22c6')",
+            map["filter"]
+        )
+    }
+
+    @Test
+    fun `or of field list and single field formats correctly`() {
+        val ids = listOf(
+            "06e55d1c-f816-48b2-b11b-debdb3115b2f",
+            "5f43b904-8d5b-4b81-9258-b14aafe858d4"
+        )
+
+        val expr = OrExpression(
+            listOf(
+                FieldFilterExpression("payload_operations", ids),
+                FieldFilterExpression("category", "updates")
+            )
+        )
+
+        val params = RequestParameters(filters = listOf(expr))
+        val map = params.toMap()
+
+        assertEquals(
+            "or(payload_operations('06e55d1c-f816-48b2-b11b-debdb3115b2f','5f43b904-8d5b-4b81-9258-b14aafe858d4'),category('updates'))",
+            map["filter"]
+        )
+    }
+}
