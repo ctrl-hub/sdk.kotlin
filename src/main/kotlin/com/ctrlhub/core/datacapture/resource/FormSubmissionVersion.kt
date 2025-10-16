@@ -13,8 +13,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.github.jasminb.jsonapi.StringIdHandler
 import com.github.jasminb.jsonapi.annotations.Id
+import com.github.jasminb.jsonapi.annotations.Meta
 import com.github.jasminb.jsonapi.annotations.Relationship
 import com.github.jasminb.jsonapi.annotations.Type
+import java.time.LocalDateTime
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Type("form-submission-versions")
@@ -31,8 +33,8 @@ class FormSubmissionVersion @JsonCreator constructor(
     @Relationship("schema")
     var schema: FormSchema? = null,
 
-    @JsonProperty("meta")
-    var meta: Map<String, Any>? = null,
+    @Meta
+    var meta: FormSubmissionVersionMeta? = null,
 
     @Relationship("author")
     var author: User? = null,
@@ -57,4 +59,11 @@ class FormSubmissionVersion @JsonCreator constructor(
 
     @Relationship("payload_schemes")
     var payloadSchemes: List<Scheme>? = null,
+)
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+class FormSubmissionVersionMeta(
+    @JsonProperty("created_at") val createdAt: LocalDateTime? = null,
+    @JsonProperty("latest") val latest: String? = null,
+    @JsonProperty("is_latest") val isLatest: Boolean? = null,
 )
