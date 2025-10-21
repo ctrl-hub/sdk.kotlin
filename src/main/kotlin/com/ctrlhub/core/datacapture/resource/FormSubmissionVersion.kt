@@ -67,9 +67,17 @@ class FormSubmissionVersion @JsonCreator constructor(
     @JsonProperty("resources")
     var resources: List<Map<String, Any>>? = null,
 ) {
+    val rawPayload: String?
+        get() = payload?.let {
+            try {
+                mapper.writeValueAsString(it)
+            } catch (e: Exception) {
+                null
+            }
+        }
 
     // shared Jackson mapper configured to ignore unknown properties when hydrating attribute maps
-    private fun resourceMapper(): ObjectMapper = Companion.mapper
+    private fun resourceMapper(): ObjectMapper = mapper
 
     /**
      * Convert the raw resources list (List<Map<...>>) into typed JsonApiEnvelope objects.

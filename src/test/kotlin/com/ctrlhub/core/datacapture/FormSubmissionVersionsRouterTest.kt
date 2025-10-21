@@ -107,6 +107,14 @@ class FormSubmissionVersionsRouterTest {
             assertNotNull(result.payload)
             assertTrue(result.payload!!.containsKey("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"))
             assertTrue(result.payload!!.containsKey("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"))
+
+            // check rawPayload is a valid JSON string
+            assertNotNull(result.rawPayload)
+            assertTrue(result.rawPayload!!.startsWith("{"))
+            assertTrue(result.rawPayload!!.endsWith("}"))
+            // verify it contains the expected keys in JSON format
+            assertTrue(result.rawPayload!!.contains("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"))
+            assertTrue(result.rawPayload!!.contains("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"))
         }
     }
 
@@ -169,6 +177,14 @@ class FormSubmissionVersionsRouterTest {
             assertNotNull(result.payload)
             assertTrue(result.payload!!.containsKey("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"))
             assertTrue(result.payload!!.containsKey("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"))
+
+            // check rawPayload is a valid JSON string
+            assertNotNull(result.rawPayload)
+            assertTrue(result.rawPayload!!.startsWith("{"))
+            assertTrue(result.rawPayload!!.endsWith("}"))
+            // verify it contains the expected keys in JSON format
+            assertTrue(result.rawPayload!!.contains("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"))
+            assertTrue(result.rawPayload!!.contains("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"))
         }
     }
 }
