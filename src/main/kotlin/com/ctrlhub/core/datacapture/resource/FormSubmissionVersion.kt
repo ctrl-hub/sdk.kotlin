@@ -2,6 +2,7 @@ package com.ctrlhub.core.datacapture.resource
 
 import com.ctrlhub.core.datacapture.response.FormSchema
 import com.ctrlhub.core.datacapture.response.Form
+import com.ctrlhub.core.datacapture.response.FormSubmission
 import com.ctrlhub.core.geo.Property
 import com.ctrlhub.core.iam.response.User
 import com.ctrlhub.core.media.response.Image
@@ -35,6 +36,9 @@ class FormSubmissionVersion @JsonCreator constructor(
 
     @Relationship("schema")
     var schema: FormSchema? = null,
+
+    @Relationship("submission")
+    var submission: FormSubmission? = null,
 
     @Meta
     var meta: FormSubmissionVersionMeta? = null,
