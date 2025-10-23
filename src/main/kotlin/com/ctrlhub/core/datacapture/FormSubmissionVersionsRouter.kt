@@ -64,7 +64,6 @@ class FormSubmissionVersionsRouter(httpClient: HttpClient) : Router(httpClient) 
                 id = "",
                 schema = FormSchema(
                     id = schemaId,
-                    rawSchema = null,
                 )
             ),
             queryParameters = emptyMap(),
