@@ -30,6 +30,9 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation(libs.mockk)
     testImplementation(libs.ktor.client.mock)
+
+    // Ensure JUnit Jupiter engine is available for useJUnitPlatform()
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
 }
 
 val generateBuildConfig by tasks.registering {

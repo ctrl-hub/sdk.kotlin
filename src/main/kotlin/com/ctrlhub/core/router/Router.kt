@@ -3,28 +3,18 @@ package com.ctrlhub.core.router
 import com.ctrlhub.core.api.ApiClientException
 import com.ctrlhub.core.api.ApiException
 import com.ctrlhub.core.api.UnauthorizedException
-import com.ctrlhub.core.api.response.CountsMeta
-import com.ctrlhub.core.api.response.OffsetsMeta
-import com.ctrlhub.core.api.response.PageMeta
-import com.ctrlhub.core.api.response.PaginatedList
-import com.ctrlhub.core.api.response.PaginationMeta
-import com.ctrlhub.core.api.response.RequestedMeta
-import com.ctrlhub.core.serializer.JacksonLocalDateTimeDeserializer
-import com.ctrlhub.core.serializer.JacksonLocalDateTimeSerializer
-import com.fasterxml.jackson.module.kotlin.kotlinModule
+import com.ctrlhub.core.api.response.*
+import com.ctrlhub.core.json.JsonConfig
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.module.SimpleModule
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.github.jasminb.jsonapi.JSONAPIDocument
 import com.github.jasminb.jsonapi.ResourceConverter
 import com.github.jasminb.jsonapi.SerializationFeature
 import io.ktor.client.*
-import io.ktor.client.call.body
-import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.call.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import java.time.LocalDateTime
 
 abstract class Router(val httpClient: HttpClient) {
     protected suspend fun performGet(endpoint: String, queryString: Map<String, String> = emptyMap()): HttpResponse {
@@ -145,16 +135,7 @@ abstract class Router(val httpClient: HttpClient) {
     }
 
     fun getObjectMapper(): ObjectMapper {
-        val module = SimpleModule().apply {
-            addSerializer(LocalDateTime::class.java, JacksonLocalDateTimeSerializer())
-            addDeserializer(LocalDateTime::class.java, JacksonLocalDateTimeDeserializer())
-        }
-
-        return ObjectMapper().apply {
-            registerModule(JavaTimeModule())
-            registerModule(module)
-            registerModule(kotlinModule())
-        }
+        return JsonConfig.getMapper()
     }
 
     protected suspend inline fun <reified T> fetchPaginatedJsonApiResources(

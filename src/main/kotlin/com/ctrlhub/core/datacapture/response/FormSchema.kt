@@ -1,7 +1,7 @@
 package com.ctrlhub.core.datacapture.response
 
+import com.ctrlhub.core.json.JsonConfig
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.github.jasminb.jsonapi.StringIdHandler
@@ -10,14 +10,43 @@ import com.github.jasminb.jsonapi.annotations.Meta
 import com.github.jasminb.jsonapi.annotations.Type
 import java.time.LocalDateTime
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Type("form-schemas")
-data class FormSchema(
+data class FormSchema @JsonCreator constructor(
+    @JsonProperty("id")
     @Id(StringIdHandler::class)
     val id: String? = null,
-    @JsonIgnore val rawSchema: String? = null,
+    @JsonProperty("model")
+    val model: Map<String, Any>? = null,
+    @JsonProperty("view")
+    val view: Map<String, Any>? = null,
+    @JsonProperty("version")
+    val version: String? = null,
     @Meta
     var meta: FormSchemaMeta? = null,
-)
+) {
+    val rawSchema: String
+        get() {
+            val mapper = JsonConfig.getMapper()
+
+            val attributes = mutableMapOf<String, Any>()
+            attributes["version"] = version ?: ""
+            attributes["id"] = id ?: ""
+            model?.let { attributes["model"] = it }
+            view?.let { attributes["view"] = it }
+            meta?.let { attributes["meta"] = it }
+
+            val dataMap = mutableMapOf(
+                "id" to (id ?: ""),
+                "type" to "form-schemas",
+                "attributes" to attributes
+            )
+
+            val envelope = mapOf("data" to dataMap)
+
+            return mapper.writeValueAsString(envelope)
+        }
+}
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class FormSchemaMeta @JsonCreator constructor(
