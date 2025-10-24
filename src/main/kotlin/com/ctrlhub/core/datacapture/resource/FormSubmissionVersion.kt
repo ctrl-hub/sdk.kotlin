@@ -1,10 +1,11 @@
 package com.ctrlhub.core.datacapture.resource
 
-import com.ctrlhub.core.datacapture.response.FormSchema
 import com.ctrlhub.core.datacapture.response.Form
+import com.ctrlhub.core.datacapture.response.FormSchema
 import com.ctrlhub.core.datacapture.response.FormSubmission
 import com.ctrlhub.core.geo.Property
 import com.ctrlhub.core.iam.response.User
+import com.ctrlhub.core.json.JsonConfig
 import com.ctrlhub.core.media.response.Image
 import com.ctrlhub.core.projects.operations.response.Operation
 import com.ctrlhub.core.projects.schemes.response.Scheme
@@ -12,9 +13,7 @@ import com.ctrlhub.core.projects.workorders.response.WorkOrder
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.kotlinModule
 import com.github.jasminb.jsonapi.StringIdHandler
 import com.github.jasminb.jsonapi.annotations.Id
 import com.github.jasminb.jsonapi.annotations.Meta
@@ -74,14 +73,14 @@ class FormSubmissionVersion @JsonCreator constructor(
     val rawPayload: String?
         get() = payload?.let {
             try {
-                mapper.writeValueAsString(it)
+                resourceMapper().writeValueAsString(it)
             } catch (e: Exception) {
                 null
             }
         }
 
     // shared Jackson mapper configured to ignore unknown properties when hydrating attribute maps
-    private fun resourceMapper(): ObjectMapper = mapper
+    private fun resourceMapper(): ObjectMapper = JsonConfig.getMapper()
 
     /**
      * Convert the raw resources list (List<Map<...>>) into typed JsonApiEnvelope objects.
@@ -126,7 +125,7 @@ class FormSubmissionVersion @JsonCreator constructor(
     fun autoHydrateById(id: String): Any? {
         val env = findResourceEnvelopeById(id) ?: return null
         val type = env.data?.type ?: return null
-        val clazz = Companion.getRegisteredClass(type) ?: return null
+        val clazz = getRegisteredClass(type) ?: return null
         return hydrateResourceAttributesById(id, clazz)
     }
 
@@ -154,10 +153,6 @@ class FormSubmissionVersion @JsonCreator constructor(
     }
 
     companion object {
-        private val mapper: ObjectMapper = ObjectMapper()
-            .registerModule(kotlinModule())
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-
         // simple type registry mapping jsonapi resource "type" -> Class
         private val typeRegistry: MutableMap<String, Class<*>> = mutableMapOf()
 
