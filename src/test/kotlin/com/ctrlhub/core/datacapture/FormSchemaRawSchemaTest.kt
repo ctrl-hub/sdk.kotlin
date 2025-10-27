@@ -36,10 +36,10 @@ class FormSchemaRawSchemaTest {
         // Parse the generated JSON and assert structure
         val node = mapper.readTree(raw)
 
-        assertEquals(id, node["data"]["id"].asText())
-        assertEquals("form-schemas", node["data"]["type"].asText())
+        assertEquals(id, node["id"].asText())
+        assertEquals("form-schemas", node["type"].asText())
 
-        val attributes = node["data"]["attributes"]
+        val attributes = node["attributes"]
         assertEquals(version, attributes["version"].asText())
         assertTrue(attributes["model"]["properties"].has("field-1"))
     }

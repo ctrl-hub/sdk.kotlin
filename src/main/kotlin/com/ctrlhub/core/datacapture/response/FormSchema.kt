@@ -42,9 +42,7 @@ data class FormSchema @JsonCreator constructor(
                 "attributes" to attributes
             )
 
-            val envelope = mapOf("data" to dataMap)
-
-            return mapper.writeValueAsString(envelope)
+            return mapper.writeValueAsString(dataMap)
         }
 }
 
