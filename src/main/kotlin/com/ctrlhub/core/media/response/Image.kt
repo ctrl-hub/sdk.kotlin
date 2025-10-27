@@ -9,7 +9,7 @@ import com.github.jasminb.jsonapi.annotations.Type
 
 @Type("images")
 class Image @JsonCreator constructor(
-    @Id(StringIdHandler::class) var id: String = "",
+    @JsonProperty("id") @Id(StringIdHandler::class) var id: String = "",
     @JsonProperty("mime_type") var mimeType: String = "",
     @JsonProperty("extension") var extension: String = "",
     @JsonProperty("width") var width: Int = 0,

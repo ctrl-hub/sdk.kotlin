@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.jasminb.jsonapi.StringIdHandler
+import com.github.jasminb.jsonapi.ResourceConverter
 import com.github.jasminb.jsonapi.annotations.Id
 import com.github.jasminb.jsonapi.annotations.Meta
 import com.github.jasminb.jsonapi.annotations.Relationship
@@ -83,73 +84,90 @@ class FormSubmissionVersion @JsonCreator constructor(
     private fun resourceMapper(): ObjectMapper = JsonConfig.getMapper()
 
     /**
-     * Convert the raw resources list (List<Map<...>>) into typed JsonApiEnvelope objects.
-     * This keeps the original raw structure but provides a typed view over it.
+     * Create a configured Jasminb ResourceConverter for the given target class and included classes.
+     * Also include any classes registered in the companion type registry so the converter knows
+     * about all registered resource types.
      */
-    fun resourcesAsEnvelopes(): List<JsonApiEnvelope> = resources?.mapNotNull { res ->
+    private fun resourceConverter(targetClass: Class<*>, vararg includedClasses: Class<*>): ResourceConverter {
+        // Use the registered classes plus the explicit target and included classes.
+        val registryClasses: List<Class<*>> = companionTypeRegistryClasses()
+
+        val classesList: MutableList<Class<*>> = ArrayList()
+        classesList.add(targetClass)
+        // add registry classes (skip duplicates)
+        for (c in registryClasses) {
+            if (!classesList.contains(c)) classesList.add(c)
+        }
+        // add explicitly passed included classes
+        for (c in includedClasses) {
+            if (!classesList.contains(c)) classesList.add(c)
+        }
+
+        val classesArray: Array<Class<*>> = classesList.toTypedArray()
+        val rc = ResourceConverter(resourceMapper(), *classesArray)
         try {
-            resourceMapper().convertValue(res, JsonApiEnvelope::class.java)
-        } catch (e: Exception) {
-            null
+            rc.enableSerializationOption(com.github.jasminb.jsonapi.SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES)
+        } catch (_: Throwable) {
+            // ignore
         }
-    } ?: emptyList()
+        return rc
+    }
 
-    /**
-     * Find the full envelope for a resource by id.
-     */
-    fun findResourceEnvelopeById(id: String): JsonApiEnvelope? = resourcesAsEnvelopes().firstOrNull { it.data?.id == id }
-
-    /**
-     * Find the inner resource data object by id.
-     */
-    fun findResourceDataById(id: String): JsonApiResourceData? = findResourceEnvelopeById(id)?.data
-
-    /**
-     * Hydrate the attributes of a resource (by id) into a target class using Jackson.
-     * Example: hydrateResourceAttributesById("...", Image::class.java)
-     * Returns null if resource or attributes are missing or conversion fails.
-     */
-    fun <T> hydrateResourceAttributesById(id: String, clazz: Class<T>): T? {
-        val attrs = findResourceDataById(id)?.attributes ?: return null
-        return try {
-            resourceMapper().convertValue(attrs, clazz)
-        } catch (e: Exception) {
-            null
-        }
+    // Helper to access companion's registry as a list (keeps the converter creation tidy)
+    private fun companionTypeRegistryClasses(): List<Class<*>> = synchronized(Companion) {
+        getAllRegisteredClasses()
     }
 
     /**
-     * Auto-hydrate a resource by looking up its JSON:API type and using the registered class for that type.
-     * Returns the hydrated object or null if not registered or conversion fails.
+     * Find the raw JSON:API envelope Map for a resource by id.
      */
-    fun autoHydrateById(id: String): Any? {
-        val env = findResourceEnvelopeById(id) ?: return null
-        val type = env.data?.type ?: return null
-        val clazz = getRegisteredClass(type) ?: return null
-        return hydrateResourceAttributesById(id, clazz)
-    }
-
-    /**
-     * Reified convenience that attempts to auto-hydrate and cast to the expected type.
-     */
-    inline fun <reified T> autoHydrateByIdAs(id: String): T? {
-        val any = autoHydrateById(id) ?: return null
-        return any as? T
-    }
-
-    /**
-     * Backwards-compatible helper: original simple lookup that returns the inner "data" map.
-     */
-    fun findResourceById(id: String): Map<String, Any>? {
+    private fun findRawResourceEnvelopeById(id: String): Map<String, Any>? {
         resources?.forEach { res ->
             val data = res["data"] as? Map<*, *> ?: return@forEach
             val dataId = data["id"] as? String
             if (dataId == id) {
                 @Suppress("UNCHECKED_CAST")
-                return data as Map<String, Any>
+                return res
             }
         }
         return null
+    }
+
+    /**
+     * Hydrate a resource by using Jasminb's ResourceConverter. Serialises the raw envelope Map
+     * to bytes using the configured ObjectMapper and passes it to ResourceConverter.readDocument.
+     */
+    private fun <T> hydrateResourceUsingConverter(id: String, clazz: Class<T>, vararg includedClasses: Class<*>): T? {
+        val envelope = findRawResourceEnvelopeById(id) ?: return null
+
+        return try {
+            val bytes = resourceMapper().writeValueAsBytes(envelope)
+            val rc = resourceConverter(clazz, *includedClasses)
+            val document = rc.readDocument(bytes, clazz)
+            document.get()
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+
+    /**
+     * Hydrate a resource (by id) into a target class using Jasminb ResourceConverter.
+     * This is the primary public method for hydration.
+     */
+    fun <T> hydrateResourceById(id: String, clazz: Class<T>): T? {
+        return hydrateResourceUsingConverter(id, clazz)
+    }
+
+    /**
+     * Auto-hydrate a resource by looking up its JSON:API type and using the registered class for that type.
+     */
+    fun autoHydrateById(id: String): Any? {
+        val envelope = findRawResourceEnvelopeById(id) ?: return null
+
+        val data = envelope["data"] as? Map<*, *> ?: return null
+        val type = data["type"] as? String ?: return null
+        val clazz = getRegisteredClass(type) ?: return null
+        return hydrateResourceUsingConverter(id, clazz)
     }
 
     companion object {
@@ -161,6 +179,11 @@ class FormSubmissionVersion @JsonCreator constructor(
         }
 
         fun getRegisteredClass(type: String): Class<*>? = typeRegistry[type]
+
+        // expose a synchronized way to get the registry contents as a List
+        fun getAllRegisteredClasses(): List<Class<*>> = synchronized(typeRegistry) {
+            typeRegistry.values.toList()
+        }
     }
 }
 
@@ -169,22 +192,4 @@ class FormSubmissionVersionMeta(
     @JsonProperty("created_at") val createdAt: LocalDateTime? = null,
     @JsonProperty("latest") val latest: String? = null,
     @JsonProperty("is_latest") val isLatest: Boolean? = null,
-)
-
-/**
- * Lightweight typed representations for JSON:API resource envelopes and resource data.
- * These are intentionally simple (attributes are a Map) to support arbitrary resource types.
- */
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class JsonApiResourceData(
-    @JsonProperty("id") val id: String? = null,
-    @JsonProperty("type") val type: String? = null,
-    @JsonProperty("attributes") val attributes: Map<String, Any>? = null,
-    @JsonProperty("relationships") val relationships: Map<String, Any>? = null,
-)
-
-@JsonIgnoreProperties(ignoreUnknown = true)
-data class JsonApiEnvelope(
-    @JsonProperty("data") val data: JsonApiResourceData? = null,
-    @JsonProperty("jsonapi") val jsonapi: Map<String, Any>? = null,
 )
