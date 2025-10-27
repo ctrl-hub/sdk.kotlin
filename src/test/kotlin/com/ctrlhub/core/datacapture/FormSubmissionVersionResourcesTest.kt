@@ -21,7 +21,7 @@ import kotlin.test.assertNotNull
 class FormSubmissionVersionResourcesTest {
 
     @Test
-    fun `can auto-hydrate resources from resources envelope`() {
+    fun `can auto-hydrate resources`() {
         val jsonFilePath = Paths.get("src/test/resources/datacapture/one-form-submission-version-with-resources.json")
         val jsonContent = Files.readString(jsonFilePath)
 
@@ -48,7 +48,7 @@ class FormSubmissionVersionResourcesTest {
             assertNotNull(result.id)
 
             // hydrate image resource
-            val image = result.autoHydrateByIdAs<Image>("c2d3e4f5-2a34-4b8c-e39d-0e1f2a3b4c5d")
+            val image = result.hydrateResourceById("c2d3e4f5-2a34-4b8c-e39d-0e1f2a3b4c5d", Image::class.java)
             assertNotNull(image)
             assertEquals("image/jpeg", image!!.mimeType)
             assertEquals(4000, image.width)
@@ -56,7 +56,7 @@ class FormSubmissionVersionResourcesTest {
             assertEquals(2136986L, image.bytes)
 
             // hydrate operation resource
-            val op = result.autoHydrateByIdAs<Operation>("d2e3f4a5-3b45-4c9d-f4ae-1f2a3b4c5d6e")
+            val op = result.hydrateResourceById("d2e3f4a5-3b45-4c9d-f4ae-1f2a3b4c5d6e", Operation::class.java)
             assertNotNull(op)
             assertEquals("Task 2", op!!.name)
             assertEquals("TK0002", op.code)
