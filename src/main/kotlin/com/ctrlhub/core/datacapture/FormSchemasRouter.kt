@@ -32,22 +32,18 @@ class FormSchemaRequestParameters(
 class FormSchemasRouter(httpClient: HttpClient) : Router(httpClient) {
 
     suspend fun all(
-        organisationId: String,
-        formId: String,
         requestParameters: FormSchemaRequestParameters = FormSchemaRequestParameters()
     ): PaginatedList<FormSchema> {
-        val endpoint = "/v3/orgs/$organisationId/data-capture/forms/$formId/schemas"
+        val endpoint = "/v3/form-schemas"
 
         return fetchPaginatedJsonApiResources(endpoint, requestParameters.toMap())
     }
 
     suspend fun one(
-        organisationId: String,
-        formId: String,
         schemaId: String,
         requestParameters: FormSchemaRequestParameters = FormSchemaRequestParameters()
     ): FormSchema {
-        val endpoint = "/v3/orgs/$organisationId/data-capture/forms/$formId/schemas/$schemaId"
+        val endpoint = "/v3/form-schemas/$schemaId"
 
         return fetchJsonApiResource(endpoint, requestParameters.toMap())
     }

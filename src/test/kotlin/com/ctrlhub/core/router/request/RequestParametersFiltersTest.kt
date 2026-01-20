@@ -7,17 +7,17 @@ class RequestParametersFiltersTest {
 
     @Test
     fun `and of two field expressions formats correctly`() {
-        val expr = AndExpression(
+        val expr = And(
             listOf(
-                FieldFilterExpression("status", "open"),
-                FieldFilterExpression("category", "news")
+                Eq("status", "open"),
+                Eq("category", "news")
             )
         )
 
         val params = RequestParameters(filters = listOf(expr))
         val map = params.toMap()
 
-        assertEquals("and(status('open'),category('news'))", map["filter"])
+        assertEquals("and(eq(status,'open'),eq(category,'news'))", map["filter"])
     }
 
     @Test

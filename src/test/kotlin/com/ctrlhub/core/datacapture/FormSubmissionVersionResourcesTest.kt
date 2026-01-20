@@ -39,8 +39,6 @@ class FormSubmissionVersionResourcesTest {
 
         runBlocking {
             val result = router.one(
-                organisationId = "b5c6d7e8-3a45-46f7-90a1-1b2c3d4e5f60",
-                submissionId = "e5f6a7b9-6d78-49ca-2d34-4e5f60718293",
                 versionId = "a1f9b6c2-3d5a-4a9e-9c1b-0f2e7a4d6b1c"
             )
 

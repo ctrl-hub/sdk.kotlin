@@ -38,7 +38,7 @@ class FormSchemasRouterTest {
             val organisationId = "test-org-id"
             val formId = "test-form-id"
 
-            val response = formSchemasRouter.all(organisationId, formId)
+            val response = formSchemasRouter.all()
 
             assertEquals(1, response.data.size)
             val formSchema = response.data[0]

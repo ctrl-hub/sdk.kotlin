@@ -34,8 +34,6 @@ class FormSubmissionVersionsRouterTest {
 
         runBlocking {
             val result = formSubmissionVersionsRouter.create(
-                organisationId = "org-123",
-                formId = "form-456",
                 schemaId = "schema-789",
                 payload = mapOf("Test" to "value")
             )
@@ -61,11 +59,7 @@ class FormSubmissionVersionsRouterTest {
         val formSubmissionVersionsRouter = FormSubmissionVersionsRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
-            val result = formSubmissionVersionsRouter.all(
-                organisationId = "org-123",
-                formId = "form-456",
-                submissionId = "d3c2b1a0-9f8e-7d6c-5b4a-3e2f1d0c9b8a"
-            )
+            val result = formSubmissionVersionsRouter.all()
 
             // verify the paginated wrapper
             assertNotNull(result)
@@ -95,9 +89,6 @@ class FormSubmissionVersionsRouterTest {
 
         runBlocking {
             val result = formSubmissionVersionsRouter.one(
-                organisationId = "org-123",
-                formId = "form-456",
-                submissionId = "d4c3b2a1-0f9e-8d7c-6b5a-4e3f2d1c0b9a",
                 versionId = "4a8b7c6d-2e3f-4a1b-9c2d-0e1f2a3b4c5d"
             )
 
@@ -136,10 +127,7 @@ class FormSubmissionVersionsRouterTest {
         val formSubmissionVersionsRouter = FormSubmissionVersionsRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
-            val result = formSubmissionVersionsRouter.all(
-                organisationId = "org-123",
-                submissionId = "d3c2b1a0-9f8e-7d6c-5b4a-3e2f1d0c9b8a"
-            )
+            val result = formSubmissionVersionsRouter.all()
 
             assertNotNull(result)
             assertTrue(result.data.isNotEmpty())
@@ -167,8 +155,6 @@ class FormSubmissionVersionsRouterTest {
 
         runBlocking {
             val result = formSubmissionVersionsRouter.one(
-                organisationId = "org-123",
-                submissionId = "d4c3b2a1-0f9e-8d7c-6b5a-4e3f2d1c0b9a",
                 versionId = "4a8b7c6d-2e3f-4a1b-9c2d-0e1f2a3b4c5d"
             )
 

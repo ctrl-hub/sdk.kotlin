@@ -15,9 +15,9 @@ class FormSubmissionsRouter(httpClient: HttpClient) : Router(httpClient) {
      *
      * @return PaginatedList of FormSubmission
      */
-    suspend fun all(organisationId: String, formId: String): PaginatedList<FormSubmission> {
+    suspend fun all(): PaginatedList<FormSubmission> {
         return fetchPaginatedJsonApiResources(
-            "/v3/orgs/$organisationId/data-capture/forms/$formId/submissions",
+            "/v3/form-submissions",
             queryParameters = emptyMap(),
             FormSubmission::class.java,
             User::class.java,
