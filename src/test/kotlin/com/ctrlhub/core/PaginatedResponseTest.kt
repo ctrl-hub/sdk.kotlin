@@ -27,7 +27,7 @@ class PaginatedResponseTest {
         val formsRouter = FormsRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
-            val response = formsRouter.all(organisationId = "123")
+            val response = formsRouter.all()
             assertEquals(1, response.pagination.page.currentPage)
             assertEquals(10, response.pagination.counts.resources)
             assertEquals(5, response.pagination.counts.pages)

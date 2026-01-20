@@ -35,7 +35,7 @@ class FormsRouterTest {
 
         runBlocking {
             val organisationId = "test-org-id"
-            val response = formsRouter.all(organisationId)
+            val response = formsRouter.all()
 
             // Assuming the mock response includes 1 form as in your earlier example
             assertEquals(1, response.data.size)

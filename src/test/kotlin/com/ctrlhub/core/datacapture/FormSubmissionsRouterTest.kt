@@ -32,7 +32,7 @@ class FormSubmissionsRouterTest {
         val formSubmissionsRouter = FormSubmissionsRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
-            val response = formSubmissionsRouter.all(organisationId = "org-123", formId = "form-456")
+            val response = formSubmissionsRouter.all()
 
             assertIs<PaginatedList<FormSubmission>>(response)
             assertEquals(4, response.data.size)
