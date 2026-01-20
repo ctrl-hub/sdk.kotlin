@@ -1,12 +1,14 @@
 package com.ctrlhub.core.datacapture.response
 
 import com.ctrlhub.core.json.JsonConfig
+import com.ctrlhub.core.projects.response.Organisation
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.github.jasminb.jsonapi.StringIdHandler
 import com.github.jasminb.jsonapi.annotations.Id
 import com.github.jasminb.jsonapi.annotations.Meta
+import com.github.jasminb.jsonapi.annotations.Relationship
 import com.github.jasminb.jsonapi.annotations.Type
 import java.time.LocalDateTime
 
@@ -22,6 +24,8 @@ data class FormSchema @JsonCreator constructor(
     val view: Map<String, Any>? = null,
     @JsonProperty("version")
     val version: String? = null,
+    @Relationship("organisation")
+    var organisation: Organisation? = null,
     @Meta
     var meta: FormSchemaMeta? = null,
 ) {
