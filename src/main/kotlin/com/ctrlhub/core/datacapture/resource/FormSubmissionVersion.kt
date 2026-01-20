@@ -8,6 +8,7 @@ import com.ctrlhub.core.iam.response.User
 import com.ctrlhub.core.json.JsonConfig
 import com.ctrlhub.core.media.response.Image
 import com.ctrlhub.core.projects.operations.response.Operation
+import com.ctrlhub.core.projects.response.Organisation
 import com.ctrlhub.core.projects.schemes.response.Scheme
 import com.ctrlhub.core.projects.workorders.response.WorkOrder
 import com.fasterxml.jackson.annotation.JsonCreator
@@ -39,6 +40,9 @@ class FormSubmissionVersion @JsonCreator constructor(
 
     @Relationship("submission")
     var submission: FormSubmission? = null,
+
+    @Relationship("organisation")
+    var organisation: Organisation? = null,
 
     @Meta
     var meta: FormSubmissionVersionMeta? = null,
