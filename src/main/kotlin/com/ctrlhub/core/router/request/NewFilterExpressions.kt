@@ -2,9 +2,8 @@ package com.ctrlhub.core.router.request
 
 internal fun rqlValue(v: Any?): String = when (v) {
     null -> "null"
-    is String -> "'${v.replace("'", "\\'")}'"
     is Boolean, is Number -> v.toString()
-    else -> "'$v'"
+    else -> v.toString()
 }
 
 sealed class Comparison(

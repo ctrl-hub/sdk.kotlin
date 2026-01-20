@@ -26,6 +26,8 @@ data class FormSchema @JsonCreator constructor(
     val version: String? = null,
     @Relationship("organisation")
     var organisation: Organisation? = null,
+    @Relationship("form")
+    var form: Form? = null,
     @Meta
     var meta: FormSchemaMeta? = null,
 ) {
