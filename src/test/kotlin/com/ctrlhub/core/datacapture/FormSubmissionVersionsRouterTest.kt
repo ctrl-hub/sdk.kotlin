@@ -3,6 +3,7 @@ package com.ctrlhub.core.datacapture
 import com.ctrlhub.core.configureForTest
 import com.ctrlhub.core.datacapture.resource.FormSubmissionVersion
 import com.ctrlhub.core.api.response.PaginatedList
+import com.ctrlhub.core.datacapture.request.CreateSubmissionRequest
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
@@ -38,6 +39,44 @@ class FormSubmissionVersionsRouterTest {
                 payload = mapOf("Test" to "value")
             )
 
+            assertIs<FormSubmissionVersion>(result)
+            assertNotNull(result.id)
+        }
+    }
+
+    @Test
+    fun `can create submission using JsonApiRequest`() {
+        // Arrange
+        val responseJsonPath =
+            Paths.get("src/test/resources/datacapture/form-submission-version-response.json")
+        val responseJson = Files.readString(responseJsonPath)
+
+        val mockEngine = MockEngine { _ ->
+            respond(
+                content = responseJson,
+                status = HttpStatusCode.Created,
+                headers = headersOf(
+                    HttpHeaders.ContentType,
+                    "application/vnd.api+json"
+                )
+            )
+        }
+
+        val formSubmissionVersionsRouter = FormSubmissionVersionsRouter(
+            httpClient = HttpClient(mockEngine).configureForTest()
+        )
+
+        val request = CreateSubmissionRequest(
+            schemaId = "89a756e8-97e9-4edb-9c47-f260831c4ab0",
+            organisationId = "org-123",
+            payload = mapOf(
+                "field-1" to "Test value",
+                "field-2" to true
+            )
+        )
+
+        runBlocking {
+            val result = formSubmissionVersionsRouter.create(request)
             assertIs<FormSubmissionVersion>(result)
             assertNotNull(result.id)
         }
