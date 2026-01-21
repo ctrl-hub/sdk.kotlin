@@ -57,7 +57,7 @@ class FormSubmissionVersionsRouter(httpClient: HttpClient) : Router(httpClient) 
      */
     suspend fun create(schemaId: String, payload: Map<String, Any>): FormSubmissionVersion {
         return postJsonApiResource(
-            "/v3/form-submissions",
+            "/v3/form-submission-versions",
             requestBody = FormSubmissionVersion(
                 payload = payload,
                 id = "",
@@ -86,7 +86,7 @@ class FormSubmissionVersionsRouter(httpClient: HttpClient) : Router(httpClient) 
      */
     suspend fun create(request: CreateSubmissionRequest): FormSubmissionVersion {
         return postJsonApiRequest(
-            "/v3/form-submissions",
+            "/v3/form-submission-versions",
             request.toJsonApiRequest(),
             queryParameters =emptyMap(),
             contentType = ContentType.parse("application/vnd.api+json"),
