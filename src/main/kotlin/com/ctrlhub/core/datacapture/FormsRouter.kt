@@ -3,6 +3,8 @@ package com.ctrlhub.core.datacapture
 import com.ctrlhub.core.Api
 import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.datacapture.response.Form
+import com.ctrlhub.core.datacapture.response.FormSchema
+import com.ctrlhub.core.projects.response.Organisation
 import com.ctrlhub.core.router.Router
 import com.ctrlhub.core.router.request.FilterOption
 import com.ctrlhub.core.router.request.JsonApiIncludes
@@ -47,7 +49,9 @@ class FormsRouter(httpClient: HttpClient) : Router(httpClient) {
         return fetchPaginatedJsonApiResources(
             "/v3/forms",
             requestParameters.toMap(),
-            Form::class.java
+            Form::class.java,
+            FormSchema::class.java, Organisation::class.java
+        )
         )
     }
 
@@ -56,8 +60,11 @@ class FormsRouter(httpClient: HttpClient) : Router(httpClient) {
      *
      * @return FOrm
      */
-    suspend fun one(formId: String): Form {
-        return fetchJsonApiResource("/v3/forms/$formId")
+    suspend fun one(formId: String, requestParameters: FormRequestParameters = FormRequestParameters()): Form {
+        return fetchJsonApiResource(
+            "/v3/forms/$formId", queryParameters = requestParameters.toMap(), Form::class.java,
+            FormSchema::class.java, Organisation::class.java
+        )
     }
 }
 
