@@ -52,7 +52,6 @@ class FormsRouter(httpClient: HttpClient) : Router(httpClient) {
             Form::class.java,
             FormSchema::class.java, Organisation::class.java
         )
-        )
     }
 
     /**
