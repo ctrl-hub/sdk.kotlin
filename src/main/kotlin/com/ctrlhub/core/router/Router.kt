@@ -5,6 +5,7 @@ import com.ctrlhub.core.api.ApiException
 import com.ctrlhub.core.api.UnauthorizedException
 import com.ctrlhub.core.api.response.*
 import com.ctrlhub.core.json.JsonConfig
+import com.ctrlhub.core.router.request.JsonApiRequest
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.jasminb.jsonapi.JSONAPIDocument
 import com.github.jasminb.jsonapi.ResourceConverter
@@ -37,6 +38,49 @@ abstract class Router(val httpClient: HttpClient) {
                 queryParameters.forEach { key, value -> parameters.append(key, value) }
             }
             setBody(body)
+        }
+    }
+
+    protected suspend inline fun <reified Res> postJsonApiRequest(
+        endpoint: String,
+        request: JsonApiRequest<*>,
+        queryParameters: Map<String, String> = emptyMap(),
+        contentType: ContentType = ContentType.Application.Json,
+        vararg includedClasses: Class<*>
+    ): Res {
+        return try {
+            val requestBytes = getObjectMapper().writeValueAsBytes(request)
+            val response = httpClient.post(endpoint) {
+                contentType(contentType)
+                url {
+                    queryParameters.forEach { key, value -> parameters.append(key, value) }
+                }
+                setBody(requestBytes)
+            }
+
+            val resourceConverter = ResourceConverter(
+                getObjectMapper(),
+                Res::class.java,
+                *includedClasses
+            ).apply {
+                enableSerializationOption(SerializationFeature.INCLUDE_RELATIONSHIP_ATTRIBUTES)
+            }
+
+            val jsonApiResponse = resourceConverter.readDocument<Res>(
+                response.body<ByteArray>(),
+                Res::class.java
+            )
+
+            jsonApiResponse.get()
+                ?: throw ApiException("Failed to parse JSON:API response for $endpoint", Exception())
+
+        } catch (e: ClientRequestException) {
+            if (e.response.status == HttpStatusCode.Unauthorized) {
+                throw UnauthorizedException("Unauthorized action: $endpoint", e.response, e)
+            }
+            throw ApiClientException("Request failed: $endpoint", e.response, e)
+        } catch (e: Exception) {
+            throw ApiException("Request failed: $endpoint", e)
         }
     }
 

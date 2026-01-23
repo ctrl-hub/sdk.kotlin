@@ -17,7 +17,7 @@ class RequestParametersFiltersTest {
         val params = RequestParameters(filters = listOf(expr))
         val map = params.toMap()
 
-        assertEquals("and(eq(status,'open'),eq(category,'news'))", map["filter"])
+        assertEquals("and(eq(status,open),eq(category,news))", map["filter"])
     }
 
     @Test

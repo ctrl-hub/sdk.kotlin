@@ -10,6 +10,7 @@ import com.ctrlhub.core.router.Router
 import io.ktor.client.HttpClient
 import io.ktor.http.ContentType
 import com.ctrlhub.core.api.response.PaginatedList
+import com.ctrlhub.core.datacapture.request.CreateSubmissionRequest
 import com.ctrlhub.core.router.request.FilterOption
 import com.ctrlhub.core.router.request.JsonApiIncludes
 import com.ctrlhub.core.router.request.RequestParametersWithIncludes
@@ -56,7 +57,7 @@ class FormSubmissionVersionsRouter(httpClient: HttpClient) : Router(httpClient) 
      */
     suspend fun create(schemaId: String, payload: Map<String, Any>): FormSubmissionVersion {
         return postJsonApiResource(
-            "/v3/form-submissions",
+            "/v3/form-submission-versions",
             requestBody = FormSubmissionVersion(
                 payload = payload,
                 id = "",
@@ -65,6 +66,29 @@ class FormSubmissionVersionsRouter(httpClient: HttpClient) : Router(httpClient) 
                 )
             ),
             queryParameters = emptyMap(),
+            contentType = ContentType.parse("application/vnd.api+json"),
+            FormSubmissionVersion::class.java,
+            FormSchema::class.java
+        )
+    }
+
+    /**
+     * Create a new form submission version using a JSON:API request payload.
+     *
+     * Sends a POST request to create a form submission (and its initial version)
+     * using a fully-constructed JSON:API request body derived from
+     * [CreateSubmissionRequest].
+     *
+     * @param request the submission creation request containing payload data,
+     * schema relationship and optional organisation relationship
+     * @return the created and hydrated [FormSubmissionVersion] instance
+     * @throws Exception on network, serialization or parsing errors
+     */
+    suspend fun create(request: CreateSubmissionRequest): FormSubmissionVersion {
+        return postJsonApiRequest(
+            "/v3/form-submission-versions",
+            request.toJsonApiRequest(),
+            queryParameters =emptyMap(),
             contentType = ContentType.parse("application/vnd.api+json"),
             FormSubmissionVersion::class.java,
             FormSchema::class.java
