@@ -19,6 +19,9 @@ class Form @JsonCreator constructor(
     @JsonProperty("status") var status: String = "",
     @Relationship("organisation")
     var organisation: Organisation? = null,
+
+    @Relationship("latest_schema")
+    var latestSchema: FormSchema? = null,
     @Meta
     var meta: FormMeta? = null
 ) {
