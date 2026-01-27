@@ -5,6 +5,7 @@ import com.ctrlhub.core.geo.Property
 import com.ctrlhub.core.projects.appointments.response.Appointment
 import com.ctrlhub.core.projects.operations.templates.response.OperationTemplate
 import com.ctrlhub.core.projects.response.Label
+import com.ctrlhub.core.projects.response.Organisation
 import com.ctrlhub.core.settings.timebands.response.TimeBand
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
@@ -40,7 +41,10 @@ class Operation @JsonCreator constructor(
     var properties: java.util.List<Property>? = null,
 
     @Relationship("appointment")
-    var appointment: Appointment? = null
+    var appointment: Appointment? = null,
+
+    @Relationship("organisation")
+    var organisation: Organisation? = null
 ) {
     constructor(): this(
         name = "",
