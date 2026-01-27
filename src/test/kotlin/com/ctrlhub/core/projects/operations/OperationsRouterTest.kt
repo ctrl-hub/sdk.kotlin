@@ -32,9 +32,7 @@ class OperationsRouterTest {
         val operationsRouter = OperationsRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
-            val response = operationsRouter.all(
-                organisationId = "123",
-            )
+            val response = operationsRouter.all()
 
             assertIs<PaginatedList<Operation>>(response)
             assertNotNull(response.data[0].id)
@@ -57,10 +55,7 @@ class OperationsRouterTest {
         val operationsRouter = OperationsRouter(httpClient = HttpClient(mockEngine).configureForTest())
 
         runBlocking {
-            val response = operationsRouter.one(
-                organisationId = "123",
-                operationId = "ghi"
-            )
+            val response = operationsRouter.one(operationId = "ghi")
 
             assertIs<Operation>(response)
             assertNotNull(response.id)
@@ -84,7 +79,6 @@ class OperationsRouterTest {
 
         runBlocking {
             val response = operationsRouter.all(
-                organisationId = "123",
                 requestParameters = OperationRequestParameters(
                     includes = listOf(
                         OperationIncludes.Template
@@ -115,7 +109,6 @@ class OperationsRouterTest {
 
         runBlocking {
             val response = operationsRouter.all(
-                organisationId = "123",
                 requestParameters = OperationRequestParameters(
                     includes = listOf(
                         OperationIncludes.Appointments
@@ -159,7 +152,6 @@ class OperationsRouterTest {
 
         runBlocking {
             val response = operationsRouter.one(
-                organisationId = "123",
                 operationId = "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
                 requestParameters = OperationRequestParameters(
                     includes = listOf(

@@ -36,15 +36,12 @@ class OperationsRouter(httpClient: HttpClient) : Router(httpClient) {
     /**
      * Retrieve a list of all operations
      *
-     * @param organisationId String The organisation ID to retrieve all operations for
-     *
      * @return A list of all operations
      */
     suspend fun all(
-        organisationId: String,
         requestParameters: OperationRequestParameters = OperationRequestParameters()
     ): PaginatedList<Operation> {
-        val endpoint = "/v3/orgs/$organisationId/projects/operations"
+        val endpoint = "/v3/operations"
 
         return fetchPaginatedJsonApiResources(
             endpoint, requestParameters.toMap(), Operation::class.java,
@@ -55,17 +52,15 @@ class OperationsRouter(httpClient: HttpClient) : Router(httpClient) {
     /**
      * Retrieve a single operation
      *
-     * @param organisationId String The organisation ID to retrieve all operations for
      * @param operationId String The operation ID to retrieve data for
      *
      * @return A list of all operations
      */
     suspend fun one(
-        organisationId: String,
         operationId: String,
         requestParameters: OperationRequestParameters = OperationRequestParameters()
     ): Operation {
-        val endpoint = "/v3/orgs/$organisationId/projects/operations/$operationId"
+        val endpoint = "/v3/operations/$operationId"
 
         return fetchJsonApiResource(
             endpoint,
