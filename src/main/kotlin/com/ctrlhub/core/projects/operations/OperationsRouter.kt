@@ -17,6 +17,7 @@ enum class OperationIncludes(val value: String) : JsonApiIncludes {
     Template("template"),
     Appointments("appointment"),
     Properties("properties"),
+    Organisation("organisation"),
     Forms("forms");
 
     override fun value(): String {
