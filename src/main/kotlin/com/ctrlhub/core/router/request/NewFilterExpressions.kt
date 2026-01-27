@@ -29,7 +29,7 @@ class In(
 ) : FilterOption {
 
     override fun format(): String =
-        "in($field,(${values.joinToString(",") { rqlValue(it) }}))"
+        "in($field,[${values.joinToString(",") { rqlValue(it) }}])"
 }
 
 class Between(
