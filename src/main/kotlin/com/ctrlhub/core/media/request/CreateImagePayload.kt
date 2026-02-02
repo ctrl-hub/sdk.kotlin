@@ -1,6 +1,7 @@
 package com.ctrlhub.core.media.request
 
 import com.ctrlhub.core.api.JsonAPIRelationship
+import com.ctrlhub.core.api.JsonAPIRelationshipData
 import com.ctrlhub.core.projects.response.Organisation
 import kotlinx.serialization.Serializable
 
@@ -11,7 +12,7 @@ data class CreateImagePayload(
 
 @Serializable
 data class CreateImagePayloadRelationships(
-    val organisation: JsonAPIRelationship
+    val organisation: JsonAPIRelationshipData
 )
 
 @Serializable

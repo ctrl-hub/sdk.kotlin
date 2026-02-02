@@ -4,6 +4,7 @@ import com.ctrlhub.core.Api
 import com.ctrlhub.core.api.ApiClientException
 import com.ctrlhub.core.api.ApiException
 import com.ctrlhub.core.api.JsonAPIRelationship
+import com.ctrlhub.core.api.JsonAPIRelationshipData
 import com.ctrlhub.core.api.UnauthorizedException
 import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.media.request.CreateImagePayload
@@ -107,9 +108,11 @@ class ImagesRouter(httpClient: HttpClient): Router(httpClient) {
                         content = dataUri
                     ),
                     relationships = CreateImagePayloadRelationships(
-                        organisation = JsonAPIRelationship(
-                            type = "organisations",
-                            id = organisationId
+                        organisation = JsonAPIRelationshipData(
+                            data = JsonAPIRelationship(
+                                type = "organisations",
+                                id = organisationId
+                            )
                         )
                     )
                 )
