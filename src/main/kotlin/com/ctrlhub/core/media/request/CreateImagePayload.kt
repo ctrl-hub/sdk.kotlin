@@ -1,5 +1,7 @@
 package com.ctrlhub.core.media.request
 
+import com.ctrlhub.core.api.JsonAPIRelationship
+import com.ctrlhub.core.projects.response.Organisation
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -8,9 +10,15 @@ data class CreateImagePayload(
 )
 
 @Serializable
+data class CreateImagePayloadRelationships(
+    val organisation: JsonAPIRelationship
+)
+
+@Serializable
 data class CreateImagePayloadData(
     val type: String = "images",
-    val attributes: CreateImagePayloadAttributes
+    val attributes: CreateImagePayloadAttributes,
+    val relationships: CreateImagePayloadRelationships
 )
 
 @Serializable

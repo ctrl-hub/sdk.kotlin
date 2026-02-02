@@ -3,11 +3,13 @@ package com.ctrlhub.core.media
 import com.ctrlhub.core.Api
 import com.ctrlhub.core.api.ApiClientException
 import com.ctrlhub.core.api.ApiException
+import com.ctrlhub.core.api.JsonAPIRelationship
 import com.ctrlhub.core.api.UnauthorizedException
 import com.ctrlhub.core.api.response.PaginatedList
 import com.ctrlhub.core.media.request.CreateImagePayload
 import com.ctrlhub.core.media.request.CreateImagePayloadAttributes
 import com.ctrlhub.core.media.request.CreateImagePayloadData
+import com.ctrlhub.core.media.request.CreateImagePayloadRelationships
 import com.ctrlhub.core.media.response.Image
 import com.ctrlhub.core.router.Router
 import io.ktor.client.HttpClient
@@ -35,7 +37,7 @@ class ImagesRouter(httpClient: HttpClient): Router(httpClient) {
      * @return Paginated response of image records
      */
     suspend fun all(organisationId: String): PaginatedList<Image> {
-        return fetchPaginatedJsonApiResources("/v3/orgs/$organisationId/media/images")
+        return fetchPaginatedJsonApiResources("/v3/images")
     }
 
     /**
@@ -47,7 +49,7 @@ class ImagesRouter(httpClient: HttpClient): Router(httpClient) {
      * @return Matching image record
      */
     suspend fun one(organisationId: String, imageId: String): Image {
-        return fetchJsonApiResource("/v3/orgs/$organisationId/media/images/$imageId")
+        return fetchJsonApiResource("/v3/images/$imageId")
     }
 
     /**
@@ -60,7 +62,7 @@ class ImagesRouter(httpClient: HttpClient): Router(httpClient) {
      * @return File instance containing the image data
      */
     suspend fun proxy(organisationId: String, imageId: String, size: String = "original.jpg"): File {
-        val endpoint = "/v3/orgs/$organisationId/media/images/$imageId/$size"
+        val endpoint = "/v3/images/$imageId/$size"
 
         return try {
             val response = performGet(endpoint)
@@ -90,7 +92,7 @@ class ImagesRouter(httpClient: HttpClient): Router(httpClient) {
      */
     @OptIn(ExperimentalEncodingApi::class)
     suspend fun create(organisationId: String, image: File): Image {
-        val endpoint = "/v3/orgs/$organisationId/media/images"
+        val endpoint = "/v3/images"
 
         return try {
             val bytes = image.readBytes()
@@ -104,6 +106,12 @@ class ImagesRouter(httpClient: HttpClient): Router(httpClient) {
                     attributes = CreateImagePayloadAttributes(
                         content = dataUri
                     ),
+                    relationships = CreateImagePayloadRelationships(
+                        organisation = JsonAPIRelationship(
+                            type = "organisations",
+                            id = organisationId
+                        )
+                    )
                 )
             ), contentType = ContentType.parse("application/vnd.api+json"))
 
